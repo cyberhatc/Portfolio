@@ -88,6 +88,34 @@
       transition: left 0.15s ease-out, top 0.15s ease-out;
     }
 
+    /* ========== CURSOR TORCH ========== */
+    .cursor-torch {
+      position: fixed;
+      inset: 0;
+      z-index: 9980;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: radial-gradient(circle 280px at var(--tx, 50%) var(--ty, 50%),
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 58%,
+        rgba(0,0,0,0.5) 78%,
+        rgba(0,0,0,0.8) 100%);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .cursor-torch { opacity: 1; }
+    }
+
+    /* ========== MATRIX RAIN BACKGROUND ========== */
+    .matrix-rain {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
     /* ========== NAVBAR ========== */
     .navbar {
       position: fixed;
@@ -1839,6 +1867,7 @@
 <body>
   <div class="grid-bg"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="cursor-torch" id="cursorTorch"></div>
   <div class="scanline"></div>
   <div class="particles" id="particles"></div>
   <div class="hex-pattern"></div>
@@ -2521,6 +2550,46 @@
       glow.style.left = e.clientX + 'px';
       glow.style.top = e.clientY + 'px';
     });
+
+    /* ========== CURSOR TORCH ========== */
+    const torch = document.getElementById('cursorTorch');
+    document.addEventListener('mousemove', (e) => {
+      torch.style.setProperty('--tx', e.clientX + 'px');
+      torch.style.setProperty('--ty', e.clientY + 'px');
+    });
+
+    /* ========== MATRIX RAIN BACKGROUND ========== */
+    (function initMatrixRain() {
+      const canvas = document.createElement('canvas');
+      canvas.className = 'matrix-rain';
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      const chars = '01アイウエオカキクケコサシスセソABCDEF$#*<>';
+      let w, h, fontSize = 16, cols = 0, drops = [];
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        cols = Math.floor(w / fontSize);
+        drops = Array(cols).fill(0).map(() => Math.floor(Math.random() * -60));
+      }
+      function draw() {
+        ctx.fillStyle = 'rgba(10,10,15,0.06)';
+        ctx.fillRect(0, 0, w, h);
+        ctx.font = fontSize + 'px monospace';
+        for (let i = 0; i < cols; i++) {
+          const ch = chars[(Math.random() * chars.length) | 0];
+          ctx.fillStyle = Math.random() > 0.975 ? '#00e5ff' : '#00ff88';
+          ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > h && Math.random() > 0.975) {
+            drops[i] = Math.floor(Math.random() * -20);
+          }
+          drops[i]++;
+        }
+      }
+      resize();
+      window.addEventListener('resize', resize);
+      setInterval(draw, 50);
+    })();
 
     /* ========== NAVBAR SCROLL ========== */
     window.addEventListener('scroll', () => {
