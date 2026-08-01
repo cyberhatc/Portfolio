@@ -1701,73 +1701,104 @@
     }
 
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
-    .classified-shake {
-      animation: classifiedShake 2s linear;
+    body.tv-frozen { overflow: hidden; }
+
+    body.tv-frozen *:not(.lightning-border):not(.tv-static):not(.tv-roll):not(.classified-logo) {
+      animation-play-state: paused !important;
     }
 
-    @keyframes classifiedShake {
-      0%, 100% { transform: translate(0, 0); }
-      8%  { transform: translate(-14px, 6px); }
-      16% { transform: translate(12px, -8px); }
-      24% { transform: translate(-16px, -5px); }
-      32% { transform: translate(14px, 8px); }
-      40% { transform: translate(-12px, 6px); }
-      48% { transform: translate(16px, -6px); }
-      56% { transform: translate(-14px, 8px); }
-      64% { transform: translate(12px, 5px); }
-      72% { transform: translate(-10px, -7px); }
-      80% { transform: translate(8px, 4px); }
-      88% { transform: translate(-6px, -3px); }
-      96% { transform: translate(3px, 2px); }
+    .tv-static {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 100001;
+      pointer-events: none;
+      image-rendering: pixelated;
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
 
-    .classified-lightning {
+    .tv-static.active { opacity: 1; }
+
+    .tv-roll {
+      position: fixed;
+      top: -90px;
+      left: 0;
+      width: 100%;
+      height: 90px;
+      z-index: 100001;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.22));
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .tv-roll.active {
+      opacity: 1;
+      animation: tvRoll 0.45s linear infinite;
+    }
+
+    @keyframes tvRoll {
+      to { transform: translateY(calc(100vh + 180px)); }
+    }
+
+    .lightning-border {
       position: fixed;
       inset: 0;
       z-index: 100002;
       pointer-events: none;
-      background: #ffffff;
+      border: 3px solid transparent;
+      box-shadow: inset 0 0 60px rgba(0, 229, 255, 0.25), 0 0 30px rgba(0, 229, 255, 0.4);
       opacity: 0;
     }
 
-    .classified-lightning.active {
-      animation: classifiedLightning 2s ease-out forwards;
+    .lightning-border.active {
+      opacity: 1;
+      animation: borderLightning 2.4s linear;
     }
 
-    @keyframes classifiedLightning {
-      0%   { opacity: 0; }
-      3%   { opacity: 0.85; }
-      6%   { opacity: 0.1; }
-      9%   { opacity: 0.75; }
-      12%  { opacity: 0.15; }
-      16%  { opacity: 0.9; }
-      19%  { opacity: 0.2; }
-      24%  { opacity: 0.65; }
-      28%  { opacity: 0.1; }
-      36%  { opacity: 0.45; }
-      48%  { opacity: 0.08; }
-      60%  { opacity: 0.3; }
-      75%  { opacity: 0.1; }
-      90%  { opacity: 0.2; }
-      100% { opacity: 0; }
+    @keyframes borderLightning {
+      0%   { border-color: transparent; }
+      3%   { border-color: #ffffff; box-shadow: inset 0 0 80px rgba(0,229,255,0.5), 0 0 40px rgba(0,229,255,0.8); }
+      6%   { border-color: #00e5ff; }
+      9%   { border-color: transparent; }
+      14%  { border-color: #ffffff; }
+      17%  { border-color: #b347ff; }
+      22%  { border-color: #00e5ff; }
+      26%  { border-color: transparent; }
+      33%  { border-color: #ffffff; }
+      38%  { border-color: #00e5ff; }
+      45%  { border-color: transparent; }
+      55%  { border-color: #00ff88; }
+      62%  { border-color: #ffffff; }
+      70%  { border-color: transparent; }
+      82%  { border-color: #00e5ff; }
+      90%  { border-color: transparent; }
+      100% { border-color: transparent; }
     }
 
     .classified-logo {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 320px;
-      max-width: 80vw;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      padding: 5vh 5vw;
       z-index: 100003;
       pointer-events: none;
       opacity: 0;
-      border-radius: 12px;
-      box-shadow: 0 0 40px rgba(0, 229, 255, 0.5);
-      transition: opacity 0.4s ease;
+      transform: scale(0.25);
+      filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.6));
+      transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
     }
 
-    .classified-logo.show { opacity: 0.5; }
+    .classified-logo.show {
+      opacity: 0.5;
+      transform: scale(1);
+    }
 
     .secret-card,
     .secret-overlay { cursor: pointer; }
@@ -2993,31 +3024,79 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
     })();
 
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
+    const tvStatic = document.createElement('canvas');
+    tvStatic.className = 'tv-static';
+    tvStatic.width = 192;
+    tvStatic.height = 108;
+    document.body.appendChild(tvStatic);
+
+    const tvRoll = document.createElement('div');
+    tvRoll.className = 'tv-roll';
+    document.body.appendChild(tvRoll);
+
+    const lightningBorder = document.createElement('div');
+    lightningBorder.className = 'lightning-border';
+    document.body.appendChild(lightningBorder);
+
     const classifiedLogo = document.createElement('img');
     classifiedLogo.src = 'logodevilmike.jpeg';
     classifiedLogo.alt = 'Devil Mike';
     classifiedLogo.className = 'classified-logo';
     document.body.appendChild(classifiedLogo);
 
-    const classifiedLightning = document.createElement('div');
-    classifiedLightning.className = 'classified-lightning';
-    document.body.appendChild(classifiedLightning);
-
+    const staticCtx = tvStatic.getContext('2d');
+    let staticRaf = null;
     let classifiedTimeout = null;
+
+    function drawStatic() {
+      const w = tvStatic.width;
+      const h = tvStatic.height;
+      const img = staticCtx.createImageData(w, h);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = (Math.random() * 255) | 0;
+        d[i] = v;
+        d[i + 1] = v;
+        d[i + 2] = v;
+        d[i + 3] = 255;
+      }
+      staticCtx.putImageData(img, 0, 0);
+    }
+
+    function startStatic() {
+      tvStatic.classList.add('active');
+      tvRoll.classList.add('active');
+      (function loop() {
+        drawStatic();
+        staticRaf = requestAnimationFrame(loop);
+      })();
+    }
+
+    function stopStatic() {
+      cancelAnimationFrame(staticRaf);
+      staticRaf = null;
+      tvStatic.classList.remove('active');
+      tvRoll.classList.remove('active');
+    }
 
     function triggerClassified() {
       clearTimeout(classifiedTimeout);
-      document.body.classList.remove('classified-shake');
-      classifiedLightning.classList.remove('active');
+      stopStatic();
+      document.body.classList.remove('tv-frozen');
+      lightningBorder.classList.remove('active');
       classifiedLogo.classList.remove('show');
       void document.body.offsetWidth;
-      void classifiedLightning.offsetWidth;
-      document.body.classList.add('classified-shake');
-      classifiedLightning.classList.add('active');
+      void lightningBorder.offsetWidth;
+
+      document.body.classList.add('tv-frozen');
+      lightningBorder.classList.add('active');
       classifiedLogo.classList.add('show');
+      startStatic();
+
       classifiedTimeout = setTimeout(() => {
-        document.body.classList.remove('classified-shake');
-        classifiedLightning.classList.remove('active');
+        stopStatic();
+        document.body.classList.remove('tv-frozen');
+        lightningBorder.classList.remove('active');
         classifiedLogo.classList.remove('show');
       }, 3000);
     }
