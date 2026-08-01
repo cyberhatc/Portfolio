@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CyberHATC | Devil Mike — Full-Stack Developer</title>
-  <meta name="description" content="Devil Mike — Full-Stack & Mobile App Developer. Building cross-platform apps, 3D simulations, and algorithmic tools.">
+  <title>CyberHATC | devil_Mike — Full-Stack Developer</title>
+  <meta name="description" content="devil_Mike — Full-Stack & Mobile App Developer. Building cross-platform apps, 3D simulations, and algorithmic tools.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -33,7 +33,7 @@
       --font-body: 'Inter', sans-serif;
     }
 
-    html { scroll-behavior: smooth; background: var(--bg-primary); }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg-primary);
@@ -86,34 +86,6 @@
       z-index: -1;
       transform: translate(-50%, -50%);
       transition: left 0.15s ease-out, top 0.15s ease-out;
-    }
-
-    /* ========== CURSOR TORCH ========== */
-    .cursor-torch {
-      position: fixed;
-      inset: 0;
-      z-index: 9980;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-      background: radial-gradient(circle 420px at var(--tx, 50%) var(--ty, 50%),
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,0) 70%,
-        rgba(0,0,0,0.08) 88%,
-        rgba(0,0,0,0.16) 100%);
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .cursor-torch { opacity: 1; }
-    }
-
-    /* ========== MATRIX RAIN BACKGROUND ========== */
-    .matrix-rain {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      opacity: 0.28;
-      pointer-events: none;
     }
 
     /* ========== NAVBAR ========== */
@@ -252,7 +224,12 @@
       line-height: 1;
       margin-bottom: 0.5rem;
       opacity: 0;
-      animation: fadeInUp 0.6s 0.4s forwards;
+      animation: fadeInUp 0.6s 0.4s forwards, heroGlow 5s ease-in-out infinite;
+    }
+
+    @keyframes heroGlow {
+      0%, 100% { text-shadow: 0 0 5px rgba(0,255,136,0.2); }
+      50% { text-shadow: 0 0 15px rgba(0,255,136,0.4); }
     }
 
     .hero-name-row {
@@ -382,6 +359,11 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    .hero-name-white {
+      color: var(--text-primary);
+      font-weight: 900;
     }
 
     .hero-tagline {
@@ -530,6 +512,18 @@
     .terminal-output .dim { color: #666; }
     .terminal-output .pink { color: var(--neon-pink); }
 
+    .ascii-logo {
+      color: var(--neon-green);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.12;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 10px rgba(0,255,136,0.4);
+      user-select: none;
+    }
+
+    .ascii-logo .cyan { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,229,255,0.4); }
+
     .terminal-input-line {
       display: flex;
       align-items: center;
@@ -557,18 +551,6 @@
       animation: blink 1s infinite;
       vertical-align: middle;
     }
-
-    .ascii-logo {
-      color: var(--neon-green);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      line-height: 1.12;
-      margin: 0 0 1rem 0;
-      text-shadow: 0 0 10px rgba(0,255,136,0.4);
-      user-select: none;
-    }
-
-    .ascii-logo .cyan { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,229,255,0.4); }
 
     /* ========== ABOUT ========== */
     .about-grid {
@@ -1740,9 +1722,37 @@
       .hex-grid { display: none; }
     }
 
+    /* ========== CURSOR TORCH ========== */
+    .cursor-torch {
+      position: fixed;
+      inset: 0;
+      z-index: 9980;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: radial-gradient(circle 420px at var(--tx, 50%) var(--ty, 50%),
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 70%,
+        rgba(0,0,0,0.08) 88%,
+        rgba(0,0,0,0.16) 100%);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .cursor-torch { opacity: 1; }
+    }
+
+    /* ========== MATRIX RAIN BACKGROUND ========== */
+    .matrix-rain {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
     body.shock-shake {
-      animation: shockShake 1s linear;
+      animation: shockShake 0.5s linear infinite;
     }
 
     @keyframes shockShake {
@@ -1779,7 +1789,7 @@
 
     .lightning-border.active {
       opacity: 1;
-      animation: borderGlow 2.5s linear forwards;
+      animation: borderGlow 5s linear forwards;
     }
 
     @keyframes borderGlow {
@@ -1873,7 +1883,7 @@
   <div class="hex-pattern"></div>
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="linux-anim-overlay" id="linuxAnim">
-    <div class="boot-logo">CYBERHATC</div>
+    <div class="boot-logo"><span style="color:var(--neon-green)">CYBER</span><span style="color:var(--text-dim)">HATC</span></div>
     <div class="boot-text" id="bootText"></div>
     <div class="boot-bar"></div>
     <div class="boot-status" id="bootStatus">LOADING KERNEL...</div>
@@ -1922,7 +1932,7 @@
     <div class="status-item"><div class="status-dot"></div> KERNEL 6.8.0</div>
     <div class="status-item"><div class="status-dot warn"></div> CPU 47%</div>
     <div class="status-item" id="statusTime">00:00:00</div>
-    <div class="status-item" style="margin-left:auto;">CYBERHATC v2.0 // <span style="color:var(--neon-green)">LINUX</span></div>
+    <div class="status-item" style="margin-left:auto;"><span style="color:var(--neon-green)">CYBER</span><span style="color:var(--text-dim)">HATC</span> v2.0 // <span style="color:var(--neon-green)">LINUX</span></div>
   </div>
 
   <!-- FIXED RIGHT-SIDE REALISTIC PROCESSOR CHIP -->
@@ -2003,7 +2013,7 @@
       <!-- PCB BOARD -->
       <rect x="160" y="280" width="180" height="240" rx="6" fill="url(#pcbGrad)" stroke="#1a3a2a" stroke-width="2"/>
       <text x="175" y="295" font-family="JetBrains Mono, monospace" font-size="4" fill="#1a3a2a" opacity="0.6">CYBERHATC-REV2.0</text>
-      <text x="175" y="510" font-family="JetBrains Mono, monospace" font-size="3.5" fill="#1a3a2a" opacity="0.4">2026 DEVIL MIKE</text>
+      <text x="175" y="510" font-family="JetBrains Mono, monospace" font-size="3.5" fill="#1a3a2a" opacity="0.4">2026 devil_Mike</text>
 
       <!-- PCB copper traces -->
       <g opacity="0.3" stroke="#1a3a2a" stroke-width="0.8">
@@ -2057,7 +2067,7 @@
       <!-- Core glow -->
       <circle cx="250" cy="400" r="22" fill="url(#pCoreGlow)" class="chip-svg-core"/>
       <text x="250" y="397" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="5.5" fill="#00ff88" opacity="0.9" font-weight="700">CYBERHATC</text>
-      <text x="250" y="406" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="4" fill="#00e5ff" opacity="0.7">DEVIL MIKE</text>
+      <text x="250" y="406" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="4" fill="#00e5ff" opacity="0.7">devil_Mike</text>
 
       <!-- PGA PINS (gold) -->
       <g fill="#c0a040" opacity="0.6">
@@ -2125,7 +2135,7 @@
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <a href="#hero" class="nav-logo glitch-hover"><img src="logodevilmike.jpeg" alt="CyberHATC" style="height:36px;width:auto;border-radius:4px;vertical-align:middle;margin-right:8px;">CYBER<span>HATC</span></a>
+    <a href="#hero" class="nav-logo glitch-hover"><img src="logodevil_Mike.jpeg" alt="CyberHATC" style="height:36px;width:auto;border-radius:4px;vertical-align:middle;"></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#terminal" onclick="closeMenu()">Terminal</a></li>
       <li><a href="#about" onclick="closeMenu()">About</a></li>
@@ -2142,10 +2152,10 @@
     <div class="hero-glitch-line">system.init --mode=hacker</div>
     <div class="hero-name-row">
       <h1 class="hero-name">
-        <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
+        <span class="highlight glitch-text" data-text="devil">devil_</span><span class="hero-name-white">Mike</span>
       </h1>
     </div>
-    <p class="hero-tagline">Full-Stack Dev // Mobile Architect // CyberNerd</p>
+    <p class="hero-tagline">Full-Stack Dev // Mobile Architect // CyberHATC</p>
     <p class="hero-desc">
       Building cross-platform apps, 3D simulations, and algorithmic tools since age 14.
       Five-time hackathon runner-up. Turning wild ideas into deployed products.
@@ -2172,10 +2182,10 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <span class="terminal-title">cyberhatc@devilmike: ~/projects</span>
+        <span class="terminal-title">cyberhatc@devil_Mike: ~/projects</span>
       </div>
       <div class="terminal-body" id="terminalBody">
-        <div class="terminal-output"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ neofetch</div>
+        <div class="terminal-output"><span class="green">cyberhatc@devil_Mike</span>:<span class="cyan">~</span>$ neofetch</div>
         <pre class="ascii-logo">
 █████ █████ █   █ █████ █      █   █ █████ █  █  █████
 █   █ █     █   █   █   █      ██ ██   █   █ █   █    
@@ -2184,20 +2194,20 @@
 █████ █████   █   █████ █████  █   █ █████ █  █  █████
         </pre>
         <div class="terminal-output dim">
-  <span class="cyan">cyberhatc@devilmike</span>
-  <span class="dim">---------------</span>
-  <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
-  <span class="cyan">Host:</span> Devil Mike Workstation
-  <span class="cyan">Kernel:</span> 6.8.0-cyber
-  <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
-  <span class="cyan">Shell:</span> /bin/zsh 5.9
-  <span class="cyan">WM:</span> i3-gaps
-  <span class="cyan">CPU:</span> DevilMike @ 5.1GHz
-  <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up
+  <span class="green">       _</span>               <span class="cyan">cyberhatc@devil_Mike</span>
+  <span class="green">      | |</span>              <span class="dim">---------------</span>
+  <span class="green">  ___ | |___</span>           <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+  <span class="green"> / _ \\| / __|</span>          <span class="cyan">Host:</span> devil_Mike Workstation
+  <span class="green">|  __/| \\__ \\</span>          <span class="cyan">Kernel:</span> 6.8.0-cyber
+  <span class="green"> \\___||_|___/</span>          <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+  <span class="dim">                       <span class="cyan">Shell:</span> /bin/zsh 5.9</span>
+  <span class="dim">                       <span class="cyan">WM:</span> i3-gaps</span>
+  <span class="dim">                       <span class="cyan">CPU:</span> devil_Mike @ 5.1GHz</span>
+  <span class="dim">                       <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>
         </div>
         <div class="terminal-output dim">Type <span class="green">'help'</span> for available commands...</div>
         <div class="terminal-input-line" id="inputLine">
-          <span class="terminal-prompt"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$</span>
+          <span class="terminal-prompt"><span class="green">cyberhatc@devil_Mike</span>:<span class="cyan">~</span>$</span>
           <input type="text" class="terminal-input" id="terminalInput" autofocus spellcheck="false" autocomplete="off">
         </div>
       </div>
@@ -2299,7 +2309,7 @@
     <div class="projects-grid">
 
       <!-- 1 -->
-      <a href="https://cyberhatc.github.io/maths-behind-gps-vtu-b/gps" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
+      <div class="project-card">
         <div class="project-header">
           <span class="project-number">01</span>
           <span class="project-status">LIVE</span>
@@ -2316,7 +2326,7 @@
           <li>Real-time satellite geometry</li>
           <li>Visual proof of GPS math</li>
         </ul>
-      </a>
+      </div>
 
       <!-- 2 — SECRET -->
       <div class="project-card secret-card">
@@ -2343,7 +2353,7 @@
       </div>
 
       <!-- 3 -->
-      <a href="https://kiranaos.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
+      <a href="https://space.kiranaos.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
         <div class="project-header">
           <span class="project-number">03</span>
           <span class="project-status">LIVE</span>
@@ -2384,7 +2394,7 @@
       </div>
 
       <!-- 5 -->
-      <a href="https://space.kiranaos.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
+      <div class="project-card">
         <div class="project-header">
           <span class="project-number">05</span>
           <span class="project-status">LIVE</span>
@@ -2401,7 +2411,7 @@
           <li>Orbit prediction engine</li>
           <li>Telemetry data visualization</li>
         </ul>
-      </a>
+      </div>
 
       <!-- 6 -->
       <div class="project-card">
@@ -2448,7 +2458,7 @@
       </div>
 
       <!-- 8 -->
-      <a href="https://mindfullheaven.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
+      <div class="project-card">
         <div class="project-header">
           <span class="project-number">08</span>
           <span class="project-status">LIVE</span>
@@ -2459,14 +2469,13 @@
           <span class="project-tag">Flutter</span>
           <span class="project-tag">Hive</span>
           <span class="project-tag">GetX</span>
-          <span class="project-tag">Co-Founder</span>
         </div>
         <ul class="project-features">
           <li>Mood tracking & journaling</li>
           <li>Offline-first architecture</li>
           <li>GenZ-focused UX design</li>
         </ul>
-      </a>
+      </div>
 
       <!-- 9 — SECRET -->
       <div class="project-card secret-card">
@@ -2511,26 +2520,23 @@
           <a href="https://github.com/cyberhatc" target="_blank" class="social-link">
             <span>[</span> GitHub <span>]</span>
           </a>
-          <a href="https://linkedin.com/" target="_blank" class="social-link">
-            <span>[</span> LinkedIn <span>]</span>
-          </a>
           <a href="mailto:userattest00011@gmail.com" class="social-link">
             <span>[</span> Email <span>]</span>
           </a>
         </div>
       </div>
-      <form class="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form" id="contactForm">
         <div class="form-group">
           <label>Name</label>
-          <input type="text" placeholder="your_handle" required>
+          <input type="text" name="name" id="contactName" placeholder="your_handle" required>
         </div>
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="you@domain.dev" required>
+          <input type="email" name="email" id="contactEmail" placeholder="you@domain.dev" required>
         </div>
         <div class="form-group">
           <label>Message</label>
-          <textarea placeholder="Tell me about your project..."></textarea>
+          <textarea name="message" id="contactMessage" placeholder="Tell me about your project..." required></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="align-self:start;">[ Transmit Message ]</button>
       </form>
@@ -2539,7 +2545,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>&copy; 2026 <span class="green">CyberHATC</span> // Built with <span class="heart">&hearts;</span> by <span class="green">Devil Mike</span></p>
+    <p>&copy; 2026 <span style="color:var(--neon-green)">CYBER</span><span style="color:var(--text-dim)">HATC</span> // Built with <span class="heart">&hearts;</span> by <span class="green">devil_Mike</span></p>
     <p style="margin-top:0.5rem;">Crafted from scratch. No frameworks. No templates. Pure code.</p>
   </footer>
 
@@ -2550,46 +2556,6 @@
       glow.style.left = e.clientX + 'px';
       glow.style.top = e.clientY + 'px';
     });
-
-    /* ========== CURSOR TORCH ========== */
-    const torch = document.getElementById('cursorTorch');
-    document.addEventListener('mousemove', (e) => {
-      torch.style.setProperty('--tx', e.clientX + 'px');
-      torch.style.setProperty('--ty', e.clientY + 'px');
-    });
-
-    /* ========== MATRIX RAIN BACKGROUND ========== */
-    (function initMatrixRain() {
-      const canvas = document.createElement('canvas');
-      canvas.className = 'matrix-rain';
-      document.body.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      const chars = '01アイウエオカキクケコサシスセソABCDEF$#*<>';
-      let w, h, fontSize = 16, cols = 0, drops = [];
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-        cols = Math.floor(w / fontSize);
-        drops = Array(cols).fill(0).map(() => Math.floor(Math.random() * -60));
-      }
-      function draw() {
-        ctx.fillStyle = 'rgba(10,10,15,0.06)';
-        ctx.fillRect(0, 0, w, h);
-        ctx.font = fontSize + 'px monospace';
-        for (let i = 0; i < cols; i++) {
-          const ch = chars[(Math.random() * chars.length) | 0];
-          ctx.fillStyle = Math.random() > 0.975 ? '#00e5ff' : '#00ff88';
-          ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
-          if (drops[i] * fontSize > h && Math.random() > 0.975) {
-            drops[i] = Math.floor(Math.random() * -20);
-          }
-          drops[i]++;
-        }
-      }
-      resize();
-      window.addEventListener('resize', resize);
-      setInterval(draw, 50);
-    })();
 
     /* ========== NAVBAR SCROLL ========== */
     window.addEventListener('scroll', () => {
@@ -2620,16 +2586,24 @@
     const commands = {
       help: `<span class="green">Available commands:</span>
   <span class="cyan">help</span>       — Show this message
-  <span class="cyan">about</span>      — Who is Devil Mike?
+  <span class="cyan">about</span>      — Who is devil_Mike?
   <span class="cyan">skills</span>     — Tech arsenal
   <span class="cyan">projects</span>   — Featured builds
   <span class="cyan">contact</span>    — How to reach me
   <span class="cyan">clear</span>      — Clear terminal
   <span class="cyan">sudo</span>       — Nice try ;)
   <span class="cyan">whoami</span>     — Identity check
-  <span class="cyan">neofetch</span>   — System info`,
+  <span class="cyan">neofetch</span>   — System info
+  <span class="cyan">devilmike</span>  — About me`,
 
-      about: `<span class="green">// About Devil Mike</span>
+      devilmike: `<span class="green">// Allow me to introduce myself</span>
+I am <span class="cyan">devil_Mike</span>, founder of <span class="violet">Zenvrox</span> and
++2 other startups. Currently pursuing
+engineering as a <span class="pink">robotics student</span>,
+an <span class="yellow">unethical hacker</span>,
+<span class="green">and a lot more yet to explore. 8550</span>`,
+
+      about: `<span class="green">// About devil_Mike</span>
 Full-Stack & Mobile App Developer.
 Started coding at <span class="yellow">age 14</span>.
 <span class="pink">5-time</span> hackathon runner-up.
@@ -2651,12 +2625,11 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="cyan">05</span> Satellite Tracking System  <span class="dim">— Orbit physics tracker</span>
 <span class="cyan">06</span> Personal Assistant AI      <span class="dim">— AI workflow bot</span>
 <span class="pink">07</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>
-<span class="cyan">08</span> StressFree App             <span class="dim">— GenZ mental health</span> <span class="green">(Co-Founder)</span>
+<span class="cyan">08</span> StressFree App             <span class="dim">— GenZ mental health</span>
 <span class="pink">09</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>`,
 
       contact: `<span class="green">// Reach Out</span>
 <span class="cyan">GitHub:</span>   github.com/cyberhatc
-<span class="cyan">LinkedIn:</span> linkedin.com/in/devilmike
 <span class="cyan">Email:</span>    userattest00011@gmail.com
 <span class="dim">Or scroll down and use the form below.</span>`,
 
@@ -2665,26 +2638,20 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       sudo: `<span class="pink">[!] ACCESS DENIED</span>
 <span class="dim">Nice try, script kiddie. This root requires 5x hackathon wins.</span>`,
 
-      whoami: `<span class="green">devilmike</span> (uid=1337)
-<span class="dim">Full-Stack Dev | Mobile Architect | CyberNerd</span>
+      whoami: `<span class="green">devil_Mike</span> (uid=1337)
+<span class="dim">Full-Stack Dev | Mobile Architect | CyberHATC</span>
 <span class="violet">Groups:</span> hackers, builders, dreamers`,
 
-      neofetch: `<pre class="ascii-logo">
-█████ █████ █   █ █████ █      █   █ █████ █  █  █████
-█   █ █     █   █   █   █      ██ ██   █   █ █   █    
-█   █ █████ █   █   █   █      █ █ █   █   ██    █████
-█   █ █      █ █    █   █      █   █   █   █ █   █    
-█████ █████   █   █████ █████  █   █ █████ █  █  █████
-</pre><span class="dim">
-<span class="cyan">cyberhatc@devilmike</span>
-<span class="dim">---------------</span>
-<span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
-<span class="cyan">Host:</span> Devil Mike Workstation
-<span class="cyan">Kernel:</span> 6.8.0-cyber
-<span class="cyan">Uptime:</span> since age <span class="pink">14</span>
-<span class="cyan">Shell:</span> /bin/zsh 5.9
-<span class="cyan">CPU:</span> DevilMike @ 5.1GHz
-<span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>`,
+      neofetch: `<span class="dim">
+       _               <span class="cyan">cyberhatc@devil_Mike</span>
+      | |              <span class="dim">---------------</span>
+  ___ | |___           <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+ / _ \\| / __|          <span class="cyan">Host:</span> devil_Mike Workstation
+|  __/| \\__ \\          <span class="cyan">Kernel:</span> 6.8.0-cyber
+ \\___||_|___/          <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+                       <span class="cyan">Shell:</span> /bin/zsh 5.9
+                       <span class="cyan">CPU:</span> devil_Mike @ 5.1GHz
+                       <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>`,
 
       htop: `<span class="dim">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+ Command</span>
 <span class="dim">    1</span> <span class="cyan">root</span>        20   0  168M  12M   8M  S  0.0  0.1   0:04 /sbin/init
@@ -2695,7 +2662,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="dim"> 6666</span> <span class="green">cyberhatc</span>   20   0  512M 192M  96M  S <span class="yellow">33.9</span>  7.1   1:48 unity editor
 <span class="dim"> 8080</span> <span class="green">cyberhatc</span>   20   0  256M 128M  64M  S <span class="yellow">55.2</span> 11.3   2:33 dart compile`,
 
-      'uname -a': `<span class="cyan">HackOS</span> devilmike 6.8.0-cyber #1 SMP x86_64 GNU/Linux
+      'uname -a': `<span class="cyan">HackOS</span> devil_Mike 6.8.0-cyber #1 SMP x86_64 GNU/Linux
 <span class="dim">CyberHATC kernel compiled with: --enable-hack-mode --disable-sleep</span>`,
     };
 
@@ -2730,7 +2697,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       const inputLineEl = document.getElementById('inputLine');
       const output = document.createElement('div');
       output.className = 'terminal-output';
-      output.innerHTML = `<span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ ${escapeHtml(cmd)}`;
+      output.innerHTML = `<span class="green">cyberhatc@devil_Mike</span>:<span class="cyan">~</span>$ ${escapeHtml(cmd)}`;
 
       if (cmd === 'clear') {
         terminalBody.innerHTML = '';
@@ -2768,7 +2735,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       line.className = 'terminal-input-line';
       line.id = 'inputLine';
       line.innerHTML = `
-        <span class="terminal-prompt"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$</span>
+        <span class="terminal-prompt"><span class="green">cyberhatc@devil_Mike</span>:<span class="cyan">~</span>$</span>
         <input type="text" class="terminal-input" id="terminalInput" autofocus spellcheck="false" autocomplete="off">
       `;
       return line;
@@ -2778,18 +2745,42 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('button');
-      btn.textContent = '[ TRANSMITTED ✓ ]';
-      btn.style.borderColor = 'var(--neon-green)';
-      btn.style.background = 'var(--neon-green)';
-      btn.style.color = 'var(--bg-primary)';
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const message = document.getElementById('contactMessage').value;
+
+      const to = 'userattest00011@gmail.com';
+      const subject = encodeURIComponent('Portfolio Contact from ' + name);
+      const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n\n' +
+        'Message:\n' + message
+      );
+
+      const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + to + '&su=' + subject + '&body=' + body;
+
+      btn.textContent = '[ OPENING GMAIL... ]';
+      btn.disabled = true;
+
+      window.open(gmailUrl, '_blank');
+
       setTimeout(() => {
-        btn.textContent = '[ Transmit Message ]';
-        btn.style.borderColor = '';
-        btn.style.background = '';
-        btn.style.color = '';
+        btn.textContent = '[ TRANSMITTED ✓ ]';
+        btn.style.borderColor = 'var(--neon-green)';
+        btn.style.background = 'var(--neon-green)';
+        btn.style.color = 'var(--bg-primary)';
         e.target.reset();
-      }, 3000);
+        setTimeout(() => {
+          btn.textContent = '[ Transmit Message ]';
+          btn.style.borderColor = '';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 3000);
+      }, 1000);
     }
+
+    document.getElementById('contactForm').addEventListener('submit', handleSubmit);
 
     /* ========== FLOATING PARTICLES ========== */
     (function initParticles() {
@@ -2918,13 +2909,13 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
         { text: '<span class="dim">[    0.000000]</span> Linux version 6.8.0-cyber (gcc 13.2.0)', delay: 0 },
         { text: '<span class="dim">[    0.004123]</span> Command line: BOOT_IMAGE=/vmlinuz', delay: 80 },
         { text: '<span class="green">[    0.123456]</span> CYBERHATC BIOS v2.0 initializing...', delay: 160 },
-        { text: '<span class="cyan">[    0.341220]</span> CPU: DevilMike Engine @ 5.1GHz', delay: 240 },
+        { text: '<span class="cyan">[    0.341220]</span> CPU: devil_Mike Engine @ 5.1GHz', delay: 240 },
         { text: '<span class="yellow">[    0.512000]</span> Memory: <span class="green">5x hackathon</span> modules loaded', delay: 340 },
         { text: '<span class="green">[    0.889102]</span> Mounting rootfs... <span class="green">OK</span>', delay: 440 },
         { text: '<span class="cyan">[    1.103445]</span> Starting systemd... <span class="green">OK</span>', delay: 560 },
         { text: '<span class="green">[    1.350012]</span> NetworkManager: <span class="green">connected</span>', delay: 680 },
         { text: '<span class="violet">[    1.602334]</span> Loading CyberHATC modules... <span class="green">OK</span>', delay: 800 },
-        { text: '<span class="pink">[    1.900000]</span> <span class="green">cyberhatc@devilmike</span> login: ****', delay: 950 },
+        { text: '<span class="pink">[    1.900000]</span> <span class="green">cyberhatc@devil_Mike</span> login: ****', delay: 950 },
         { text: '<span class="green">[    2.000000]</span> Welcome to <span class="cyan">HackOS 6.8.0-cyber</span>', delay: 1100 },
         { text: '<span class="dim">               Last login: Sat Aug  1 12:00:00 2026</span>', delay: 1200 },
       ];
@@ -3137,6 +3128,13 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       }, 3000);
     })();
 
+    /* ========== CURSOR TORCH ========== */
+    const torch = document.getElementById('cursorTorch');
+    document.addEventListener('mousemove', (e) => {
+      torch.style.setProperty('--tx', e.clientX + 'px');
+      torch.style.setProperty('--ty', e.clientY + 'px');
+    });
+
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
     const lightningBorder = document.createElement('div');
     lightningBorder.className = 'lightning-border';
@@ -3149,15 +3147,45 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
     });
 
     const classifiedLogo = document.createElement('img');
-    classifiedLogo.src = 'logodevilmike.jpeg';
-    classifiedLogo.alt = 'Devil Mike';
+    classifiedLogo.src = 'logodevil_Mike.jpeg';
+    classifiedLogo.alt = 'devil_Mike';
     classifiedLogo.className = 'classified-logo';
     document.body.appendChild(classifiedLogo);
 
-    let classifiedTimeout = null;
+    let idleTimer = null;
+    let isActive = false;
+
+    function resetIdleTimer() {
+      if (isActive) return;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(triggerIdleBlink, 5000);
+    }
+
+    function triggerIdleBlink() {
+      isActive = true;
+      clearTimeout(idleTimer);
+      lightningBorder.classList.remove('active');
+      classifiedLogo.classList.remove('show');
+      document.body.classList.remove('shock-shake');
+      void lightningBorder.offsetWidth;
+
+      lightningBorder.classList.add('active');
+
+      setTimeout(() => {
+        lightningBorder.classList.remove('active');
+        isActive = false;
+        resetIdleTimer();
+      }, 5000);
+    }
+
+    document.addEventListener('mousemove', resetIdleTimer);
+    document.addEventListener('keydown', resetIdleTimer);
+    document.addEventListener('click', resetIdleTimer);
+    resetIdleTimer();
 
     function triggerClassified() {
-      clearTimeout(classifiedTimeout);
+      isActive = true;
+      clearTimeout(idleTimer);
       document.body.classList.remove('shock-shake');
       lightningBorder.classList.remove('active');
       classifiedLogo.classList.remove('show');
@@ -3168,11 +3196,13 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       lightningBorder.classList.add('active');
       classifiedLogo.classList.add('show');
 
-      classifiedTimeout = setTimeout(() => {
+      setTimeout(() => {
         document.body.classList.remove('shock-shake');
         lightningBorder.classList.remove('active');
         classifiedLogo.classList.remove('show');
-      }, 3000);
+        isActive = false;
+        resetIdleTimer();
+      }, 5000);
     }
 
     document.querySelectorAll('.secret-card').forEach(card => {
