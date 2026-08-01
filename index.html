@@ -1701,47 +1701,32 @@
     }
 
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
-    body.tv-frozen { overflow: hidden; }
-
-    body.tv-frozen *:not(.lightning-border):not(.tv-static):not(.tv-roll):not(.classified-logo) {
-      animation-play-state: paused !important;
+    body.shock-shake {
+      animation: shockShake 0.5s linear;
     }
 
-    .tv-static {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 100001;
-      pointer-events: none;
-      image-rendering: pixelated;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .tv-static.active { opacity: 1; }
-
-    .tv-roll {
-      position: fixed;
-      top: -90px;
-      left: 0;
-      width: 100%;
-      height: 90px;
-      z-index: 100001;
-      pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.22));
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .tv-roll.active {
-      opacity: 1;
-      animation: tvRoll 0.45s linear infinite;
-    }
-
-    @keyframes tvRoll {
-      to { transform: translateY(calc(100vh + 180px)); }
+    @keyframes shockShake {
+      0%   { transform: translate(0, 0); }
+      5%   { transform: translate(-6px, 4px); }
+      10%  { transform: translate(6px, -4px); }
+      15%  { transform: translate(-7px, 3px); }
+      20%  { transform: translate(7px, -3px); }
+      25%  { transform: translate(-8px, 4px); }
+      30%  { transform: translate(8px, -4px); }
+      35%  { transform: translate(-7px, 3px); }
+      40%  { transform: translate(7px, -3px); }
+      45%  { transform: translate(-8px, 4px); }
+      50%  { transform: translate(8px, -4px); }
+      55%  { transform: translate(-7px, 3px); }
+      60%  { transform: translate(7px, -3px); }
+      65%  { transform: translate(-8px, 4px); }
+      70%  { transform: translate(8px, -4px); }
+      75%  { transform: translate(-7px, 3px); }
+      80%  { transform: translate(6px, -3px); }
+      85%  { transform: translate(-4px, 2px); }
+      90%  { transform: translate(3px, -2px); }
+      95%  { transform: translate(-2px, 1px); }
+      100% { transform: translate(0, 0); }
     }
 
     .lightning-border {
@@ -1749,34 +1734,63 @@
       inset: 0;
       z-index: 100002;
       pointer-events: none;
-      border: 3px solid transparent;
-      box-shadow: inset 0 0 60px rgba(0, 229, 255, 0.25), 0 0 30px rgba(0, 229, 255, 0.4);
       opacity: 0;
     }
 
     .lightning-border.active {
       opacity: 1;
-      animation: borderLightning 2.4s linear;
+      animation: borderGlow 2s linear;
     }
 
-    @keyframes borderLightning {
-      0%   { border-color: transparent; }
-      3%   { border-color: #ffffff; box-shadow: inset 0 0 80px rgba(0,229,255,0.5), 0 0 40px rgba(0,229,255,0.8); }
-      6%   { border-color: #00e5ff; }
-      9%   { border-color: transparent; }
-      14%  { border-color: #ffffff; }
-      17%  { border-color: #b347ff; }
-      22%  { border-color: #00e5ff; }
-      26%  { border-color: transparent; }
-      33%  { border-color: #ffffff; }
-      38%  { border-color: #00e5ff; }
-      45%  { border-color: transparent; }
-      55%  { border-color: #00ff88; }
-      62%  { border-color: #ffffff; }
-      70%  { border-color: transparent; }
-      82%  { border-color: #00e5ff; }
-      90%  { border-color: transparent; }
-      100% { border-color: transparent; }
+    @keyframes borderGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+      10% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.3); }
+      25% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
+      40% { box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 255, 0, 0.4); }
+      55% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 50px rgba(255, 255, 255, 0.4); }
+      70% { box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), 0 0 80px rgba(255, 255, 255, 0.5); }
+      85% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+    }
+
+    .border-line {
+      position: absolute;
+      pointer-events: none;
+      background: linear-gradient(90deg, #ff0000, #00ff00, #000000, #ffffff, #00ff00, #ff0000);
+      background-size: 300% 100%;
+      animation: borderFlow 0.3s linear infinite, borderFlicker 0.18s linear infinite;
+    }
+
+    .border-line.top { top: 0; left: 0; width: 100%; height: 4px; }
+    .border-line.bottom { bottom: 0; left: 0; width: 100%; height: 4px; }
+    .border-line.left {
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(180deg, #ff0000, #00ff00, #000000, #ffffff, #00ff00, #ff0000);
+      background-size: 100% 300%;
+      animation: borderFlowV 0.3s linear infinite, borderFlicker 0.18s linear infinite;
+    }
+    .border-line.right {
+      top: 0; right: 0; width: 4px; height: 100%;
+      background: linear-gradient(180deg, #ff0000, #00ff00, #000000, #ffffff, #00ff00, #ff0000);
+      background-size: 100% 300%;
+      animation: borderFlowV 0.3s linear infinite, borderFlicker 0.18s linear infinite;
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    @keyframes borderFlowV {
+      0% { background-position: 50% 0%; }
+      100% { background-position: 50% 300%; }
+    }
+
+    @keyframes borderFlicker {
+      0%, 100% { opacity: 1; }
+      20% { opacity: 0.2; }
+      40% { opacity: 0.9; }
+      60% { opacity: 0.1; }
+      80% { opacity: 0.7; }
     }
 
     .classified-logo {
@@ -1790,14 +1804,17 @@
       z-index: 100003;
       pointer-events: none;
       opacity: 0;
-      transform: scale(0.25);
-      filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.6));
-      transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
     }
 
     .classified-logo.show {
-      opacity: 0.5;
-      transform: scale(1);
+      animation: logoBlurFlash 0.3s ease-out 0.25s forwards;
+    }
+
+    @keyframes logoBlurFlash {
+      0%   { opacity: 0; filter: blur(50px); }
+      25%  { opacity: 0.75; filter: blur(30px); }
+      60%  { opacity: 0.6; filter: blur(22px); }
+      100% { opacity: 0; filter: blur(12px); }
     }
 
     .secret-card,
@@ -3024,19 +3041,15 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
     })();
 
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
-    const tvStatic = document.createElement('canvas');
-    tvStatic.className = 'tv-static';
-    tvStatic.width = 192;
-    tvStatic.height = 108;
-    document.body.appendChild(tvStatic);
-
-    const tvRoll = document.createElement('div');
-    tvRoll.className = 'tv-roll';
-    document.body.appendChild(tvRoll);
-
     const lightningBorder = document.createElement('div');
     lightningBorder.className = 'lightning-border';
     document.body.appendChild(lightningBorder);
+
+    ['top', 'right', 'bottom', 'left'].forEach(pos => {
+      const line = document.createElement('div');
+      line.className = 'border-line ' + pos;
+      lightningBorder.appendChild(line);
+    });
 
     const classifiedLogo = document.createElement('img');
     classifiedLogo.src = 'logodevilmike.jpeg';
@@ -3044,61 +3057,25 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
     classifiedLogo.className = 'classified-logo';
     document.body.appendChild(classifiedLogo);
 
-    const staticCtx = tvStatic.getContext('2d');
-    let staticRaf = null;
     let classifiedTimeout = null;
-
-    function drawStatic() {
-      const w = tvStatic.width;
-      const h = tvStatic.height;
-      const img = staticCtx.createImageData(w, h);
-      const d = img.data;
-      for (let i = 0; i < d.length; i += 4) {
-        const v = (Math.random() * 255) | 0;
-        d[i] = v;
-        d[i + 1] = v;
-        d[i + 2] = v;
-        d[i + 3] = 255;
-      }
-      staticCtx.putImageData(img, 0, 0);
-    }
-
-    function startStatic() {
-      tvStatic.classList.add('active');
-      tvRoll.classList.add('active');
-      (function loop() {
-        drawStatic();
-        staticRaf = requestAnimationFrame(loop);
-      })();
-    }
-
-    function stopStatic() {
-      cancelAnimationFrame(staticRaf);
-      staticRaf = null;
-      tvStatic.classList.remove('active');
-      tvRoll.classList.remove('active');
-    }
 
     function triggerClassified() {
       clearTimeout(classifiedTimeout);
-      stopStatic();
-      document.body.classList.remove('tv-frozen');
+      document.body.classList.remove('shock-shake');
       lightningBorder.classList.remove('active');
       classifiedLogo.classList.remove('show');
       void document.body.offsetWidth;
       void lightningBorder.offsetWidth;
 
-      document.body.classList.add('tv-frozen');
+      document.body.classList.add('shock-shake');
       lightningBorder.classList.add('active');
       classifiedLogo.classList.add('show');
-      startStatic();
 
       classifiedTimeout = setTimeout(() => {
-        stopStatic();
-        document.body.classList.remove('tv-frozen');
+        document.body.classList.remove('shock-shake');
         lightningBorder.classList.remove('active');
         classifiedLogo.classList.remove('show');
-      }, 3000);
+      }, 2000);
     }
 
     document.querySelectorAll('.secret-card').forEach(card => {
