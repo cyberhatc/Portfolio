@@ -817,12 +817,343 @@
       pointer-events: none;
       z-index: 9998;
     }
+
+    /* ========== SECRET PROJECT CARD ========== */
+    .secret-card {
+      position: relative;
+      overflow: hidden;
+      border-color: var(--neon-violet) !important;
+    }
+
+    .secret-card .secret-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(3px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .secret-card:hover .secret-overlay { opacity: 1; }
+
+    .secret-lock {
+      color: var(--neon-violet);
+      animation: lockPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes lockPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(179,71,255,0.4)); }
+      50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(179,71,255,0.8)); }
+    }
+
+    .secret-label {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--neon-violet);
+      letter-spacing: 4px;
+      text-shadow: 0 0 15px rgba(179,71,255,0.6);
+    }
+
+    .secret-sublabel {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+    }
+
+    .project-status.classified {
+      color: var(--neon-violet);
+    }
+
+    .project-status.classified::before {
+      background: var(--neon-violet);
+    }
+
+    /* ========== FLOATING PARTICLES ========== */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--neon-green);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0% { opacity: 0; transform: translateY(100vh) scale(0); }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+    }
+
+    /* ========== GLITCH TEXT EFFECT ========== */
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-text::before {
+      color: var(--neon-cyan);
+      animation: glitchLayer1 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      z-index: -1;
+    }
+
+    .glitch-text::after {
+      color: var(--neon-pink);
+      animation: glitchLayer2 2s infinite linear alternate-reverse;
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+      z-index: -1;
+    }
+
+    @keyframes glitchLayer1 {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 2px); }
+      40% { transform: translate(3px, -1px); }
+      60% { transform: translate(-1px, -3px); }
+      80% { transform: translate(2px, 3px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glitchLayer2 {
+      0% { transform: translate(0); }
+      20% { transform: translate(3px, -2px); }
+      40% { transform: translate(-3px, 1px); }
+      60% { transform: translate(1px, 3px); }
+      80% { transform: translate(-2px, -3px); }
+      100% { transform: translate(0); }
+    }
+
+    /* ========== HOVER SPARK TRAIL ========== */
+    .spark-trail {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      animation: sparkFade 0.6s forwards;
+    }
+
+    @keyframes sparkFade {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0) translateY(-20px); }
+    }
+
+    /* ========== CARD TILT EFFECT ========== */
+    .project-card {
+      transform-style: preserve-3d;
+      perspective: 800px;
+    }
+
+    /* ========== TEXT SCRAMBLE ========== */
+    .scramble {
+      display: inline-block;
+      min-width: 2ch;
+    }
+
+    /* ========== LINE DRAW ANIMATION ========== */
+    .line-draw {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: drawLine 1.5s ease forwards;
+    }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ========== NEON BORDER GLOW ========== */
+    .neon-border {
+      position: relative;
+    }
+
+    .neon-border::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan), var(--neon-violet), var(--neon-green));
+      background-size: 300% 300%;
+      z-index: -1;
+      animation: borderGlow 4s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .neon-border:hover::before { opacity: 1; }
+
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== SECTION DIVIDER ========== */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+      margin: 0 auto;
+      opacity: 0.3;
+    }
+
+    /* ========== STAT COUNTER ANIMATION ========== */
+    .stat-number.counting {
+      transition: all 0.05s;
+    }
+
+    /* ========== RIPPLE ON CLICK ========== */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0,255,136,0.15);
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* ========== HERO NAME GLOW PULSE ========== */
+    .hero-name .highlight {
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { filter: drop-shadow(0 0 5px rgba(0,255,136,0.3)); }
+      50% { filter: drop-shadow(0 0 25px rgba(0,255,136,0.6)); }
+    }
+
+    /* ========== NAV LOGO FLICKER ========== */
+    @keyframes navFlicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.4; }
+    }
+
+    .nav-logo:hover {
+      animation: navFlicker 1.5s linear;
+    }
+
+    /* ========== PROGRESS BAR SCROLL ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+      z-index: 10001;
+      transition: width 0.1s;
+      box-shadow: 0 0 10px rgba(0,255,136,0.5);
+    }
+
+    /* ========== TERMINAL BOOT TEXT ========== */
+    .boot-line {
+      opacity: 0;
+      animation: bootFade 0.3s forwards;
+    }
+
+    @keyframes bootFade {
+      to { opacity: 1; }
+    }
+
+    /* ========== STAGGER CHILDREN ========== */
+    .stagger-children > * {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: staggerIn 0.4s forwards;
+    }
+
+    .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+    .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+    .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+    .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+    .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+    .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+    .stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+    .stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+    .stagger-children > *:nth-child(9) { animation-delay: 0.9s; }
+
+    @keyframes staggerIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== CARD HOVER RIPPLE ========== */
+    .project-card { position: relative; overflow: hidden; }
+
+    /* ========== SMOOTH SCROLL REVEAL ========== */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .reveal-left.visible,
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ========== CYBER HEX PATTERN ========== */
+    .hex-pattern {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle at center, rgba(179,71,255,0.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      animation: hexDrift 20s linear infinite;
+    }
+
+    @keyframes hexDrift {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
   </style>
 </head>
 <body>
   <div class="grid-bg"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="scanline"></div>
+  <div class="particles" id="particles"></div>
+  <div class="hex-pattern"></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
@@ -842,7 +1173,7 @@
   <section class="hero" id="hero">
     <div class="hero-glitch-line">system.init --mode=hacker</div>
     <h1 class="hero-name">
-      <span class="highlight">Devil</span> Mike
+      <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
     </h1>
     <p class="hero-tagline">Full-Stack Dev // Mobile Architect // CyberNerd</p>
     <p class="hero-desc">
@@ -858,6 +1189,8 @@
       <div class="arrow"></div>
     </div>
   </section>
+
+  <div class="section-divider"></div>
 
   <!-- TERMINAL -->
   <section class="terminal-section fade-section" id="terminal">
@@ -890,6 +1223,8 @@
       </div>
     </div>
   </section>
+
+  <div class="section-divider"></div>
 
   <!-- ABOUT -->
   <section class="fade-section" id="about">
@@ -952,6 +1287,8 @@
     </div>
   </section>
 
+  <div class="section-divider"></div>
+
   <!-- PROJECTS -->
   <section class="fade-section" id="projects">
     <div class="section-label">// featured_builds</div>
@@ -980,24 +1317,28 @@
         </ul>
       </div>
 
-      <!-- 2 -->
-      <div class="project-card">
+      <!-- 2 — SECRET -->
+      <div class="project-card secret-card">
+        <div class="secret-overlay">
+          <div class="secret-lock">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="secret-label">CLASSIFIED</div>
+          <div class="secret-sublabel">[ ACCESS RESTRICTED ]</div>
+        </div>
         <div class="project-header">
           <span class="project-number">02</span>
-          <span class="project-status">LIVE</span>
+          <span class="project-status classified">CLASSIFIED</span>
         </div>
-        <h3 class="project-title">Startup Mind Heaven</h3>
-        <p class="project-desc">Innovation platform & mindset/execution tool for founders and builders. Turn raw ideas into validated startup concepts with structured frameworks.</p>
+        <h3 class="project-title">████████████</h3>
+        <p class="project-desc" style="filter:blur(6px);user-select:none;">Classified project details are currently locked. Authorization required for full access.</p>
         <div class="project-tags">
-          <span class="project-tag">Flutter</span>
-          <span class="project-tag">Firebase</span>
-          <span class="project-tag">AI</span>
+          <span class="project-tag">[LOCKED]</span>
+          <span class="project-tag">[RESTRICTED]</span>
         </div>
-        <ul class="project-features">
-          <li>Startup idea validation engine</li>
-          <li>Founder mindset coaching</li>
-          <li>Execution roadmap generator</li>
-        </ul>
       </div>
 
       <!-- 3 -->
@@ -1080,24 +1421,28 @@
         </ul>
       </div>
 
-      <!-- 7 -->
-      <div class="project-card">
+      <!-- 7 — SECRET -->
+      <div class="project-card secret-card">
+        <div class="secret-overlay">
+          <div class="secret-lock">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="secret-label">CLASSIFIED</div>
+          <div class="secret-sublabel">[ ACCESS RESTRICTED ]</div>
+        </div>
         <div class="project-header">
           <span class="project-number">07</span>
-          <span class="project-status">LIVE</span>
+          <span class="project-status classified">CLASSIFIED</span>
         </div>
-        <h3 class="project-title">Virtual Chemistry Laboratory</h3>
-        <p class="project-desc">Multi-platform pre-lab 3D testing app. Frontend/UI in Flutter, chemical logic/math via FastAPI, 3D assets rendered from Blender.</p>
+        <h3 class="project-title">████████████</h3>
+        <p class="project-desc" style="filter:blur(6px);user-select:none;">Classified project details are currently locked. Authorization required for full access.</p>
         <div class="project-tags">
-          <span class="project-tag">Flutter</span>
-          <span class="project-tag">FastAPI</span>
-          <span class="project-tag">Blender 3D</span>
+          <span class="project-tag">[LOCKED]</span>
+          <span class="project-tag">[RESTRICTED]</span>
         </div>
-        <ul class="project-features">
-          <li>3D molecular simulations</li>
-          <li>Real chemical math backend</li>
-          <li>Pre-lab practice platform</li>
-        </ul>
       </div>
 
       <!-- 8 -->
@@ -1120,28 +1465,34 @@
         </ul>
       </div>
 
-      <!-- 9 -->
-      <div class="project-card">
+      <!-- 9 — SECRET -->
+      <div class="project-card secret-card">
+        <div class="secret-overlay">
+          <div class="secret-lock">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="secret-label">CLASSIFIED</div>
+          <div class="secret-sublabel">[ ACCESS RESTRICTED ]</div>
+        </div>
         <div class="project-header">
           <span class="project-number">09</span>
-          <span class="project-status">LIVE</span>
+          <span class="project-status classified">CLASSIFIED</span>
         </div>
-        <h3 class="project-title">VTU Learning Management System</h3>
-        <p class="project-desc">Comprehensive academic platform with integrated mini-LinkedIn, active chat groups, and admin control center. Built for VTU students.</p>
+        <h3 class="project-title">████████████</h3>
+        <p class="project-desc" style="filter:blur(6px);user-select:none;">Classified project details are currently locked. Authorization required for full access.</p>
         <div class="project-tags">
-          <span class="project-tag">Flutter</span>
-          <span class="project-tag">Firebase</span>
-          <span class="project-tag">FastAPI</span>
+          <span class="project-tag">[LOCKED]</span>
+          <span class="project-tag">[RESTRICTED]</span>
         </div>
-        <ul class="project-features">
-          <li>Mini-LinkedIn social feed</li>
-          <li>Real-time chat groups</li>
-          <li>Admin dashboard & controls</li>
-        </ul>
       </div>
 
     </div>
   </section>
+
+  <div class="section-divider"></div>
 
   <!-- CONTACT -->
   <section class="fade-section" id="contact">
@@ -1154,13 +1505,13 @@
           Whether you need a full-stack developer, a mobile architect, or someone who thinks in algorithms — I'm your guy. Let's turn wild ideas into deployed products.
         </p>
         <div class="social-links">
-          <a href="https://github.com/" target="_blank" class="social-link">
+          <a href="https://github.com/cyberhatc" target="_blank" class="social-link">
             <span>[</span> GitHub <span>]</span>
           </a>
           <a href="https://linkedin.com/" target="_blank" class="social-link">
             <span>[</span> LinkedIn <span>]</span>
           </a>
-          <a href="mailto:dev@cyberhatch.dev" class="social-link">
+          <a href="mailto:userattest00011@gmail.com" class="social-link">
             <span>[</span> Email <span>]</span>
           </a>
         </div>
@@ -1251,19 +1602,19 @@ and algorithmic tools under the <span class="violet">CyberHatch</span> brand.`,
 
       projects: `<span class="green">// Featured Projects</span>
 <span class="cyan">01</span> How-Maths-Work-in-GPS     <span class="dim">— GPS math visualization</span>
-<span class="cyan">02</span> Startup Mind Heaven        <span class="dim">— Founder execution tool</span>
+<span class="pink">02</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>
 <span class="cyan">03</span> KiranaOS                   <span class="dim">— Indian retail OS</span>
 <span class="cyan">04</span> RouteOptimizer             <span class="dim">— Algorithmic routing</span>
 <span class="cyan">05</span> Satellite Tracking System  <span class="dim">— Orbit physics tracker</span>
 <span class="cyan">06</span> Personal Assistant AI      <span class="dim">— AI workflow bot</span>
-<span class="cyan">07</span> Virtual Chemistry Lab      <span class="dim">— 3D pre-lab platform</span>
+<span class="pink">07</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>
 <span class="cyan">08</span> StressFree App             <span class="dim">— GenZ mental health</span>
-<span class="cyan">09</span> VTU LMS                    <span class="dim">— Academic platform</span>`,
+<span class="pink">09</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>`,
 
       contact: `<span class="green">// Reach Out</span>
-<span class="cyan">GitHub:</span>   github.com/devilmike
+<span class="cyan">GitHub:</span>   github.com/cyberhatc
 <span class="cyan">LinkedIn:</span> linkedin.com/in/devilmike
-<span class="cyan">Email:</span>    dev@cyberhatch.dev
+<span class="cyan">Email:</span>    userattest00011@gmail.com
 <span class="dim">Or scroll down and use the form below.</span>`,
 
       clear: '__CLEAR__',
@@ -1376,6 +1727,123 @@ and algorithmic tools under the <span class="violet">CyberHatch</span> brand.`,
         e.target.reset();
       }, 3000);
     }
+
+    /* ========== FLOATING PARTICLES ========== */
+    (function initParticles() {
+      const container = document.getElementById('particles');
+      const count = 30;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const colors = ['var(--neon-green)', 'var(--neon-cyan)', 'var(--neon-violet)'];
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 12) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
+        container.appendChild(p);
+      }
+    })();
+
+    /* ========== SCROLL PROGRESS BAR ========== */
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('scrollProgress').style.width = progress + '%';
+    });
+
+    /* ========== CARD TILT ON MOUSE MOVE ========== */
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+      });
+    });
+
+    /* ========== SPARK TRAIL ON BUTTONS ========== */
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.7) {
+          const spark = document.createElement('div');
+          spark.className = 'spark-trail';
+          spark.style.left = e.clientX + 'px';
+          spark.style.top = e.clientY + 'px';
+          spark.style.background = Math.random() > 0.5 ? 'var(--neon-green)' : 'var(--neon-cyan)';
+          document.body.appendChild(spark);
+          setTimeout(() => spark.remove(), 600);
+        }
+      });
+    });
+
+    /* ========== RIPPLE ON CLICK ========== */
+    document.querySelectorAll('.btn, .stat-card, .social-link').forEach(el => {
+      el.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    /* ========== REVEAL LEFT/RIGHT ON SCROLL ========== */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.about-text').forEach(el => {
+      el.classList.add('reveal-left');
+      revealObserver.observe(el);
+    });
+    document.querySelectorAll('.stats-grid').forEach(el => {
+      el.classList.add('reveal-right');
+      revealObserver.observe(el);
+    });
+    document.querySelectorAll('.contact-text').forEach(el => {
+      el.classList.add('reveal-left');
+      revealObserver.observe(el);
+    });
+    document.querySelectorAll('.contact-form').forEach(el => {
+      el.classList.add('reveal-right');
+      revealObserver.observe(el);
+    });
+
+    /* ========== STAGGER PROJECT CARDS ON SCROLL ========== */
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('stagger-children');
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.projects-grid').forEach(el => staggerObserver.observe(el));
+
+    /* ========== NAV LINK HOVER SOUND EFFECT (visual pulse) ========== */
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        link.style.textShadow = '0 0 10px var(--neon-green)';
+      });
+      link.addEventListener('mouseleave', () => {
+        link.style.textShadow = 'none';
+      });
+    });
   </script>
 </body>
 </html>
