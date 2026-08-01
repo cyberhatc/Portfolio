@@ -776,8 +776,9 @@
     /* ========== CONTACT ========== */
     .contact-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 2fr;
       gap: 4rem;
+      max-width: none;
     }
 
     .contact-text h3 {
@@ -820,7 +821,7 @@
       transform: translateY(-2px);
     }
 
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; width:100%; max-width:700px; margin:0 auto; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; width:100%; }
 
     .form-group { position: relative; }
 
@@ -2536,7 +2537,7 @@
   <div class="section-divider"></div>
 
   <!-- CONTACT -->
-  <section class="fade-section" id="contact">
+  <section class="fade-section" id="contact" style="max-width:none;">
     <div class="section-label">// contact_me</div>
     <div class="section-title">Let's Talk</div>
     <div class="contact-grid" style="grid-template-columns:1fr 2fr;align-items:center;">
