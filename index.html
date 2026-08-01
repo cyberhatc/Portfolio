@@ -1702,7 +1702,7 @@
 
     /* ========== CLASSIFIED SHOCK EFFECT ========== */
     body.shock-shake {
-      animation: shockShake 0.5s linear;
+      animation: shockShake 1s linear;
     }
 
     @keyframes shockShake {
@@ -1739,17 +1739,19 @@
 
     .lightning-border.active {
       opacity: 1;
-      animation: borderGlow 2s linear;
+      animation: borderGlow 2.5s linear forwards;
     }
 
     @keyframes borderGlow {
-      0%, 100% { box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+      0%, 5% { opacity: 1; box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
       10% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.3); }
       25% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
       40% { box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 255, 0, 0.4); }
       55% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 50px rgba(255, 255, 255, 0.4); }
       70% { box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), 0 0 80px rgba(255, 255, 255, 0.5); }
-      85% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+      83% { opacity: 1; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+      92% { opacity: 0.4; box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); }
+      100% { opacity: 0; box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
     }
 
     .border-line {
@@ -1807,13 +1809,14 @@
     }
 
     .classified-logo.show {
-      animation: logoBlurFlash 0.3s ease-out 0.25s forwards;
+      animation: logoBlurFlash 1s ease-out 0.15s forwards;
     }
 
     @keyframes logoBlurFlash {
       0%   { opacity: 0; filter: blur(50px); }
-      25%  { opacity: 0.75; filter: blur(30px); }
-      60%  { opacity: 0.6; filter: blur(22px); }
+      20%  { opacity: 0.75; filter: blur(30px); }
+      50%  { opacity: 0.7; filter: blur(25px); }
+      80%  { opacity: 0.5; filter: blur(20px); }
       100% { opacity: 0; filter: blur(12px); }
     }
 
@@ -3075,7 +3078,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
         document.body.classList.remove('shock-shake');
         lightningBorder.classList.remove('active');
         classifiedLogo.classList.remove('show');
-      }, 2000);
+      }, 3000);
     }
 
     document.querySelectorAll('.secret-card').forEach(card => {
