@@ -234,63 +234,119 @@
       flex-wrap: wrap;
     }
 
-    .hero-chip {
-      position: relative;
-      width: 160px;
-      height: 160px;
-      flex-shrink: 0;
-      animation: fadeInUp 0.6s 0.6s forwards;
+    /* ========== FIXED RIGHT-SIDE PROCESSOR CHIP ========== */
+    .processor-chip-fixed {
+      position: fixed;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 220px;
+      height: 400px;
+      z-index: 995;
+      pointer-events: none;
       opacity: 0;
+      animation: chipFadeIn 1s 2.5s forwards;
     }
 
-    .hero-chip svg {
+    @keyframes chipFadeIn {
+      to { opacity: 1; }
+    }
+
+    .processor-chip-fixed svg {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 0 15px rgba(0,255,136,0.4));
-      animation: chipPulseGlow 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(0,255,136,0.3));
+      animation: chipGlobalGlow 4s ease-in-out infinite;
     }
 
-    @keyframes chipPulseGlow {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(0,255,136,0.3)); }
-      50% { filter: drop-shadow(0 0 25px rgba(0,255,136,0.7)) drop-shadow(0 0 50px rgba(0,229,255,0.3)); }
+    @keyframes chipGlobalGlow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(0,255,136,0.2)); }
+      50% { filter: drop-shadow(0 0 35px rgba(0,255,136,0.6)) drop-shadow(0 0 60px rgba(0,229,255,0.3)); }
     }
 
-    .hero-chip .chip-svg-core { animation: corePulse 2s ease-in-out infinite; }
-
-    .hero-chip .chip-svg-trace {
-      stroke-dasharray: 100;
-      stroke-dashoffset: 100;
-      animation: traceDraw 3s linear infinite;
+    /* Zig-zag trace animation */
+    .zig-trace {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: zigDraw 4s linear infinite;
     }
-    .hero-chip .chip-svg-trace:nth-child(2) { animation-delay: 0.2s; }
-    .hero-chip .chip-svg-trace:nth-child(3) { animation-delay: 0.4s; }
-    .hero-chip .chip-svg-trace:nth-child(4) { animation-delay: 0.6s; }
-    .hero-chip .chip-svg-trace:nth-child(5) { animation-delay: 0.8s; }
-    .hero-chip .chip-svg-trace:nth-child(6) { animation-delay: 1.0s; }
-    .hero-chip .chip-svg-trace:nth-child(7) { animation-delay: 1.2s; }
-    .hero-chip .chip-svg-trace:nth-child(8) { animation-delay: 1.4s; }
-    .hero-chip .chip-svg-trace:nth-child(9) { animation-delay: 1.6s; }
-    .hero-chip .chip-svg-trace:nth-child(10) { animation-delay: 1.8s; }
-    .hero-chip .chip-svg-trace:nth-child(11) { animation-delay: 2.0s; }
-    .hero-chip .chip-svg-trace:nth-child(12) { animation-delay: 2.2s; }
 
-    @keyframes traceDraw { to { stroke-dashoffset: 0; } }
+    .zig-trace:nth-child(1) { animation-delay: 0s; }
+    .zig-trace:nth-child(2) { animation-delay: 0.3s; }
+    .zig-trace:nth-child(3) { animation-delay: 0.6s; }
+    .zig-trace:nth-child(4) { animation-delay: 0.9s; }
+    .zig-trace:nth-child(5) { animation-delay: 1.2s; }
+    .zig-trace:nth-child(6) { animation-delay: 1.5s; }
+    .zig-trace:nth-child(7) { animation-delay: 1.8s; }
+    .zig-trace:nth-child(8) { animation-delay: 2.1s; }
+    .zig-trace:nth-child(9) { animation-delay: 2.4s; }
+    .zig-trace:nth-child(10) { animation-delay: 2.7s; }
+    .zig-trace:nth-child(11) { animation-delay: 3.0s; }
+    .zig-trace:nth-child(12) { animation-delay: 3.3s; }
+    .zig-trace:nth-child(13) { animation-delay: 3.6s; }
+    .zig-trace:nth-child(14) { animation-delay: 3.9s; }
 
-    .hero-chip .chip-node { animation: nodeBlink 2s ease-in-out infinite; }
-    .hero-chip .chip-node:nth-of-type(1) { animation-delay: 0s; }
-    .hero-chip .chip-node:nth-of-type(2) { animation-delay: 0.3s; }
-    .hero-chip .chip-node:nth-of-type(3) { animation-delay: 0.6s; }
-    .hero-chip .chip-node:nth-of-type(4) { animation-delay: 0.9s; }
-    .hero-chip .chip-node:nth-of-type(5) { animation-delay: 1.2s; }
-    .hero-chip .chip-node:nth-of-type(6) { animation-delay: 1.5s; }
+    @keyframes zigDraw {
+      0% { stroke-dashoffset: 300; opacity: 0.3; }
+      50% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: -300; opacity: 0.3; }
+    }
 
-    @keyframes nodeBlink {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
+    /* Lightning flash effect */
+    .zig-trace:nth-child(1),
+    .zig-trace:nth-child(2) {
+      animation: zigDraw 4s linear infinite, lightningFlash 6s ease-in-out infinite;
+    }
+
+    @keyframes lightningFlash {
+      0%, 90%, 100% { filter: none; }
+      92% { filter: url(#pGlowStrong) brightness(2); }
+      94% { filter: none; }
+      96% { filter: url(#pGlowStrong) brightness(1.5); }
+    }
+
+    /* Junction nodes pulse */
+    .chip-junction {
+      animation: junctionPulse 2s ease-in-out infinite;
+    }
+
+    .chip-junction:nth-of-type(1) { animation-delay: 0s; }
+    .chip-junction:nth-of-type(2) { animation-delay: 0.5s; }
+    .chip-junction:nth-of-type(3) { animation-delay: 1s; }
+    .chip-junction:nth-of-type(4) { animation-delay: 1.5s; }
+    .chip-junction:nth-of-type(5) { animation-delay: 0.3s; }
+    .chip-junction:nth-of-type(6) { animation-delay: 0.8s; }
+    .chip-junction:nth-of-type(7) { animation-delay: 1.3s; }
+    .chip-junction:nth-of-type(8) { animation-delay: 1.8s; }
+
+    @keyframes junctionPulse {
+      0%, 100% { r: 2; opacity: 0.3; }
+      50% { r: 5; opacity: 1; }
+    }
+
+    /* End nodes blink */
+    .chip-node-end {
+      animation: endNodeBlink 3s ease-in-out infinite;
+    }
+
+    .chip-node-end:nth-of-type(odd) { animation-delay: 0s; }
+    .chip-node-end:nth-of-type(even) { animation-delay: 1.5s; }
+
+    @keyframes endNodeBlink {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.8; }
+    }
+
+    .processor-chip-fixed .chip-svg-core {
+      animation: corePulse 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 1100px) {
+      .processor-chip-fixed { width: 160px; height: 300px; right: -10px; }
     }
 
     @media (max-width: 768px) {
-      .hero-chip { width: 100px; height: 100px; }
+      .processor-chip-fixed { display: none; }
     }
 
     .hero-name .highlight {
@@ -1705,6 +1761,186 @@
     <div class="status-item" style="margin-left:auto;">CYBERHATC v2.0 // <span style="color:var(--neon-green)">LINUX</span></div>
   </div>
 
+  <!-- FIXED RIGHT-SIDE PROCESSOR CHIP -->
+  <div class="processor-chip-fixed" id="processorChip">
+    <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="pCoreGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="1"/>
+          <stop offset="40%" stop-color="#00ff88" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="pOuterGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="pGlow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="pGlowStrong">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="lightningGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#b347ff" stop-opacity="0.3"/>
+        </linearGradient>
+        <linearGradient id="lightningGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0.2"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Background glow -->
+      <circle cx="200" cy="300" r="180" fill="url(#pOuterGlow)"/>
+
+      <!-- ===== ZIG-ZAG LIGHTNING TRACES ===== -->
+
+      <!-- Top-left zig-zag -->
+      <path class="zig-trace" d="M200,230 L195,210 L185,200 L190,180 L180,165 L185,145 L175,130 L180,110 L170,90 L175,70 L165,50 L170,30"
+        fill="none" stroke="url(#lightningGrad1)" stroke-width="1.5" filter="url(#pGlow)" stroke-linecap="round"/>
+
+      <!-- Top-right zig-zag -->
+      <path class="zig-trace" d="M200,230 L205,210 L215,200 L210,180 L220,165 L215,145 L225,130 L220,110 L230,90 L225,70 L235,50 L230,30"
+        fill="none" stroke="url(#lightningGrad1)" stroke-width="1.5" filter="url(#pGlow)" stroke-linecap="round"/>
+
+      <!-- Left zig-zag horizontal -->
+      <path class="zig-trace" d="M170,300 L150,295 L140,300 L120,295 L110,300 L90,295 L80,300 L60,295 L50,300 L30,295"
+        fill="none" stroke="url(#lightningGrad2)" stroke-width="1.5" filter="url(#pGlow)" stroke-linecap="round"/>
+
+      <!-- Right zig-zag horizontal -->
+      <path class="zig-trace" d="M230,300 L250,295 L260,300 L280,295 L290,300 L310,295 L320,300 L340,295 L350,300 L370,295"
+        fill="none" stroke="url(#lightningGrad2)" stroke-width="1.5" filter="url(#pGlow)" stroke-linecap="round"/>
+
+      <!-- Bottom-left zig-zag -->
+      <path class="zig-trace" d="M200,370 L195,390 L185,400 L190,420 L180,435 L185,455 L175,470 L180,490 L170,510 L175,530 L165,550 L170,570"
+        fill="none" stroke="url(#lightningGrad1)" stroke-width="1.5" filter="url(#pGlow)" stroke-linecap="round"/>
+
+      <!-- Bottom-right zig-zag -->
+      <path class="zig-trace" d="M200,370 L205,390 L215,400 L210,420 L220,435 L215,455 L225,470 L220,490 L230,510 L225,530 L235,550 L230,570"
+        fill="none" stroke="url(#lightningGrad1)" stroke-width="1.5" filter="url(#pGlow)" stroke-linecap="round"/>
+
+      <!-- Diagonal zig-zags -->
+      <path class="zig-trace" d="M170,230 L155,215 L145,220 L130,205 L120,210 L105,195 L95,200 L80,185 L70,190 L55,175"
+        fill="none" stroke="#00ff88" stroke-width="1" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+
+      <path class="zig-trace" d="M230,230 L245,215 L255,220 L270,205 L280,210 L295,195 L305,200 L320,185 L330,190 L345,175"
+        fill="none" stroke="#00e5ff" stroke-width="1" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+
+      <path class="zig-trace" d="M170,370 L155,385 L145,380 L130,395 L120,390 L105,405 L95,400 L80,415 L70,410 L55,425"
+        fill="none" stroke="#00ff88" stroke-width="1" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+
+      <path class="zig-trace" d="M230,370 L245,385 L255,380 L270,395 L280,390 L295,405 L305,400 L320,415 L330,410 L345,425"
+        fill="none" stroke="#00e5ff" stroke-width="1" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+
+      <!-- Extra micro zig-zags -->
+      <path class="zig-trace" d="M190,260 L180,250 L175,255 L165,245 L155,250"
+        fill="none" stroke="#b347ff" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.4"/>
+      <path class="zig-trace" d="M210,260 L220,250 L225,255 L235,245 L245,250"
+        fill="none" stroke="#b347ff" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.4"/>
+      <path class="zig-trace" d="M190,340 L180,350 L175,345 L165,355 L155,350"
+        fill="none" stroke="#ff006e" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.3"/>
+      <path class="zig-trace" d="M210,340 L220,350 L225,345 L235,355 L245,350"
+        fill="none" stroke="#ff006e" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.3"/>
+
+      <!-- ===== JUNCTION NODES ===== -->
+      <circle class="chip-junction" cx="200" cy="230" r="4" fill="#00ff88" filter="url(#pGlowStrong)"/>
+      <circle class="chip-junction" cx="200" cy="370" r="4" fill="#00ff88" filter="url(#pGlowStrong)"/>
+      <circle class="chip-junction" cx="170" cy="300" r="3" fill="#00e5ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="230" cy="300" r="3" fill="#00e5ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="170" cy="230" r="2" fill="#b347ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="230" cy="230" r="2" fill="#b347ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="170" cy="370" r="2" fill="#ff006e" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="230" cy="370" r="2" fill="#ff006e" filter="url(#pGlow)"/>
+
+      <!-- Trace end nodes -->
+      <circle class="chip-node-end" cx="170" cy="30" r="2" fill="#00ff88"/>
+      <circle class="chip-node-end" cx="230" cy="30" r="2" fill="#00ff88"/>
+      <circle class="chip-node-end" cx="30" cy="295" r="2" fill="#00e5ff"/>
+      <circle class="chip-node-end" cx="370" cy="295" r="2" fill="#00e5ff"/>
+      <circle class="chip-node-end" cx="170" cy="570" r="2" fill="#00ff88"/>
+      <circle class="chip-node-end" cx="230" cy="570" r="2" fill="#00ff88"/>
+      <circle class="chip-node-end" cx="55" cy="175" r="1.5" fill="#00ff88"/>
+      <circle class="chip-node-end" cx="345" cy="175" r="1.5" fill="#00e5ff"/>
+      <circle class="chip-node-end" cx="55" cy="425" r="1.5" fill="#00ff88"/>
+      <circle class="chip-node-end" cx="345" cy="425" r="1.5" fill="#00e5ff"/>
+
+      <!-- ===== CPU CHIP ===== -->
+      <!-- Outer board -->
+      <rect x="155" y="245" width="90" height="110" rx="4" fill="#080e0a" stroke="#1a3a2a" stroke-width="1" opacity="0.8"/>
+
+      <!-- IHS (heat spreader) -->
+      <rect x="165" y="258" width="70" height="84" rx="3" fill="#0d1a12" stroke="#00ff88" stroke-width="1.5"/>
+      <rect x="167" y="260" width="66" height="80" rx="2" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.3"/>
+
+      <!-- CPU die -->
+      <rect x="175" y="270" width="50" height="60" rx="2" fill="#0a120d" stroke="#00ff88" stroke-width="1" class="chip-svg-core"/>
+
+      <!-- Die grid -->
+      <line x1="185" y1="270" x2="185" y2="330" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="195" y1="270" x2="195" y2="330" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="200" y1="270" x2="200" y2="330" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="205" y1="270" x2="205" y2="330" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="215" y1="270" x2="215" y2="330" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="175" y1="280" x2="225" y2="280" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="175" y1="290" x2="225" y2="290" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="175" y1="300" x2="225" y2="300" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="175" y1="310" x2="225" y2="310" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <line x1="175" y1="320" x2="225" y2="320" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+
+      <!-- Core glow -->
+      <circle cx="200" cy="300" r="20" fill="url(#pCoreGlow)" class="chip-svg-core"/>
+
+      <!-- Chip text -->
+      <text x="200" y="297" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="5" fill="#00ff88" opacity="0.9" font-weight="700">CYBERHATC</text>
+      <text x="200" y="306" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="3.5" fill="#00e5ff" opacity="0.7">DEVIL MIKE</text>
+
+      <!-- Pin legs — top -->
+      <rect x="170" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="180" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="190" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="200" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="210" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="220" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="230" y="240" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+
+      <!-- Pin legs — bottom -->
+      <rect x="170" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="180" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="190" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="200" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="210" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="220" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+      <rect x="230" y="352" width="2" height="8" fill="#00ff88" opacity="0.5"/>
+
+      <!-- Pin legs — left -->
+      <rect x="148" y="270" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="148" y="280" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="148" y="290" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="148" y="300" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="148" y="310" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="148" y="320" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="148" y="330" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+
+      <!-- Pin legs — right -->
+      <rect x="244" y="270" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="244" y="280" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="244" y="290" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="244" y="300" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="244" y="310" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="244" y="320" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+      <rect x="244" y="330" width="8" height="2" fill="#00e5ff" opacity="0.5"/>
+
+      <!-- SMD components around chip -->
+      <rect x="158" y="248" width="8" height="4" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.4" opacity="0.5"/>
+      <rect x="234" y="248" width="8" height="4" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.4" opacity="0.5"/>
+      <rect x="158" y="348" width="8" height="4" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.4" opacity="0.5"/>
+      <rect x="234" y="348" width="8" height="4" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.4" opacity="0.5"/>
+    </svg>
+  </div>
+
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="#hero" class="nav-logo glitch-hover"><img src="logodevilmike.jpeg" alt="CyberHATC" style="height:36px;width:auto;border-radius:4px;vertical-align:middle;margin-right:8px;">CYBER<span>HATC</span></a>
@@ -1726,121 +1962,6 @@
       <h1 class="hero-name">
         <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
       </h1>
-      <div class="hero-chip">
-        <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#00ff88" stop-opacity="0.9"/>
-              <stop offset="50%" stop-color="#00ff88" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
-            </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <linearGradient id="traceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#00ff88" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.1"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Outer circuit board background -->
-          <rect x="5" y="5" width="150" height="150" rx="4" fill="none" stroke="#1a3a2a" stroke-width="0.5" opacity="0.4"/>
-          <rect x="10" y="10" width="140" height="140" rx="3" fill="none" stroke="#1a3a2a" stroke-width="0.3" opacity="0.3"/>
-
-          <!-- Circuit traces radiating outward — top -->
-          <line class="chip-svg-trace" x1="80" y1="35" x2="80" y2="5" stroke="url(#traceGrad)" stroke-width="1" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="60" y1="35" x2="40" y2="8" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="100" y1="35" x2="120" y2="8" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-
-          <!-- Circuit traces — bottom -->
-          <line class="chip-svg-trace" x1="80" y1="125" x2="80" y2="155" stroke="url(#traceGrad)" stroke-width="1" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="60" y1="125" x2="40" y2="152" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="100" y1="125" x2="120" y2="152" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-
-          <!-- Circuit traces — left -->
-          <line class="chip-svg-trace" x1="35" y1="80" x2="5" y2="80" stroke="url(#traceGrad)" stroke-width="1" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="35" y1="60" x2="8" y2="40" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="35" y1="100" x2="8" y2="120" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-
-          <!-- Circuit traces — right -->
-          <line class="chip-svg-trace" x1="125" y1="80" x2="155" y2="80" stroke="url(#traceGrad)" stroke-width="1" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="125" y1="60" x2="152" y2="40" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-          <line class="chip-svg-trace" x1="125" y1="100" x2="152" y2="120" stroke="url(#traceGrad)" stroke-width="0.8" filter="url(#glow)"/>
-
-          <!-- Inner trace rings -->
-          <rect x="30" y="30" width="100" height="100" rx="2" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.2"/>
-          <rect x="38" y="38" width="84" height="84" rx="2" fill="none" stroke="#00ff88" stroke-width="0.3" opacity="0.15"/>
-
-          <!-- CPU IHS (heat spreader) -->
-          <rect x="40" y="40" width="80" height="80" rx="4" fill="#0d1a12" stroke="#00ff88" stroke-width="1.5" opacity="0.9"/>
-          <rect x="42" y="42" width="76" height="76" rx="3" fill="none" stroke="#00ff88" stroke-width="0.5" opacity="0.3"/>
-
-          <!-- CPU die (inner chip) -->
-          <rect x="52" y="52" width="56" height="56" rx="2" fill="#0a120d" stroke="#00ff88" stroke-width="1" class="chip-svg-core"/>
-
-          <!-- Core grid inside die -->
-          <line x1="62" y1="52" x2="62" y2="108" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="72" y1="52" x2="72" y2="108" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="80" y1="52" x2="80" y2="108" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="88" y1="52" x2="88" y2="108" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="98" y1="52" x2="98" y2="108" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="52" y1="62" x2="108" y2="62" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="52" y1="72" x2="108" y2="72" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="52" y1="80" x2="108" y2="80" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="52" y1="88" x2="108" y2="88" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-          <line x1="52" y1="98" x2="108" y2="98" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
-
-          <!-- Center glow -->
-          <circle cx="80" cy="80" r="18" fill="url(#coreGlow)" class="chip-svg-core"/>
-
-          <!-- Core text -->
-          <text x="80" y="78" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="5" fill="#00ff88" opacity="0.8" font-weight="700">CYBERHATC</text>
-          <text x="80" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="3.5" fill="#00e5ff" opacity="0.6">DEVIL MIKE</text>
-
-          <!-- Junction nodes -->
-          <circle class="chip-node" cx="80" cy="35" r="2" fill="#00ff88" filter="url(#glow)"/>
-          <circle class="chip-node" cx="80" cy="125" r="2" fill="#00ff88" filter="url(#glow)"/>
-          <circle class="chip-node" cx="35" cy="80" r="2" fill="#00e5ff" filter="url(#glow)"/>
-          <circle class="chip-node" cx="125" cy="80" r="2" fill="#00e5ff" filter="url(#glow)"/>
-          <circle class="chip-node" cx="40" cy="40" r="1.5" fill="#b347ff" filter="url(#glow)"/>
-          <circle class="chip-node" cx="120" cy="120" r="1.5" fill="#b347ff" filter="url(#glow)"/>
-
-          <!-- Pin legs — top -->
-          <rect x="55" y="33" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="65" y="33" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="75" y="33" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="85" y="33" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="95" y="33" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-
-          <!-- Pin legs — bottom -->
-          <rect x="55" y="120" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="65" y="120" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="75" y="120" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="85" y="120" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-          <rect x="95" y="120" width="2" height="7" fill="#00ff88" opacity="0.4"/>
-
-          <!-- Pin legs — left -->
-          <rect x="33" y="55" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="33" y="65" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="33" y="75" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="33" y="85" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="33" y="95" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-
-          <!-- Pin legs — right -->
-          <rect x="120" y="55" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="120" y="65" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="120" y="75" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="120" y="85" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-          <rect x="120" y="95" width="7" height="2" fill="#00e5ff" opacity="0.4"/>
-
-          <!-- Corner SMD components -->
-          <rect x="14" y="14" width="6" height="3" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.3" opacity="0.5"/>
-          <rect x="140" y="14" width="6" height="3" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.3" opacity="0.5"/>
-          <rect x="14" y="143" width="6" height="3" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.3" opacity="0.5"/>
-          <rect x="140" y="143" width="6" height="3" rx="1" fill="#1a3a2a" stroke="#00ff88" stroke-width="0.3" opacity="0.5"/>
-        </svg>
-      </div>
     </div>
     <p class="hero-tagline">Full-Stack Dev // Mobile Architect // CyberNerd</p>
     <p class="hero-desc">
