@@ -227,6 +227,79 @@
       animation: fadeInUp 0.6s 0.4s forwards;
     }
 
+    .hero-name-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-chip {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      animation: fadeInUp 0.6s 0.6s forwards, chipFloat 6s ease-in-out infinite;
+      opacity: 0;
+    }
+
+    .hero-chip .chip-body {
+      width: 50px;
+      height: 50px;
+      margin: 14px auto;
+      border: 2px solid var(--neon-green);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: chipGlow 3s ease-in-out infinite;
+    }
+
+    .hero-chip .chip-core {
+      width: 16px;
+      height: 16px;
+      background: var(--neon-green);
+      opacity: 0.6;
+      animation: corePulse 1.5s ease-in-out infinite;
+    }
+
+    .hero-chip .chip-pin {
+      position: absolute;
+      background: var(--neon-green);
+      opacity: 0.5;
+    }
+
+    .hero-chip .chip-pin.top { width: 3px; height: 10px; top: -10px; }
+    .hero-chip .chip-pin.bottom { width: 3px; height: 10px; bottom: -10px; }
+    .hero-chip .chip-pin.left { width: 10px; height: 3px; left: -10px; }
+    .hero-chip .chip-pin.right { width: 10px; height: 3px; right: -10px; }
+
+    .hero-chip .chip-trace {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, var(--neon-green), transparent);
+      opacity: 0.3;
+      animation: traceFlow 2s linear infinite;
+    }
+
+    .hero-chip .chip-trace:nth-child(1) { width: 60px; top: 22px; left: 62px; animation-delay: 0s; }
+    .hero-chip .chip-trace:nth-child(2) { width: 45px; top: 38px; left: 62px; animation-delay: 0.4s; }
+    .hero-chip .chip-trace:nth-child(3) { width: 55px; top: 54px; left: 62px; animation-delay: 0.8s; }
+    .hero-chip .chip-trace:nth-child(4) { width: 40px; top: 70px; left: 62px; animation-delay: 1.2s; }
+
+    .hero-chip .chip-label {
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.45rem;
+      color: var(--neon-green);
+      letter-spacing: 1px;
+      white-space: nowrap;
+      opacity: 0.5;
+    }
+
     .hero-name .highlight {
       background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
       -webkit-background-clip: text;
@@ -327,21 +400,21 @@
     .terminal-section { padding-bottom: 4rem; }
 
     .terminal-window {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: #0c0c0c;
+      border: 1px solid #333;
+      border-radius: 6px;
       overflow: hidden;
-      max-width: 700px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-green);
+      max-width: 750px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 1px rgba(0,255,136,0.3);
     }
 
     .terminal-header {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.8rem 1rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0.8rem;
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
     }
 
     .terminal-dot {
@@ -362,12 +435,14 @@
     }
 
     .terminal-body {
-      padding: 1.2rem;
+      padding: 1rem;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      min-height: 300px;
-      max-height: 400px;
+      font-size: 0.82rem;
+      min-height: 320px;
+      max-height: 420px;
       overflow-y: auto;
+      background: #0c0c0c;
+      color: #ccc;
     }
 
     .terminal-output { margin-bottom: 0.3rem; line-height: 1.8; }
@@ -375,7 +450,7 @@
     .terminal-output .cyan { color: var(--neon-cyan); }
     .terminal-output .violet { color: var(--neon-violet); }
     .terminal-output .yellow { color: var(--neon-yellow); }
-    .terminal-output .dim { color: var(--text-dim); }
+    .terminal-output .dim { color: #666; }
     .terminal-output .pink { color: var(--neon-pink); }
 
     .terminal-input-line {
@@ -1232,34 +1307,101 @@
       opacity: 0.35;
     }
 
-    /* ========== CHIP / PROCESSOR ANIMATION ========== */
-    .chip-container {
+    /* ========== LINUX BOOT SCREEN ========== */
+    .linux-anim-overlay {
       position: fixed;
-      bottom: 240px;
-      right: 20px;
-      width: 120px;
-      height: 120px;
-      z-index: 998;
+      inset: 0;
+      background: var(--bg-primary);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      transition: opacity 0.8s, visibility 0.8s;
+    }
+
+    .linux-anim-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      animation: chipFloat 6s ease-in-out infinite;
+    }
+
+    .boot-text {
+      color: var(--neon-green);
+      font-size: 0.75rem;
+      line-height: 1.8;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .boot-text .dim { color: var(--text-dim); }
+    .boot-text .cyan { color: var(--neon-cyan); }
+    .boot-text .yellow { color: var(--neon-yellow); }
+    .boot-text .pink { color: var(--neon-pink); }
+
+    .boot-bar {
+      width: 300px;
+      height: 3px;
+      background: var(--border);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .boot-bar::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+      animation: bootFill 2s ease forwards;
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+
+    @keyframes bootFill {
+      0% { width: 0%; }
+      30% { width: 25%; }
+      60% { width: 65%; }
+      80% { width: 85%; }
+      100% { width: 100%; }
+    }
+
+    .boot-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--neon-green);
+      margin-bottom: 2rem;
+      letter-spacing: 4px;
+      text-shadow: 0 0 30px rgba(0,255,136,0.5);
+      animation: bootLogoPulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes bootLogoPulse {
+      from { text-shadow: 0 0 20px rgba(0,255,136,0.3); }
+      to { text-shadow: 0 0 40px rgba(0,255,136,0.7), 0 0 80px rgba(0,255,136,0.3); }
+    }
+
+    .boot-status {
+      margin-top: 1rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .boot-text { font-size: 0.6rem; }
+      .boot-logo { font-size: 1.2rem; }
+      .boot-bar { width: 200px; }
     }
 
     @keyframes chipFloat {
       0%, 100% { transform: translateY(0) rotate(0deg); }
       25% { transform: translateY(-8px) rotate(1deg); }
       75% { transform: translateY(5px) rotate(-1deg); }
-    }
-
-    .chip-body {
-      width: 60px;
-      height: 60px;
-      margin: 18px auto;
-      border: 2px solid var(--neon-green);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: chipGlow 3s ease-in-out infinite;
     }
 
     @keyframes chipGlow {
@@ -1278,53 +1420,6 @@
     @keyframes corePulse {
       0%, 100% { transform: scale(1); opacity: 0.4; }
       50% { transform: scale(1.3); opacity: 0.9; }
-    }
-
-    .chip-pin {
-      position: absolute;
-      background: var(--neon-green);
-      opacity: 0.5;
-    }
-
-    .chip-pin.top { width: 4px; height: 12px; top: -12px; }
-    .chip-pin.bottom { width: 4px; height: 12px; bottom: -12px; }
-    .chip-pin.left { width: 12px; height: 4px; left: -12px; }
-    .chip-pin.right { width: 12px; height: 4px; right: -12px; }
-
-    .chip-trace {
-      position: absolute;
-      height: 1px;
-      background: linear-gradient(90deg, var(--neon-green), transparent);
-      opacity: 0.3;
-      animation: traceFlow 2s linear infinite;
-    }
-
-    @keyframes traceFlow {
-      0% { opacity: 0.1; }
-      50% { opacity: 0.6; }
-      100% { opacity: 0.1; }
-    }
-
-    .chip-trace:nth-child(1) { width: 80px; top: 30px; left: 70px; animation-delay: 0s; }
-    .chip-trace:nth-child(2) { width: 60px; top: 50px; left: 70px; animation-delay: 0.3s; }
-    .chip-trace:nth-child(3) { width: 70px; top: 70px; left: 70px; animation-delay: 0.6s; }
-    .chip-trace:nth-child(4) { width: 50px; top: 90px; left: 70px; animation-delay: 0.9s; }
-
-    .chip-label {
-      position: absolute;
-      bottom: -22px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-mono);
-      font-size: 0.5rem;
-      color: var(--neon-green);
-      letter-spacing: 2px;
-      white-space: nowrap;
-      opacity: 0.6;
-    }
-
-    @media (max-width: 768px) {
-      .chip-container { display: none; }
     }
 
     /* ========== HIDDEN REVEAL ZONES ========== */
@@ -1564,28 +1659,13 @@
   <div class="particles" id="particles"></div>
   <div class="hex-pattern"></div>
   <div class="scroll-progress" id="scrollProgress"></div>
-  <div class="linux-anim-overlay" id="linuxAnim"></div>
-  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
-
-  <!-- CHIP -->
-  <div class="chip-container">
-    <div class="chip-trace"></div>
-    <div class="chip-trace"></div>
-    <div class="chip-trace"></div>
-    <div class="chip-trace"></div>
-    <div class="chip-body">
-      <div class="chip-core"></div>
-      <div class="chip-pin top" style="left:15px"></div>
-      <div class="chip-pin top" style="left:35px"></div>
-      <div class="chip-pin bottom" style="left:15px"></div>
-      <div class="chip-pin bottom" style="left:35px"></div>
-      <div class="chip-pin left" style="top:15px"></div>
-      <div class="chip-pin left" style="top:35px"></div>
-      <div class="chip-pin right" style="top:15px"></div>
-      <div class="chip-pin right" style="top:35px"></div>
-    </div>
-    <div class="chip-label">CYBERHATC CPU</div>
+  <div class="linux-anim-overlay" id="linuxAnim">
+    <div class="boot-logo">CYBERHATC</div>
+    <div class="boot-text" id="bootText"></div>
+    <div class="boot-bar"></div>
+    <div class="boot-status" id="bootStatus">LOADING KERNEL...</div>
   </div>
+  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
 
   <!-- DATA STREAM LEFT -->
   <div class="data-stream" id="dataStream"></div>
@@ -1649,9 +1729,33 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-glitch-line">system.init --mode=hacker</div>
-    <h1 class="hero-name">
-      <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
-    </h1>
+    <div class="hero-name-row">
+      <h1 class="hero-name">
+        <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
+      </h1>
+      <div class="hero-chip">
+        <div class="chip-trace"></div>
+        <div class="chip-trace"></div>
+        <div class="chip-trace"></div>
+        <div class="chip-trace"></div>
+        <div class="chip-body">
+          <div class="chip-core"></div>
+          <div class="chip-pin top" style="left:12px"></div>
+          <div class="chip-pin top" style="left:28px"></div>
+          <div class="chip-pin top" style="left:44px"></div>
+          <div class="chip-pin bottom" style="left:12px"></div>
+          <div class="chip-pin bottom" style="left:28px"></div>
+          <div class="chip-pin bottom" style="left:44px"></div>
+          <div class="chip-pin left" style="top:12px"></div>
+          <div class="chip-pin left" style="top:28px"></div>
+          <div class="chip-pin left" style="top:44px"></div>
+          <div class="chip-pin right" style="top:12px"></div>
+          <div class="chip-pin right" style="top:28px"></div>
+          <div class="chip-pin right" style="top:44px"></div>
+        </div>
+        <div class="chip-label">CYBERHATC CPU</div>
+      </div>
+    </div>
     <p class="hero-tagline">Full-Stack Dev // Mobile Architect // CyberNerd</p>
     <p class="hero-desc">
       Building cross-platform apps, 3D simulations, and algorithmic tools since age 14.
@@ -1679,22 +1783,25 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <span class="terminal-title">cyberhatc@devilmike:~</span>
+        <span class="terminal-title">cyberhatc@devilmike: ~/projects</span>
       </div>
       <div class="terminal-body" id="terminalBody">
-        <div class="terminal-output"><span class="green">DevilMike@CyberHATC</span>:<span class="cyan">~</span>$ neofetch</div>
+        <div class="terminal-output"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ neofetch</div>
         <div class="terminal-output dim">
-  ╔══════════════════════════════════╗<br>
-  ║ &nbsp; <span class="green">CYBERHATC</span> v2.0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║<br>
-  ║ &nbsp; Dev: <span class="cyan">Devil Mike</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║<br>
-  ║ &nbsp; Stack: <span class="violet">Full-Stack | Mobile</span> &nbsp;║<br>
-  ║ &nbsp; OS: <span class="yellow">HackOS 5x Runner-Up</span> &nbsp;&nbsp;║<br>
-  ║ &nbsp; Uptime: Since age <span class="pink">14</span> &nbsp;&nbsp;&nbsp;&nbsp;║<br>
-  ╚══════════════════════════════════╝
+  <span class="green">       _</span>               <span class="cyan">cyberhatc@devilmike</span>
+  <span class="green">      | |</span>              <span class="dim">---------------</span>
+  <span class="green">  ___ | |___</span>           <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+  <span class="green"> / _ \\| / __|</span>          <span class="cyan">Host:</span> Devil Mike Workstation
+  <span class="green">|  __/| \\__ \\</span>          <span class="cyan">Kernel:</span> 6.8.0-cyber
+  <span class="green"> \\___||_|___/</span>          <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+  <span class="dim">                       <span class="cyan">Shell:</span> /bin/zsh 5.9</span>
+  <span class="dim">                       <span class="cyan">WM:</span> i3-gaps</span>
+  <span class="dim">                       <span class="cyan">CPU:</span> DevilMike @ 5.1GHz</span>
+  <span class="dim">                       <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>
         </div>
         <div class="terminal-output dim">Type <span class="green">'help'</span> for available commands...</div>
         <div class="terminal-input-line" id="inputLine">
-          <span class="terminal-prompt">DevilMike@CyberHATC:~$</span>
+          <span class="terminal-prompt"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$</span>
           <input type="text" class="terminal-input" id="terminalInput" autofocus spellcheck="false" autocomplete="off">
         </div>
       </div>
@@ -2126,13 +2233,27 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="violet">Groups:</span> hackers, builders, dreamers`,
 
       neofetch: `<span class="dim">
-╔══════════════════════════════════╗
-║  <span class="green">CYBERHATC</span> v2.0               ║
-║  Dev: <span class="cyan">Devil Mike</span>              ║
-║  Stack: <span class="violet">Full-Stack | Mobile</span>   ║
-║  OS: <span class="yellow">HackOS 5x Runner-Up</span>    ║
-║  Uptime: Since age <span class="pink">14</span>         ║
-╚══════════════════════════════════╝</span>`
+       _               <span class="cyan">cyberhatc@devilmike</span>
+      | |              <span class="dim">---------------</span>
+  ___ | |___           <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+ / _ \\| / __|          <span class="cyan">Host:</span> Devil Mike Workstation
+|  __/| \\__ \\          <span class="cyan">Kernel:</span> 6.8.0-cyber
+ \\___||_|___/          <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+                       <span class="cyan">Shell:</span> /bin/zsh 5.9
+                       <span class="cyan">CPU:</span> DevilMike @ 5.1GHz
+                       <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>`,
+
+      htop: `<span class="dim">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+ Command</span>
+<span class="dim">    1</span> <span class="cyan">root</span>        20   0  168M  12M   8M  S  0.0  0.1   0:04 /sbin/init
+<span class="dim">  420</span> <span class="green">cyberhatc</span>   20   0  512M  48M  32M  S <span class="yellow">12.4</span>  3.2   1:23 flutter build
+<span class="dim"> 1337</span> <span class="green">cyberhatc</span>   20   0  256M 128M  64M  S <span class="pink">88.7</span> 18.6   5:42 fastapi server
+<span class="dim"> 2048</span> <span class="green">cyberhatc</span>   20   0  1.2G 256M 128M  S <span class="yellow">45.1</span>  9.8   3:11 blender render
+<span class="dim"> 4096</span> <span class="green">cyberhatc</span>   20   0  128M  64M  32M  S <span class="yellow">67.3</span> 12.4   2:55 firebase deploy
+<span class="dim"> 6666</span> <span class="green">cyberhatc</span>   20   0  512M 192M  96M  S <span class="yellow">33.9</span>  7.1   1:48 unity editor
+<span class="dim"> 8080</span> <span class="green">cyberhatc</span>   20   0  256M 128M  64M  S <span class="yellow">55.2</span> 11.3   2:33 dart compile`,
+
+      'uname -a': `<span class="cyan">HackOS</span> devilmike 6.8.0-cyber #1 SMP x86_64 GNU/Linux
+<span class="dim">CyberHATC kernel compiled with: --enable-hack-mode --disable-sleep</span>`,
     };
 
     terminalInput.addEventListener('keydown', (e) => {
@@ -2166,7 +2287,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       const inputLineEl = document.getElementById('inputLine');
       const output = document.createElement('div');
       output.className = 'terminal-output';
-      output.innerHTML = `<span class="green">DevilMike@CyberHATC</span>:<span class="cyan">~</span>$ ${escapeHtml(cmd)}`;
+      output.innerHTML = `<span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ ${escapeHtml(cmd)}`;
 
       if (cmd === 'clear') {
         terminalBody.innerHTML = '';
@@ -2204,7 +2325,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       line.className = 'terminal-input-line';
       line.id = 'inputLine';
       line.innerHTML = `
-        <span class="terminal-prompt">DevilMike@CyberHATC:~$</span>
+        <span class="terminal-prompt"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$</span>
         <input type="text" class="terminal-input" id="terminalInput" autofocus spellcheck="false" autocomplete="off">
       `;
       return line;
@@ -2344,335 +2465,51 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       });
     });
 
-    /* ========== LINUX ANIMATION CYCLER ========== */
-    (function initLinuxAnim() {
-      const el = document.getElementById('linuxAnim');
-      let phase = 0;
+    /* ========== LINUX BOOT SCREEN ========== */
+    (function initBoot() {
+      const overlay = document.getElementById('linuxAnim');
+      const bootText = document.getElementById('bootText');
+      const bootStatus = document.getElementById('bootStatus');
 
-      const animations = [
-        /* 0 — dmesg boot */
-        {
-          title: 'dmesg | tail -f',
-          run(body) {
-            const lines = [
-              '<span class="green">[    0.000000]</span> Linux version 6.8.0 (gcc 13.2.0)',
-              '<span class="cyan">[    0.004123]</span> Command line: BOOT_IMAGE=/vmlinuz',
-              '<span class="dim">[    0.012891]</span> BIOS-provided physical RAM map:',
-              '<span class="green">[    0.023445]</span> ACPI: RSDP 0x00000000000F0490',
-              '<span class="yellow">[    0.341220]</span> Calibrating delay loop... <span class="green">4325.43</span> BogoMIPS',
-              '<span class="green">[    0.512000]</span> Mount-root: mounting rootfs...',
-              '<span class="cyan">[    0.889102]</span> EXT4-fs (sda1): mounted filesystem',
-              '<span class="violet">[    1.203445]</span> systemd[1]: Started Journal Service.',
-              '<span class="green">[    1.550012]</span> NetworkManager: <span class="green">connected</span>',
-              '<span class="pink">[    2.102334]</span> <span class="green">cyberhatc@devilmike</span> login: ****',
-              '<span class="green">[    2.440000]</span> Last login: Sat Aug  1 12:00:00',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= lines.length) { clearInterval(iv); return; }
-              body.innerHTML += lines[i] + '\n';
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 400);
-            return iv;
-          }
-        },
-        /* 1 — htop */
-        {
-          title: 'htop',
-          run(body) {
-            const procs = [
-              { pid: 1, user: 'root', cpu: 0.0, mem: 0.1, cmd: '/sbin/init' },
-              { pid: 420, user: 'cyberhatc', cpu: 12.4, mem: 3.2, cmd: 'flutter build' },
-              { pid: 1337, user: 'cyberhatc', cpu: 88.7, mem: 18.6, cmd: 'fastapi server' },
-              { pid: 2048, user: 'cyberhatc', cpu: 45.1, mem: 9.8, cmd: 'blender render' },
-              { pid: 3000, user: 'root', cpu: 2.1, mem: 0.5, cmd: '/usr/sbin/sshd' },
-              { pid: 4096, user: 'cyberhatc', cpu: 67.3, mem: 12.4, cmd: 'firebase deploy' },
-              { pid: 5555, user: 'root', cpu: 0.3, mem: 0.2, cmd: '/usr/bin/node' },
-              { pid: 6666, user: 'cyberhatc', cpu: 33.9, mem: 7.1, cmd: 'unity editor' },
-              { pid: 7777, user: 'root', cpu: 1.0, mem: 0.3, cmd: 'cron daemon' },
-              { pid: 8080, user: 'cyberhatc', cpu: 55.2, mem: 11.3, cmd: 'dart compile' },
-            ];
-            let html = '<span class="dim">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+ Command</span>\n';
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= procs.length) { clearInterval(iv); return; }
-              const p = procs[i];
-              const bar = '█'.repeat(Math.floor(p.cpu / 5)) + '░'.repeat(20 - Math.floor(p.cpu / 5));
-              const cpuColor = p.cpu > 80 ? 'pink' : p.cpu > 40 ? 'yellow' : 'green';
-              html += `<span class="dim">${String(p.pid).padStart(5)}</span> <span class="cyan">${p.user.padEnd(10)}</span> <span class="${cpuColor}">${String(p.cpu.toFixed(1)).padStart(5)}</span>  <span class="green">${bar}</span> ${p.cmd}\n`;
-              body.innerHTML = html;
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 300);
-            return iv;
-          }
-        },
-        /* 2 — Matrix rain */
-        {
-          title: 'matrix_rain.sh',
-          run(body) {
-            const chars = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ABCDEFZ:.;=+*^!/$&#@';
-            const cols = 40;
-            const drops = Array(cols).fill(0);
-            let running = true;
-            function frame() {
-              if (!running) return;
-              let line = '';
-              for (let c = 0; c < cols; c++) {
-                if (drops[c] > 0 && Math.random() > 0.6) {
-                  line += `<span class="green">${chars[Math.floor(Math.random() * chars.length)]}</span>`;
-                } else {
-                  line += ' ';
-                }
-                if (Math.random() > 0.95) drops[c] = 15;
-                if (drops[c] > 0) drops[c]--;
-              }
-              body.innerHTML += line + '\n';
-              if (body.children.length > 18) body.removeChild(body.firstChild);
-              body.scrollTop = body.scrollHeight;
-              setTimeout(frame, 80);
-            }
-            frame();
-            return { stop() { running = false; } };
-          }
-        },
-        /* 3 — Kernel modules */
-        {
-          title: 'lsmod | grep cyberhatc',
-          run(body) {
-            const mods = [
-              '<span class="green">Module</span>                  <span class="dim">Size  Used by</span>',
-              'cyberhatc_core        <span class="cyan">142336</span>  1 cyberhatc_hack',
-              'cyberhatc_hack         <span class="cyan"> 89088</span>  0',
-              'neon_driver            <span class="cyan"> 53248</span>  2 cyberhatc_core',
-              'quantum_engine         <span class="violet">204800</span>  1 cyberhatc_hack',
-              'blender_gpu            <span class="yellow">311296</span>  3 neon_driver',
-              'flutter_render         <span class="cyan"> 76800</span>  1 cyberhatc_core',
-              'firebase_auth          <span class="pink"> 32768</span>  0',
-              'fastapi_worker         <span class="cyan"> 98304</span>  4 quantum_engine',
-              'unity_physics          <span class="violet">266240</span>  2 blender_gpu',
-              '<span class="dim">cyberhatc@devilmike</span>$ <span class="green">insmod secret_module.ko</span>',
-              '<span class="yellow">[  +0.000123]</span> Module loaded. ACCESS GRANTED.',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= mods.length) { clearInterval(iv); return; }
-              body.innerHTML += mods[i] + '\n';
-              if (body.children.length > 18) body.removeChild(body.firstChild);
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 350);
-            return iv;
-          }
-        },
-        /* 4 — File tree */
-        {
-          title: 'tree /home/cyberhatc',
-          run(body) {
-            const tree = [
-              '<span class="cyan">/home/cyberhatc</span>',
-              '├── <span class="green">Projects</span>',
-              '│   ├── <span class="violet">KiranaOS/</span>',
-              '│   │   ├── flutter_app/',
-              '│   │   ├── fastapi_backend/',
-              '│   │   └── <span class="yellow">docker-compose.yml</span>',
-              '│   ├── <span class="violet">RouteOptimizer/</span>',
-              '│   │   ├── algorithms/',
-              '│   │   └── api/',
-              '│   ├── <span class="pink">secret_project/</span>  <span class="dim">[CLASSIFIED]</span>',
-              '│   └── <span class="violet">StressFree/</span>',
-              '│       └── lib/',
-              '├── <span class="green">.config</span>',
-              '│   ├── <span class="cyan">nvim/</span>',
-              '│   └── <span class="cyan">zsh/</span>',
-              '├── <span class="yellow">.ssh</span>',
-              '│   └── id_ed25519',
-              '├── <span class="green">.vimrc</span>',
-              '└── <span class="pink">.bashrc</span>  <span class="dim"># customized</span>',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= tree.length) { clearInterval(iv); return; }
-              body.innerHTML += tree[i] + '\n';
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 200);
-            return iv;
-          }
-        },
-        /* 5 — Network traffic */
-        {
-          title: 'iftop -i eth0',
-          run(body) {
-            let lines = [];
-            let tick = 0;
-            const servers = ['192.168.1.1', '10.0.0.42', '172.16.0.100', '8.8.8.8', 'space.kiranaos.xyz'];
-            const iv = setInterval(() => {
-              tick++;
-              const header = '<span class="dim">  interface: eth0</span>          <span class="green">TX: 1.2Gbps</span>  <span class="cyan">RX: 890Mbps</span>';
-              const sep = '<span class="dim">─────────────────────────────────────────────</span>';
-              let newLines = [header, sep];
-              for (let s = 0; s < servers.length; s++) {
-                const tx = (Math.random() * 500).toFixed(1);
-                const rx = (Math.random() * 300).toFixed(1);
-                const bars = '▓'.repeat(Math.floor(Math.random() * 20) + 2);
-                newLines.push(`<span class="cyan">${servers[s].padEnd(22)}</span> <span class="green">▲${tx.padStart(6)}kb</span> <span class="pink">▼${rx.padStart(6)}kb</span> ${bars}`);
-              }
-              newLines.push(sep);
-              newLines.push(`<span class="dim">Total: TX ${((tick * 1.2) % 999).toFixed(0)}MB  RX ${((tick * 0.8) % 999).toFixed(0)}MB  peaks: TX 1.4Gbps RX 1.1Gbps</span>`);
-              body.innerHTML = newLines.join('\n');
-              body.scrollTop = body.scrollHeight;
-            }, 1000);
-            return iv;
-          }
-        },
-        /* 6 — systemctl */
-        {
-          title: 'systemctl list-units --type=service',
-          run(body) {
-            const svcs = [
-              '<span class="green">UNIT</span>                      <span class="dim">LOAD   ACTIVE</span>  <span class="green">SUB</span>     <span class="dim">DESCRIPTION</span>',
-              '<span class="green">cyberhatc.service</span>         loaded active running CyberHatch Core Engine',
-              '<span class="green">flutter-build.service</span>    loaded active running Flutter Cross-Platform Builder',
-              '<span class="green">fastapi.service</span>          loaded active running FastAPI Backend Server',
-              '<span class="green">blender-render.service</span>  loaded active running Blender 3D Asset Pipeline',
-              '<span class="green">firebase-sync.service</span>   loaded active running Firebase Cloud Sync',
-              '<span class="yellow">quantum-compute.service</span> loaded active running Quantum Algorithm Engine',
-              '<span class="cyan">docker.service</span>          loaded active running Docker Container Runtime',
-              '<span class="violet">unity-editor.service</span>    loaded active running Unity Game Engine',
-              '<span class="green">neon-glow.service</span>       loaded active running Neon Aesthetic Renderer',
-              '<span class="dim">10 units loaded. All systems operational.</span>',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= svcs.length) { clearInterval(iv); return; }
-              body.innerHTML += svcs[i] + '\n';
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 300);
-            return iv;
-          }
-        },
-        /* 7 — ASCII Tux */
-        {
-          title: 'cat /etc/motd',
-          run(body) {
-            const tux = [
-              '<span class="yellow">         .--.        </span>',
-              '<span class="yellow">        |o_o |       </span>',
-              '<span class="yellow">        |:_/ |       </span>',
-              '<span class="yellow">       //   \\ \\      </span>',
-              '<span class="yellow">      (|     | )     </span>',
-              '<span class="yellow">     /\'\\_   _/`\\    </span>',
-              '<span class="yellow">     \\___)=(___/    </span>',
-              '',
-              '<span class="green">    ╔═══════════════════════════╗</span>',
-              '<span class="green">    ║</span>   <span class="cyan">W E L C O M E</span>           <span class="green">║</span>',
-              '<span class="green">    ║</span>   <span class="pink">cyberhatc@devilmike</span>    <span class="green">║</span>',
-              '<span class="green">    ║</span>                           <span class="green">║</span>',
-              '<span class="green">    ║</span>  Kernel: <span class="violet">6.8.0-cyber</span>     <span class="green">║</span>',
-              '<span class="green">    ║</span>  Uptime: <span class="yellow">since age 14</span>    <span class="green">║</span>',
-              '<span class="green">    ║</span>  Shell:  <span class="cyan">/bin/zsh</span>        <span class="green">║</span>',
-              '<span class="green">    ║</span>  WM:     <span class="pink">i3-gaps</span>         <span class="green">║</span>',
-              '<span class="green">    ║</span>  Theme:  <span class="green">Neon Abyss</span>      <span class="green">║</span>',
-              '<span class="green">    ╚═══════════════════════════╝</span>',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= tux.length) { clearInterval(iv); return; }
-              body.innerHTML += tux[i] + '\n';
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 180);
-            return iv;
-          }
-        },
-        /* 8 — /proc/cpuinfo */
-        {
-          title: 'cat /proc/cpuinfo | grep -E "model|cpu"',
-          run(body) {
-            const info = [
-              '<span class="green">processor</span>\t: <span class="cyan">0</span>',
-              '<span class="green">model name</span>\t: CyberHatc Dev Engine v5.0',
-              '<span class="green">cpu MHz</span>\t\t: <span class="yellow">4325.432</span>',
-              '<span class="green">cache size</span>\t: <span class="violet">16384 KB</span>',
-              '<span class="green">bogomips</span>\t: <span class="pink">8650.86</span>',
-              '',
-              '<span class="green">processor</span>\t: <span class="cyan">1</span>',
-              '<span class="green">model name</span>\t: Neural Hack Accelerator',
-              '<span class="green">cpu MHz</span>\t\t: <span class="yellow">5100.00</span>',
-              '<span class="green">flags</span>\t\t: <span class="dim">sse4 avx2 neon flutter</span>',
-              '',
-              '<span class="dim">cyberhatc@devilmike</span>$ <span class="green">lscpu | head -5</span>',
-              '<span class="cyan">Architecture:</span>           x86_64',
-              '<span class="cyan">CPU(s):</span>                 <span class="yellow">1337</span>',
-              '<span class="cyan">Model name:</span>             Devil Mike @ 5.1GHz',
-              '<span class="cyan">Thread(s) per core:</span>     <span class="pink">∞</span>',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= info.length) { clearInterval(iv); return; }
-              body.innerHTML += info[i] + '\n';
-              if (body.children.length > 18) body.removeChild(body.firstChild);
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 280);
-            return iv;
-          }
-        },
-        /* 9 — strace */
-        {
-          title: 'strace -p 1337 -e trace=network',
-          run(body) {
-            const traces = [
-              '<span class="dim">connect(3, {sa_family=AF_INET, sin_port=htons(443),</span>',
-              '<span class="dim">  sin_addr=inet_addr("space.kiranaos.xyz")}, 16) = <span class="green">0</span></span>',
-              '<span class="green">sendto(3, "GET /api/v1/status HTTP/1.1\\r\\n", 8192,</span>',
-              '<span class="green">  MSG_NOSIGNAL, NULL, 0) = <span class="cyan">8192</span></span>',
-              '<span class="yellow">recvfrom(3, "HTTP/1.1 200 OK\\r\\nContent-Type:..."</span>',
-              '<span class="green">  8192, 0, NULL, NULL) = <span class="cyan">42069</span></span>',
-              '<span class="dim">--- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---</span>',
-              '<span class="violet">write(1, "cyberhatc@devilmike:~$ ", 24) = <span class="green">24</span></span>',
-              '<span class="pink">read(0, "flutter build --release\\n", 1024) = <span class="cyan">22</span></span>',
-              '<span class="green">clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID...) = <span class="cyan">1338</span></span>',
-              '<span class="cyan">mmap(NULL, 2097152, PROT_READ|PROT_WRITE,</span>',
-              '<span class="cyan">  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = <span class="green">0x7f3a...</span></span>',
-            ];
-            let i = 0;
-            const iv = setInterval(() => {
-              if (i >= traces.length) { clearInterval(iv); return; }
-              body.innerHTML += traces[i] + '\n';
-              if (body.children.length > 18) body.removeChild(body.firstChild);
-              body.scrollTop = body.scrollHeight;
-              i++;
-            }, 350);
-            return iv;
-          }
-        },
+      const bootLines = [
+        { text: '<span class="dim">[    0.000000]</span> Linux version 6.8.0-cyber (gcc 13.2.0)', delay: 0 },
+        { text: '<span class="dim">[    0.004123]</span> Command line: BOOT_IMAGE=/vmlinuz', delay: 80 },
+        { text: '<span class="green">[    0.123456]</span> CYBERHATC BIOS v2.0 initializing...', delay: 160 },
+        { text: '<span class="cyan">[    0.341220]</span> CPU: DevilMike Engine @ 5.1GHz', delay: 240 },
+        { text: '<span class="yellow">[    0.512000]</span> Memory: <span class="green">5x hackathon</span> modules loaded', delay: 340 },
+        { text: '<span class="green">[    0.889102]</span> Mounting rootfs... <span class="green">OK</span>', delay: 440 },
+        { text: '<span class="cyan">[    1.103445]</span> Starting systemd... <span class="green">OK</span>', delay: 560 },
+        { text: '<span class="green">[    1.350012]</span> NetworkManager: <span class="green">connected</span>', delay: 680 },
+        { text: '<span class="violet">[    1.602334]</span> Loading CyberHATC modules... <span class="green">OK</span>', delay: 800 },
+        { text: '<span class="pink">[    1.900000]</span> <span class="green">cyberhatc@devilmike</span> login: ****', delay: 950 },
+        { text: '<span class="green">[    2.000000]</span> Welcome to <span class="cyan">HackOS 6.8.0-cyber</span>', delay: 1100 },
+        { text: '<span class="dim">               Last login: Sat Aug  1 12:00:00 2026</span>', delay: 1200 },
       ];
 
-      function runPhase() {
-        const anim = animations[phase % animations.length];
-        el.innerHTML = `
-          <div class="linux-anim-header">
-            <span class="linux-anim-title">${anim.title}</span>
-            <span class="linux-anim-phase">[${phase + 1}/${animations.length}]</span>
-          </div>
-          <div class="linux-anim-body" id="linuxAnimBody"></div>
-        `;
-        const body = document.getElementById('linuxAnimBody');
-        const iv = anim.run(body);
+      const statuses = [
+        'LOADING KERNEL...',
+        'MOUNTING FILESYSTEM...',
+        'STARTING SERVICES...',
+        'CYBERHATC READY'
+      ];
 
-        setTimeout(() => {
-          if (iv && iv.stop) iv.stop();
-          else if (iv) clearInterval(iv);
-          phase++;
-          runPhase();
-        }, 15000);
+      let i = 0;
+      function showLine() {
+        if (i >= bootLines.length) {
+          bootStatus.textContent = statuses[3];
+          bootStatus.style.color = 'var(--neon-green)';
+          setTimeout(() => { overlay.classList.add('hidden'); }, 400);
+          return;
+        }
+        bootText.innerHTML += bootLines[i].text + '\n';
+        if (i < 4) bootStatus.textContent = statuses[0];
+        else if (i < 7) bootStatus.textContent = statuses[1];
+        else if (i < 10) bootStatus.textContent = statuses[2];
+        i++;
+        setTimeout(showLine, bootLines[i - 1].delay > 0 ? 100 : 80);
       }
 
-      setTimeout(runPhase, 3000);
+      showLine();
     })();
 
     /* ========== CIRCUIT BOARD CANVAS ========== */
