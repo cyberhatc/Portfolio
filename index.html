@@ -1222,6 +1222,339 @@
         font-size: 0.55rem;
       }
     }
+
+    /* ========== CIRCUIT BOARD CANVAS ========== */
+    .circuit-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    /* ========== CHIP / PROCESSOR ANIMATION ========== */
+    .chip-container {
+      position: fixed;
+      bottom: 240px;
+      right: 20px;
+      width: 120px;
+      height: 120px;
+      z-index: 998;
+      pointer-events: none;
+      animation: chipFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes chipFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-8px) rotate(1deg); }
+      75% { transform: translateY(5px) rotate(-1deg); }
+    }
+
+    .chip-body {
+      width: 60px;
+      height: 60px;
+      margin: 18px auto;
+      border: 2px solid var(--neon-green);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: chipGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes chipGlow {
+      0%, 100% { box-shadow: 0 0 8px rgba(0,255,136,0.3), inset 0 0 8px rgba(0,255,136,0.1); }
+      50% { box-shadow: 0 0 25px rgba(0,255,136,0.7), inset 0 0 15px rgba(0,255,136,0.3); }
+    }
+
+    .chip-core {
+      width: 20px;
+      height: 20px;
+      background: var(--neon-green);
+      opacity: 0.6;
+      animation: corePulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes corePulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.3); opacity: 0.9; }
+    }
+
+    .chip-pin {
+      position: absolute;
+      background: var(--neon-green);
+      opacity: 0.5;
+    }
+
+    .chip-pin.top { width: 4px; height: 12px; top: -12px; }
+    .chip-pin.bottom { width: 4px; height: 12px; bottom: -12px; }
+    .chip-pin.left { width: 12px; height: 4px; left: -12px; }
+    .chip-pin.right { width: 12px; height: 4px; right: -12px; }
+
+    .chip-trace {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, var(--neon-green), transparent);
+      opacity: 0.3;
+      animation: traceFlow 2s linear infinite;
+    }
+
+    @keyframes traceFlow {
+      0% { opacity: 0.1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 0.1; }
+    }
+
+    .chip-trace:nth-child(1) { width: 80px; top: 30px; left: 70px; animation-delay: 0s; }
+    .chip-trace:nth-child(2) { width: 60px; top: 50px; left: 70px; animation-delay: 0.3s; }
+    .chip-trace:nth-child(3) { width: 70px; top: 70px; left: 70px; animation-delay: 0.6s; }
+    .chip-trace:nth-child(4) { width: 50px; top: 90px; left: 70px; animation-delay: 0.9s; }
+
+    .chip-label {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      color: var(--neon-green);
+      letter-spacing: 2px;
+      white-space: nowrap;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 768px) {
+      .chip-container { display: none; }
+    }
+
+    /* ========== HIDDEN REVEAL ZONES ========== */
+    .reveal-zone {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reveal-zone .reveal-content {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,15,0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.5s, backdrop-filter 0.5s;
+      backdrop-filter: blur(0px);
+      z-index: 5;
+    }
+
+    .reveal-zone:hover .reveal-content {
+      opacity: 1;
+      backdrop-filter: blur(8px);
+    }
+
+    .reveal-zone .reveal-content .reveal-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      animation: revealBounce 0.6s ease;
+    }
+
+    @keyframes revealBounce {
+      0% { transform: scale(0) rotate(-180deg); }
+      60% { transform: scale(1.2) rotate(10deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .reveal-zone .reveal-content .reveal-text {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--neon-green);
+      letter-spacing: 1px;
+    }
+
+    .reveal-zone .reveal-content .reveal-sub {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* ========== CIRCUIT CORNER DECORATIONS ========== */
+    .circuit-corner {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    .circuit-corner.top-left {
+      top: 60px;
+      left: 0;
+    }
+
+    .circuit-corner.bottom-right {
+      bottom: 0;
+      right: 340px;
+      transform: rotate(180deg);
+    }
+
+    .circuit-corner svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .circuit-line {
+      stroke: var(--neon-green);
+      stroke-width: 1;
+      fill: none;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: circuitDraw 4s linear infinite;
+    }
+
+    .circuit-line:nth-child(2) { animation-delay: 0.5s; }
+    .circuit-line:nth-child(3) { animation-delay: 1s; }
+    .circuit-line:nth-child(4) { animation-delay: 1.5s; }
+    .circuit-line:nth-child(5) { animation-delay: 2s; }
+
+    @keyframes circuitDraw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .circuit-node {
+      fill: var(--neon-green);
+      opacity: 0;
+      animation: nodePulse 3s ease-in-out infinite;
+    }
+
+    .circuit-node:nth-child(6) { animation-delay: 0.3s; }
+    .circuit-node:nth-child(7) { animation-delay: 0.8s; }
+    .circuit-node:nth-child(8) { animation-delay: 1.3s; }
+    .circuit-node:nth-child(9) { animation-delay: 1.8s; }
+    .circuit-node:nth-child(10) { animation-delay: 2.3s; }
+
+    @keyframes nodePulse {
+      0%, 100% { opacity: 0.1; r: 2; }
+      50% { opacity: 1; r: 4; }
+    }
+
+    /* ========== DATA STREAM LEFT EDGE ========== */
+    .data-stream {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 30px;
+      height: 100%;
+      z-index: 997;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .data-stream-char {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--neon-green);
+      opacity: 0;
+      animation: streamFall linear infinite;
+    }
+
+    @keyframes streamFall {
+      0% { opacity: 0; transform: translateY(-20px); }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(100vh); }
+    }
+
+    /* ========== HOVER REVEAL NAV INDICATOR ========== */
+    .nav-links a .nav-reveal {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.5rem;
+      color: var(--neon-green);
+      opacity: 0;
+      transition: opacity 0.3s, bottom 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .nav-links a:hover .nav-reveal {
+      opacity: 1;
+      bottom: -22px;
+    }
+
+    /* ========== HEX NODE GRID ========== */
+    .hex-grid {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.04;
+    }
+
+    .hex-node {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--neon-cyan);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      animation: hexPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes hexPulse {
+      0%, 100% { opacity: 0.1; transform: scale(0.8); }
+      50% { opacity: 0.5; transform: scale(1); }
+    }
+
+    /* ========== BOTTOM STATUS BAR ========== */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 28px;
+      background: rgba(10,10,15,0.9);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      gap: 20px;
+      z-index: 996;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.warn { background: var(--neon-yellow); }
+    .status-dot.hot { background: var(--neon-pink); }
+
+    @media (max-width: 768px) {
+      .status-bar { display: none; }
+      .data-stream { display: none; }
+      .circuit-corner { display: none; }
+      .hex-grid { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1232,6 +1565,72 @@
   <div class="hex-pattern"></div>
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="linux-anim-overlay" id="linuxAnim"></div>
+  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
+
+  <!-- CHIP -->
+  <div class="chip-container">
+    <div class="chip-trace"></div>
+    <div class="chip-trace"></div>
+    <div class="chip-trace"></div>
+    <div class="chip-trace"></div>
+    <div class="chip-body">
+      <div class="chip-core"></div>
+      <div class="chip-pin top" style="left:15px"></div>
+      <div class="chip-pin top" style="left:35px"></div>
+      <div class="chip-pin bottom" style="left:15px"></div>
+      <div class="chip-pin bottom" style="left:35px"></div>
+      <div class="chip-pin left" style="top:15px"></div>
+      <div class="chip-pin left" style="top:35px"></div>
+      <div class="chip-pin right" style="top:15px"></div>
+      <div class="chip-pin right" style="top:35px"></div>
+    </div>
+    <div class="chip-label">CYBERHATC CPU</div>
+  </div>
+
+  <!-- DATA STREAM LEFT -->
+  <div class="data-stream" id="dataStream"></div>
+
+  <!-- CIRCUIT CORNERS -->
+  <div class="circuit-corner top-left">
+    <svg viewBox="0 0 200 200">
+      <path class="circuit-line" d="M0,40 H60 L80,60 H120 L140,80 H180"/>
+      <path class="circuit-line" d="M0,80 H40 L60,100 H100 L120,120 H160"/>
+      <path class="circuit-line" d="M0,120 H30 L50,140 H90 L110,160 H140"/>
+      <path class="circuit-line" d="M40,0 V30 L60,50 V80 L80,100 V130"/>
+      <path class="circuit-line" d="M80,0 V20 L100,40 V70 L120,90 V120"/>
+      <circle class="circuit-node" cx="60" cy="40"/>
+      <circle class="circuit-node" cx="120" cy="80"/>
+      <circle class="circuit-node" cx="40" cy="80"/>
+      <circle class="circuit-node" cx="100" cy="120"/>
+      <circle class="circuit-node" cx="80" cy="100"/>
+    </svg>
+  </div>
+  <div class="circuit-corner bottom-right">
+    <svg viewBox="0 0 200 200">
+      <path class="circuit-line" d="M0,40 H60 L80,60 H120 L140,80 H180"/>
+      <path class="circuit-line" d="M0,80 H40 L60,100 H100 L120,120 H160"/>
+      <path class="circuit-line" d="M0,120 H30 L50,140 H90 L110,160 H140"/>
+      <path class="circuit-line" d="M40,0 V30 L60,50 V80 L80,100 V130"/>
+      <path class="circuit-line" d="M80,0 V20 L100,40 V70 L120,90 V120"/>
+      <circle class="circuit-node" cx="60" cy="40"/>
+      <circle class="circuit-node" cx="120" cy="80"/>
+      <circle class="circuit-node" cx="40" cy="80"/>
+      <circle class="circuit-node" cx="100" cy="120"/>
+      <circle class="circuit-node" cx="80" cy="100"/>
+    </svg>
+  </div>
+
+  <!-- HEX NODE GRID -->
+  <div class="hex-grid" id="hexGrid"></div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-item"><div class="status-dot"></div> SYS OK</div>
+    <div class="status-item"><div class="status-dot"></div> KERNEL 6.8.0</div>
+    <div class="status-item"><div class="status-dot warn"></div> CPU 47%</div>
+    <div class="status-item" id="statusTime">00:00:00</div>
+    <div class="status-item" style="margin-left:auto;">CYBERHATC v2.0 // <span style="color:var(--neon-green)">LINUX</span></div>
+  </div>
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
@@ -1346,21 +1745,41 @@
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">14</div>
           <div class="stat-label">Started Coding (Age)</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F525;</div>
+            <div class="reveal-text">BORN TO CODE</div>
+            <div class="reveal-sub">First program: Hello World in C</div>
+          </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">5x</div>
           <div class="stat-label">Hackathon Runner-Up</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F3C6;</div>
+            <div class="reveal-text">NEAR MISSES</div>
+            <div class="reveal-sub">Each loss = 10x knowledge gain</div>
+          </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">9+</div>
           <div class="stat-label">Projects Shipped</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F680;</div>
+            <div class="reveal-text">DEPLOYED & LIVE</div>
+            <div class="reveal-sub">Zero abandoned repos</div>
+          </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">∞</div>
           <div class="stat-label">Curiosity Level</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F9E0;</div>
+            <div class="reveal-text">NEVER SATISFIED</div>
+            <div class="reveal-sub">Always one more feature away</div>
+          </div>
         </div>
       </div>
     </div>
@@ -2254,6 +2673,188 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       }
 
       setTimeout(runPhase, 3000);
+    })();
+
+    /* ========== CIRCUIT BOARD CANVAS ========== */
+    (function initCircuit() {
+      const canvas = document.getElementById('circuitCanvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, nodes = [], mouseX = -100, mouseY = -100;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        initNodes();
+      }
+
+      function initNodes() {
+        nodes = [];
+        const spacing = 80;
+        for (let x = 0; x < w; x += spacing) {
+          for (let y = 0; y < h; y += spacing) {
+            nodes.push({
+              x: x + (Math.random() - 0.5) * 20,
+              y: y + (Math.random() - 0.5) * 20,
+              vx: 0, vy: 0,
+              connections: []
+            });
+          }
+        }
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) nodes[i].connections.push(j);
+          }
+        }
+      }
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+          const dx = mouseX - n.x;
+          const dy = mouseY - n.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const influence = Math.max(0, 1 - dist / 250);
+
+          for (const j of n.connections) {
+            const m = nodes[j];
+            const mdx = mouseX - m.x;
+            const mdy = mouseY - m.y;
+            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            const minf = Math.max(0, 1 - mdist / 250);
+            const alpha = Math.max(influence, minf) * 0.4;
+            if (alpha > 0.02) {
+              ctx.beginPath();
+              ctx.moveTo(n.x, n.y);
+              ctx.lineTo(m.x, m.y);
+              ctx.strokeStyle = `rgba(0,255,136,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+
+          if (influence > 0.05) {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 2 + influence * 3, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0,255,136,${influence * 0.8})`;
+            ctx.fill();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+
+    /* ========== DATA STREAM LEFT EDGE ========== */
+    (function initDataStream() {
+      const container = document.getElementById('dataStream');
+      const chars = '01アイウエオカキクケコサシスセソ';
+      function spawn() {
+        const el = document.createElement('div');
+        el.className = 'data-stream-char';
+        el.textContent = chars[Math.floor(Math.random() * chars.length)];
+        el.style.left = (Math.random() * 20) + 'px';
+        el.style.animationDuration = (3 + Math.random() * 4) + 's';
+        el.style.animationDelay = '0s';
+        el.style.color = Math.random() > 0.7 ? 'var(--neon-cyan)' : 'var(--neon-green)';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 7000);
+      }
+      setInterval(spawn, 300);
+    })();
+
+    /* ========== HEX NODE GRID ========== */
+    (function initHexGrid() {
+      const grid = document.getElementById('hexGrid');
+      const cols = 10, rows = 8;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const node = document.createElement('div');
+          node.className = 'hex-node';
+          node.style.left = (c * 55 + (r % 2) * 28) + 'px';
+          node.style.top = (r * 48) + 'px';
+          node.style.animationDelay = (Math.random() * 4) + 's';
+          grid.appendChild(node);
+        }
+      }
+    })();
+
+    /* ========== STATUS BAR CLOCK ========== */
+    (function initStatusClock() {
+      const el = document.getElementById('statusTime');
+      function update() {
+        const now = new Date();
+        el.textContent = now.toTimeString().split(' ')[0];
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+
+    /* ========== NAV LINK REVEAL LABELS ========== */
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      const labels = { terminal: '>_', about: '{}', projects: '[]', contact: '<@>' };
+      const key = a.getAttribute('href').replace('#', '');
+      if (labels[key]) {
+        const span = document.createElement('span');
+        span.className = 'nav-reveal';
+        span.textContent = labels[key];
+        a.appendChild(span);
+      }
+    });
+
+    /* ========== HOVER REVEAL ON SECTION LABELS ========== */
+    document.querySelectorAll('.section-label').forEach(label => {
+      label.style.cursor = 'default';
+      const full = label.textContent;
+      const hidden = label.dataset.reveal;
+      if (hidden) {
+        label.addEventListener('mouseenter', () => {
+          label.textContent = hidden;
+          label.style.color = 'var(--neon-cyan)';
+        });
+        label.addEventListener('mouseleave', () => {
+          label.textContent = full;
+          label.style.color = '';
+        });
+      }
+    });
+
+    /* ========== CURSOR PROXIMITY GLOW ON CARDS ========== */
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0,255,136,0.06) 0%, var(--bg-card) 60%)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.background = 'var(--bg-card)';
+      });
+    });
+
+    /* ========== RANDOM GLITCH FLICKER ========== */
+    (function initGlitchFlicker() {
+      setInterval(() => {
+        if (Math.random() > 0.92) {
+          document.body.style.filter = 'hue-rotate(90deg) saturate(2)';
+          setTimeout(() => { document.body.style.filter = 'none'; }, 80);
+          setTimeout(() => {
+            document.body.style.filter = 'hue-rotate(-30deg) brightness(1.5)';
+            setTimeout(() => { document.body.style.filter = 'none'; }, 50);
+          }, 120);
+        }
+      }, 3000);
     })();
   </script>
 </body>
