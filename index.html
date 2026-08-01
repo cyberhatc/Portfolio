@@ -1145,6 +1145,83 @@
       50% { transform: rotate(180deg) scale(1.2); }
       100% { transform: rotate(360deg) scale(1); }
     }
+
+    /* ========== LINUX ANIMATION OVERLAY ========== */
+    .linux-anim-overlay {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      height: 200px;
+      border: 1px solid var(--border);
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 6px;
+      z-index: 999;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--neon-green);
+      opacity: 0;
+      animation: linuxFadeIn 1s 3s forwards;
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .linux-anim-overlay:hover {
+      transform: scale(1.02);
+      border-color: var(--neon-green);
+    }
+
+    @keyframes linuxFadeIn {
+      to { opacity: 1; }
+    }
+
+    .linux-anim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      background: rgba(0,255,136,0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .linux-anim-title {
+      color: var(--neon-green);
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 0.6rem;
+    }
+
+    .linux-anim-phase {
+      color: var(--text-dim);
+      font-size: 0.55rem;
+    }
+
+    .linux-anim-body {
+      padding: 8px 10px;
+      height: calc(100% - 30px);
+      overflow: hidden;
+      position: relative;
+      line-height: 1.5;
+      white-space: pre;
+    }
+
+    .linux-anim-body .green { color: var(--neon-green); }
+    .linux-anim-body .cyan { color: var(--neon-cyan); }
+    .linux-anim-body .violet { color: var(--neon-violet); }
+    .linux-anim-body .yellow { color: var(--neon-yellow); }
+    .linux-anim-body .pink { color: var(--neon-pink); }
+    .linux-anim-body .dim { color: var(--text-dim); }
+
+    @media (max-width: 768px) {
+      .linux-anim-overlay {
+        width: 260px;
+        height: 160px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.55rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1154,6 +1231,7 @@
   <div class="particles" id="particles"></div>
   <div class="hex-pattern"></div>
   <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="linux-anim-overlay" id="linuxAnim"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
@@ -1846,6 +1924,337 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
         link.style.textShadow = 'none';
       });
     });
+
+    /* ========== LINUX ANIMATION CYCLER ========== */
+    (function initLinuxAnim() {
+      const el = document.getElementById('linuxAnim');
+      let phase = 0;
+
+      const animations = [
+        /* 0 — dmesg boot */
+        {
+          title: 'dmesg | tail -f',
+          run(body) {
+            const lines = [
+              '<span class="green">[    0.000000]</span> Linux version 6.8.0 (gcc 13.2.0)',
+              '<span class="cyan">[    0.004123]</span> Command line: BOOT_IMAGE=/vmlinuz',
+              '<span class="dim">[    0.012891]</span> BIOS-provided physical RAM map:',
+              '<span class="green">[    0.023445]</span> ACPI: RSDP 0x00000000000F0490',
+              '<span class="yellow">[    0.341220]</span> Calibrating delay loop... <span class="green">4325.43</span> BogoMIPS',
+              '<span class="green">[    0.512000]</span> Mount-root: mounting rootfs...',
+              '<span class="cyan">[    0.889102]</span> EXT4-fs (sda1): mounted filesystem',
+              '<span class="violet">[    1.203445]</span> systemd[1]: Started Journal Service.',
+              '<span class="green">[    1.550012]</span> NetworkManager: <span class="green">connected</span>',
+              '<span class="pink">[    2.102334]</span> <span class="green">cyberhatc@devilmike</span> login: ****',
+              '<span class="green">[    2.440000]</span> Last login: Sat Aug  1 12:00:00',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= lines.length) { clearInterval(iv); return; }
+              body.innerHTML += lines[i] + '\n';
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 400);
+            return iv;
+          }
+        },
+        /* 1 — htop */
+        {
+          title: 'htop',
+          run(body) {
+            const procs = [
+              { pid: 1, user: 'root', cpu: 0.0, mem: 0.1, cmd: '/sbin/init' },
+              { pid: 420, user: 'cyberhatc', cpu: 12.4, mem: 3.2, cmd: 'flutter build' },
+              { pid: 1337, user: 'cyberhatc', cpu: 88.7, mem: 18.6, cmd: 'fastapi server' },
+              { pid: 2048, user: 'cyberhatc', cpu: 45.1, mem: 9.8, cmd: 'blender render' },
+              { pid: 3000, user: 'root', cpu: 2.1, mem: 0.5, cmd: '/usr/sbin/sshd' },
+              { pid: 4096, user: 'cyberhatc', cpu: 67.3, mem: 12.4, cmd: 'firebase deploy' },
+              { pid: 5555, user: 'root', cpu: 0.3, mem: 0.2, cmd: '/usr/bin/node' },
+              { pid: 6666, user: 'cyberhatc', cpu: 33.9, mem: 7.1, cmd: 'unity editor' },
+              { pid: 7777, user: 'root', cpu: 1.0, mem: 0.3, cmd: 'cron daemon' },
+              { pid: 8080, user: 'cyberhatc', cpu: 55.2, mem: 11.3, cmd: 'dart compile' },
+            ];
+            let html = '<span class="dim">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+ Command</span>\n';
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= procs.length) { clearInterval(iv); return; }
+              const p = procs[i];
+              const bar = '█'.repeat(Math.floor(p.cpu / 5)) + '░'.repeat(20 - Math.floor(p.cpu / 5));
+              const cpuColor = p.cpu > 80 ? 'pink' : p.cpu > 40 ? 'yellow' : 'green';
+              html += `<span class="dim">${String(p.pid).padStart(5)}</span> <span class="cyan">${p.user.padEnd(10)}</span> <span class="${cpuColor}">${String(p.cpu.toFixed(1)).padStart(5)}</span>  <span class="green">${bar}</span> ${p.cmd}\n`;
+              body.innerHTML = html;
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 300);
+            return iv;
+          }
+        },
+        /* 2 — Matrix rain */
+        {
+          title: 'matrix_rain.sh',
+          run(body) {
+            const chars = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ABCDEFZ:.;=+*^!/$&#@';
+            const cols = 40;
+            const drops = Array(cols).fill(0);
+            let running = true;
+            function frame() {
+              if (!running) return;
+              let line = '';
+              for (let c = 0; c < cols; c++) {
+                if (drops[c] > 0 && Math.random() > 0.6) {
+                  line += `<span class="green">${chars[Math.floor(Math.random() * chars.length)]}</span>`;
+                } else {
+                  line += ' ';
+                }
+                if (Math.random() > 0.95) drops[c] = 15;
+                if (drops[c] > 0) drops[c]--;
+              }
+              body.innerHTML += line + '\n';
+              if (body.children.length > 18) body.removeChild(body.firstChild);
+              body.scrollTop = body.scrollHeight;
+              setTimeout(frame, 80);
+            }
+            frame();
+            return { stop() { running = false; } };
+          }
+        },
+        /* 3 — Kernel modules */
+        {
+          title: 'lsmod | grep cyberhatc',
+          run(body) {
+            const mods = [
+              '<span class="green">Module</span>                  <span class="dim">Size  Used by</span>',
+              'cyberhatc_core        <span class="cyan">142336</span>  1 cyberhatc_hack',
+              'cyberhatc_hack         <span class="cyan"> 89088</span>  0',
+              'neon_driver            <span class="cyan"> 53248</span>  2 cyberhatc_core',
+              'quantum_engine         <span class="violet">204800</span>  1 cyberhatc_hack',
+              'blender_gpu            <span class="yellow">311296</span>  3 neon_driver',
+              'flutter_render         <span class="cyan"> 76800</span>  1 cyberhatc_core',
+              'firebase_auth          <span class="pink"> 32768</span>  0',
+              'fastapi_worker         <span class="cyan"> 98304</span>  4 quantum_engine',
+              'unity_physics          <span class="violet">266240</span>  2 blender_gpu',
+              '<span class="dim">cyberhatc@devilmike</span>$ <span class="green">insmod secret_module.ko</span>',
+              '<span class="yellow">[  +0.000123]</span> Module loaded. ACCESS GRANTED.',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= mods.length) { clearInterval(iv); return; }
+              body.innerHTML += mods[i] + '\n';
+              if (body.children.length > 18) body.removeChild(body.firstChild);
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 350);
+            return iv;
+          }
+        },
+        /* 4 — File tree */
+        {
+          title: 'tree /home/cyberhatc',
+          run(body) {
+            const tree = [
+              '<span class="cyan">/home/cyberhatc</span>',
+              '├── <span class="green">Projects</span>',
+              '│   ├── <span class="violet">KiranaOS/</span>',
+              '│   │   ├── flutter_app/',
+              '│   │   ├── fastapi_backend/',
+              '│   │   └── <span class="yellow">docker-compose.yml</span>',
+              '│   ├── <span class="violet">RouteOptimizer/</span>',
+              '│   │   ├── algorithms/',
+              '│   │   └── api/',
+              '│   ├── <span class="pink">secret_project/</span>  <span class="dim">[CLASSIFIED]</span>',
+              '│   └── <span class="violet">StressFree/</span>',
+              '│       └── lib/',
+              '├── <span class="green">.config</span>',
+              '│   ├── <span class="cyan">nvim/</span>',
+              '│   └── <span class="cyan">zsh/</span>',
+              '├── <span class="yellow">.ssh</span>',
+              '│   └── id_ed25519',
+              '├── <span class="green">.vimrc</span>',
+              '└── <span class="pink">.bashrc</span>  <span class="dim"># customized</span>',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= tree.length) { clearInterval(iv); return; }
+              body.innerHTML += tree[i] + '\n';
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 200);
+            return iv;
+          }
+        },
+        /* 5 — Network traffic */
+        {
+          title: 'iftop -i eth0',
+          run(body) {
+            let lines = [];
+            let tick = 0;
+            const servers = ['192.168.1.1', '10.0.0.42', '172.16.0.100', '8.8.8.8', 'space.kiranaos.xyz'];
+            const iv = setInterval(() => {
+              tick++;
+              const header = '<span class="dim">  interface: eth0</span>          <span class="green">TX: 1.2Gbps</span>  <span class="cyan">RX: 890Mbps</span>';
+              const sep = '<span class="dim">─────────────────────────────────────────────</span>';
+              let newLines = [header, sep];
+              for (let s = 0; s < servers.length; s++) {
+                const tx = (Math.random() * 500).toFixed(1);
+                const rx = (Math.random() * 300).toFixed(1);
+                const bars = '▓'.repeat(Math.floor(Math.random() * 20) + 2);
+                newLines.push(`<span class="cyan">${servers[s].padEnd(22)}</span> <span class="green">▲${tx.padStart(6)}kb</span> <span class="pink">▼${rx.padStart(6)}kb</span> ${bars}`);
+              }
+              newLines.push(sep);
+              newLines.push(`<span class="dim">Total: TX ${((tick * 1.2) % 999).toFixed(0)}MB  RX ${((tick * 0.8) % 999).toFixed(0)}MB  peaks: TX 1.4Gbps RX 1.1Gbps</span>`);
+              body.innerHTML = newLines.join('\n');
+              body.scrollTop = body.scrollHeight;
+            }, 1000);
+            return iv;
+          }
+        },
+        /* 6 — systemctl */
+        {
+          title: 'systemctl list-units --type=service',
+          run(body) {
+            const svcs = [
+              '<span class="green">UNIT</span>                      <span class="dim">LOAD   ACTIVE</span>  <span class="green">SUB</span>     <span class="dim">DESCRIPTION</span>',
+              '<span class="green">cyberhatc.service</span>         loaded active running CyberHatch Core Engine',
+              '<span class="green">flutter-build.service</span>    loaded active running Flutter Cross-Platform Builder',
+              '<span class="green">fastapi.service</span>          loaded active running FastAPI Backend Server',
+              '<span class="green">blender-render.service</span>  loaded active running Blender 3D Asset Pipeline',
+              '<span class="green">firebase-sync.service</span>   loaded active running Firebase Cloud Sync',
+              '<span class="yellow">quantum-compute.service</span> loaded active running Quantum Algorithm Engine',
+              '<span class="cyan">docker.service</span>          loaded active running Docker Container Runtime',
+              '<span class="violet">unity-editor.service</span>    loaded active running Unity Game Engine',
+              '<span class="green">neon-glow.service</span>       loaded active running Neon Aesthetic Renderer',
+              '<span class="dim">10 units loaded. All systems operational.</span>',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= svcs.length) { clearInterval(iv); return; }
+              body.innerHTML += svcs[i] + '\n';
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 300);
+            return iv;
+          }
+        },
+        /* 7 — ASCII Tux */
+        {
+          title: 'cat /etc/motd',
+          run(body) {
+            const tux = [
+              '<span class="yellow">         .--.        </span>',
+              '<span class="yellow">        |o_o |       </span>',
+              '<span class="yellow">        |:_/ |       </span>',
+              '<span class="yellow">       //   \\ \\      </span>',
+              '<span class="yellow">      (|     | )     </span>',
+              '<span class="yellow">     /\'\\_   _/`\\    </span>',
+              '<span class="yellow">     \\___)=(___/    </span>',
+              '',
+              '<span class="green">    ╔═══════════════════════════╗</span>',
+              '<span class="green">    ║</span>   <span class="cyan">W E L C O M E</span>           <span class="green">║</span>',
+              '<span class="green">    ║</span>   <span class="pink">cyberhatc@devilmike</span>    <span class="green">║</span>',
+              '<span class="green">    ║</span>                           <span class="green">║</span>',
+              '<span class="green">    ║</span>  Kernel: <span class="violet">6.8.0-cyber</span>     <span class="green">║</span>',
+              '<span class="green">    ║</span>  Uptime: <span class="yellow">since age 14</span>    <span class="green">║</span>',
+              '<span class="green">    ║</span>  Shell:  <span class="cyan">/bin/zsh</span>        <span class="green">║</span>',
+              '<span class="green">    ║</span>  WM:     <span class="pink">i3-gaps</span>         <span class="green">║</span>',
+              '<span class="green">    ║</span>  Theme:  <span class="green">Neon Abyss</span>      <span class="green">║</span>',
+              '<span class="green">    ╚═══════════════════════════╝</span>',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= tux.length) { clearInterval(iv); return; }
+              body.innerHTML += tux[i] + '\n';
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 180);
+            return iv;
+          }
+        },
+        /* 8 — /proc/cpuinfo */
+        {
+          title: 'cat /proc/cpuinfo | grep -E "model|cpu"',
+          run(body) {
+            const info = [
+              '<span class="green">processor</span>\t: <span class="cyan">0</span>',
+              '<span class="green">model name</span>\t: CyberHatc Dev Engine v5.0',
+              '<span class="green">cpu MHz</span>\t\t: <span class="yellow">4325.432</span>',
+              '<span class="green">cache size</span>\t: <span class="violet">16384 KB</span>',
+              '<span class="green">bogomips</span>\t: <span class="pink">8650.86</span>',
+              '',
+              '<span class="green">processor</span>\t: <span class="cyan">1</span>',
+              '<span class="green">model name</span>\t: Neural Hack Accelerator',
+              '<span class="green">cpu MHz</span>\t\t: <span class="yellow">5100.00</span>',
+              '<span class="green">flags</span>\t\t: <span class="dim">sse4 avx2 neon flutter</span>',
+              '',
+              '<span class="dim">cyberhatc@devilmike</span>$ <span class="green">lscpu | head -5</span>',
+              '<span class="cyan">Architecture:</span>           x86_64',
+              '<span class="cyan">CPU(s):</span>                 <span class="yellow">1337</span>',
+              '<span class="cyan">Model name:</span>             Devil Mike @ 5.1GHz',
+              '<span class="cyan">Thread(s) per core:</span>     <span class="pink">∞</span>',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= info.length) { clearInterval(iv); return; }
+              body.innerHTML += info[i] + '\n';
+              if (body.children.length > 18) body.removeChild(body.firstChild);
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 280);
+            return iv;
+          }
+        },
+        /* 9 — strace */
+        {
+          title: 'strace -p 1337 -e trace=network',
+          run(body) {
+            const traces = [
+              '<span class="dim">connect(3, {sa_family=AF_INET, sin_port=htons(443),</span>',
+              '<span class="dim">  sin_addr=inet_addr("space.kiranaos.xyz")}, 16) = <span class="green">0</span></span>',
+              '<span class="green">sendto(3, "GET /api/v1/status HTTP/1.1\\r\\n", 8192,</span>',
+              '<span class="green">  MSG_NOSIGNAL, NULL, 0) = <span class="cyan">8192</span></span>',
+              '<span class="yellow">recvfrom(3, "HTTP/1.1 200 OK\\r\\nContent-Type:..."</span>',
+              '<span class="green">  8192, 0, NULL, NULL) = <span class="cyan">42069</span></span>',
+              '<span class="dim">--- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---</span>',
+              '<span class="violet">write(1, "cyberhatc@devilmike:~$ ", 24) = <span class="green">24</span></span>',
+              '<span class="pink">read(0, "flutter build --release\\n", 1024) = <span class="cyan">22</span></span>',
+              '<span class="green">clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID...) = <span class="cyan">1338</span></span>',
+              '<span class="cyan">mmap(NULL, 2097152, PROT_READ|PROT_WRITE,</span>',
+              '<span class="cyan">  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = <span class="green">0x7f3a...</span></span>',
+            ];
+            let i = 0;
+            const iv = setInterval(() => {
+              if (i >= traces.length) { clearInterval(iv); return; }
+              body.innerHTML += traces[i] + '\n';
+              if (body.children.length > 18) body.removeChild(body.firstChild);
+              body.scrollTop = body.scrollHeight;
+              i++;
+            }, 350);
+            return iv;
+          }
+        },
+      ];
+
+      function runPhase() {
+        const anim = animations[phase % animations.length];
+        el.innerHTML = `
+          <div class="linux-anim-header">
+            <span class="linux-anim-title">${anim.title}</span>
+            <span class="linux-anim-phase">[${phase + 1}/${animations.length}]</span>
+          </div>
+          <div class="linux-anim-body" id="linuxAnimBody"></div>
+        `;
+        const body = document.getElementById('linuxAnimBody');
+        const iv = anim.run(body);
+
+        setTimeout(() => {
+          if (iv && iv.stop) iv.stop();
+          else if (iv) clearInterval(iv);
+          phase++;
+          runPhase();
+        }, 15000);
+      }
+
+      setTimeout(runPhase, 3000);
+    })();
   </script>
 </body>
 </html>
