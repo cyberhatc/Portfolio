@@ -33,7 +33,7 @@
       --font-body: 'Inter', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background: var(--bg-primary); }
 
     body {
       background: var(--bg-primary);
@@ -96,11 +96,11 @@
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s;
-      background: radial-gradient(circle 280px at var(--tx, 50%) var(--ty, 50%),
+      background: radial-gradient(circle 420px at var(--tx, 50%) var(--ty, 50%),
         rgba(0,0,0,0) 0%,
-        rgba(0,0,0,0) 58%,
-        rgba(0,0,0,0.5) 78%,
-        rgba(0,0,0,0.8) 100%);
+        rgba(0,0,0,0) 70%,
+        rgba(0,0,0,0.08) 88%,
+        rgba(0,0,0,0.16) 100%);
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -255,6 +255,128 @@
       animation: fadeInUp 0.6s 0.4s forwards;
     }
 
+    .hero-name-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ========== FIXED RIGHT-SIDE PROCESSOR CHIP ========== */
+    .processor-chip-fixed {
+      position: fixed;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 220px;
+      height: 400px;
+      z-index: 995;
+      pointer-events: none;
+      opacity: 0;
+      animation: chipFadeIn 1s 2.5s forwards;
+    }
+
+    @keyframes chipFadeIn {
+      to { opacity: 1; }
+    }
+
+    .processor-chip-fixed svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 20px rgba(0,255,136,0.3));
+      animation: chipGlobalGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes chipGlobalGlow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(0,255,136,0.2)); }
+      50% { filter: drop-shadow(0 0 35px rgba(0,255,136,0.6)) drop-shadow(0 0 60px rgba(0,229,255,0.3)); }
+    }
+
+    /* Zig-zag trace animation */
+    .zig-trace {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: zigDraw 4s linear infinite;
+    }
+
+    .zig-trace:nth-child(1) { animation-delay: 0s; }
+    .zig-trace:nth-child(2) { animation-delay: 0.3s; }
+    .zig-trace:nth-child(3) { animation-delay: 0.6s; }
+    .zig-trace:nth-child(4) { animation-delay: 0.9s; }
+    .zig-trace:nth-child(5) { animation-delay: 1.2s; }
+    .zig-trace:nth-child(6) { animation-delay: 1.5s; }
+    .zig-trace:nth-child(7) { animation-delay: 1.8s; }
+    .zig-trace:nth-child(8) { animation-delay: 2.1s; }
+    .zig-trace:nth-child(9) { animation-delay: 2.4s; }
+    .zig-trace:nth-child(10) { animation-delay: 2.7s; }
+    .zig-trace:nth-child(11) { animation-delay: 3.0s; }
+    .zig-trace:nth-child(12) { animation-delay: 3.3s; }
+    .zig-trace:nth-child(13) { animation-delay: 3.6s; }
+    .zig-trace:nth-child(14) { animation-delay: 3.9s; }
+
+    @keyframes zigDraw {
+      0% { stroke-dashoffset: 300; opacity: 0.3; }
+      50% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: -300; opacity: 0.3; }
+    }
+
+    /* Lightning flash effect */
+    .zig-trace:nth-child(1),
+    .zig-trace:nth-child(2) {
+      animation: zigDraw 4s linear infinite, lightningFlash 6s ease-in-out infinite;
+    }
+
+    @keyframes lightningFlash {
+      0%, 90%, 100% { filter: none; }
+      92% { filter: url(#pGlowStrong) brightness(2); }
+      94% { filter: none; }
+      96% { filter: url(#pGlowStrong) brightness(1.5); }
+    }
+
+    /* Junction nodes pulse */
+    .chip-junction {
+      animation: junctionPulse 2s ease-in-out infinite;
+    }
+
+    .chip-junction:nth-of-type(1) { animation-delay: 0s; }
+    .chip-junction:nth-of-type(2) { animation-delay: 0.5s; }
+    .chip-junction:nth-of-type(3) { animation-delay: 1s; }
+    .chip-junction:nth-of-type(4) { animation-delay: 1.5s; }
+    .chip-junction:nth-of-type(5) { animation-delay: 0.3s; }
+    .chip-junction:nth-of-type(6) { animation-delay: 0.8s; }
+    .chip-junction:nth-of-type(7) { animation-delay: 1.3s; }
+    .chip-junction:nth-of-type(8) { animation-delay: 1.8s; }
+
+    @keyframes junctionPulse {
+      0%, 100% { r: 2; opacity: 0.3; }
+      50% { r: 5; opacity: 1; }
+    }
+
+    /* End nodes blink */
+    .chip-node-end {
+      animation: endNodeBlink 3s ease-in-out infinite;
+    }
+
+    .chip-node-end:nth-of-type(odd) { animation-delay: 0s; }
+    .chip-node-end:nth-of-type(even) { animation-delay: 1.5s; }
+
+    @keyframes endNodeBlink {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.8; }
+    }
+
+    .processor-chip-fixed .chip-svg-core {
+      animation: corePulse 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 1100px) {
+      .processor-chip-fixed { width: 160px; height: 300px; right: -10px; }
+    }
+
+    @media (max-width: 768px) {
+      .processor-chip-fixed { display: none; }
+    }
+
     .hero-name .highlight {
       background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
       -webkit-background-clip: text;
@@ -355,21 +477,21 @@
     .terminal-section { padding-bottom: 4rem; }
 
     .terminal-window {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: #0c0c0c;
+      border: 1px solid #333;
+      border-radius: 6px;
       overflow: hidden;
-      max-width: 700px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-green);
+      max-width: 1050px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 1px rgba(0,255,136,0.3);
     }
 
     .terminal-header {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.8rem 1rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0.8rem;
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
     }
 
     .terminal-dot {
@@ -392,10 +514,12 @@
     .terminal-body {
       padding: 1.2rem;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      min-height: 300px;
-      max-height: 400px;
+      font-size: 0.9rem;
+      min-height: 440px;
+      max-height: 640px;
       overflow-y: auto;
+      background: #0c0c0c;
+      color: #ccc;
     }
 
     .terminal-output { margin-bottom: 0.3rem; line-height: 1.8; }
@@ -403,7 +527,7 @@
     .terminal-output .cyan { color: var(--neon-cyan); }
     .terminal-output .violet { color: var(--neon-violet); }
     .terminal-output .yellow { color: var(--neon-yellow); }
-    .terminal-output .dim { color: var(--text-dim); }
+    .terminal-output .dim { color: #666; }
     .terminal-output .pink { color: var(--neon-pink); }
 
     .terminal-input-line {
@@ -433,6 +557,18 @@
       animation: blink 1s infinite;
       vertical-align: middle;
     }
+
+    .ascii-logo {
+      color: var(--neon-green);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.12;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 10px rgba(0,255,136,0.4);
+      user-select: none;
+    }
+
+    .ascii-logo .cyan { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,229,255,0.4); }
 
     /* ========== ABOUT ========== */
     .about-grid {
@@ -1173,6 +1309,559 @@
       50% { transform: rotate(180deg) scale(1.2); }
       100% { transform: rotate(360deg) scale(1); }
     }
+
+    /* ========== LINUX ANIMATION OVERLAY ========== */
+    .linux-anim-overlay {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      height: 200px;
+      border: 1px solid var(--border);
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 6px;
+      z-index: 999;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--neon-green);
+      opacity: 0;
+      animation: linuxFadeIn 1s 3s forwards;
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .linux-anim-overlay:hover {
+      transform: scale(1.02);
+      border-color: var(--neon-green);
+    }
+
+    @keyframes linuxFadeIn {
+      to { opacity: 1; }
+    }
+
+    .linux-anim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      background: rgba(0,255,136,0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .linux-anim-title {
+      color: var(--neon-green);
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 0.6rem;
+    }
+
+    .linux-anim-phase {
+      color: var(--text-dim);
+      font-size: 0.55rem;
+    }
+
+    .linux-anim-body {
+      padding: 8px 10px;
+      height: calc(100% - 30px);
+      overflow: hidden;
+      position: relative;
+      line-height: 1.5;
+      white-space: pre;
+    }
+
+    .linux-anim-body .green { color: var(--neon-green); }
+    .linux-anim-body .cyan { color: var(--neon-cyan); }
+    .linux-anim-body .violet { color: var(--neon-violet); }
+    .linux-anim-body .yellow { color: var(--neon-yellow); }
+    .linux-anim-body .pink { color: var(--neon-pink); }
+    .linux-anim-body .dim { color: var(--text-dim); }
+
+    @media (max-width: 768px) {
+      .linux-anim-overlay {
+        width: 260px;
+        height: 160px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.55rem;
+      }
+    }
+
+    /* ========== CIRCUIT BOARD CANVAS ========== */
+    .circuit-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    /* ========== LINUX BOOT SCREEN ========== */
+    .linux-anim-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      transition: opacity 0.8s, visibility 0.8s;
+    }
+
+    .linux-anim-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .boot-text {
+      color: var(--neon-green);
+      font-size: 0.75rem;
+      line-height: 1.8;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .boot-text .dim { color: var(--text-dim); }
+    .boot-text .cyan { color: var(--neon-cyan); }
+    .boot-text .yellow { color: var(--neon-yellow); }
+    .boot-text .pink { color: var(--neon-pink); }
+
+    .boot-bar {
+      width: 300px;
+      height: 3px;
+      background: var(--border);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .boot-bar::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+      animation: bootFill 2s ease forwards;
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+
+    @keyframes bootFill {
+      0% { width: 0%; }
+      30% { width: 25%; }
+      60% { width: 65%; }
+      80% { width: 85%; }
+      100% { width: 100%; }
+    }
+
+    .boot-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--neon-green);
+      margin-bottom: 2rem;
+      letter-spacing: 4px;
+      text-shadow: 0 0 30px rgba(0,255,136,0.5);
+      animation: bootLogoPulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes bootLogoPulse {
+      from { text-shadow: 0 0 20px rgba(0,255,136,0.3); }
+      to { text-shadow: 0 0 40px rgba(0,255,136,0.7), 0 0 80px rgba(0,255,136,0.3); }
+    }
+
+    .boot-status {
+      margin-top: 1rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .boot-text { font-size: 0.6rem; }
+      .boot-logo { font-size: 1.2rem; }
+      .boot-bar { width: 200px; }
+    }
+
+    @keyframes chipFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-8px) rotate(1deg); }
+      75% { transform: translateY(5px) rotate(-1deg); }
+    }
+
+    @keyframes chipGlow {
+      0%, 100% { box-shadow: 0 0 8px rgba(0,255,136,0.3), inset 0 0 8px rgba(0,255,136,0.1); }
+      50% { box-shadow: 0 0 25px rgba(0,255,136,0.7), inset 0 0 15px rgba(0,255,136,0.3); }
+    }
+
+    .chip-core {
+      width: 20px;
+      height: 20px;
+      background: var(--neon-green);
+      opacity: 0.6;
+      animation: corePulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes corePulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.3); opacity: 0.9; }
+    }
+
+    /* ========== HIDDEN REVEAL ZONES ========== */
+    .reveal-zone {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reveal-zone .reveal-content {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,15,0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.5s, backdrop-filter 0.5s;
+      backdrop-filter: blur(0px);
+      z-index: 5;
+    }
+
+    .reveal-zone:hover .reveal-content {
+      opacity: 1;
+      backdrop-filter: blur(8px);
+    }
+
+    .reveal-zone .reveal-content .reveal-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      animation: revealBounce 0.6s ease;
+    }
+
+    @keyframes revealBounce {
+      0% { transform: scale(0) rotate(-180deg); }
+      60% { transform: scale(1.2) rotate(10deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .reveal-zone .reveal-content .reveal-text {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--neon-green);
+      letter-spacing: 1px;
+    }
+
+    .reveal-zone .reveal-content .reveal-sub {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* ========== CIRCUIT CORNER DECORATIONS ========== */
+    .circuit-corner {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    .circuit-corner.top-left {
+      top: 60px;
+      left: 0;
+    }
+
+    .circuit-corner.bottom-right {
+      bottom: 0;
+      right: 340px;
+      transform: rotate(180deg);
+    }
+
+    .circuit-corner svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .circuit-line {
+      stroke: var(--neon-green);
+      stroke-width: 1;
+      fill: none;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: circuitDraw 4s linear infinite;
+    }
+
+    .circuit-line:nth-child(2) { animation-delay: 0.5s; }
+    .circuit-line:nth-child(3) { animation-delay: 1s; }
+    .circuit-line:nth-child(4) { animation-delay: 1.5s; }
+    .circuit-line:nth-child(5) { animation-delay: 2s; }
+
+    @keyframes circuitDraw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .circuit-node {
+      fill: var(--neon-green);
+      opacity: 0;
+      animation: nodePulse 3s ease-in-out infinite;
+    }
+
+    .circuit-node:nth-child(6) { animation-delay: 0.3s; }
+    .circuit-node:nth-child(7) { animation-delay: 0.8s; }
+    .circuit-node:nth-child(8) { animation-delay: 1.3s; }
+    .circuit-node:nth-child(9) { animation-delay: 1.8s; }
+    .circuit-node:nth-child(10) { animation-delay: 2.3s; }
+
+    @keyframes nodePulse {
+      0%, 100% { opacity: 0.1; r: 2; }
+      50% { opacity: 1; r: 4; }
+    }
+
+    /* ========== DATA STREAM LEFT EDGE ========== */
+    .data-stream {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 30px;
+      height: 100%;
+      z-index: 997;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .data-stream-char {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--neon-green);
+      opacity: 0;
+      animation: streamFall linear infinite;
+    }
+
+    @keyframes streamFall {
+      0% { opacity: 0; transform: translateY(-20px); }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(100vh); }
+    }
+
+    /* ========== HOVER REVEAL NAV INDICATOR ========== */
+    .nav-links a .nav-reveal {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.5rem;
+      color: var(--neon-green);
+      opacity: 0;
+      transition: opacity 0.3s, bottom 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .nav-links a:hover .nav-reveal {
+      opacity: 1;
+      bottom: -22px;
+    }
+
+    /* ========== HEX NODE GRID ========== */
+    .hex-grid {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.04;
+    }
+
+    .hex-node {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--neon-cyan);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      animation: hexPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes hexPulse {
+      0%, 100% { opacity: 0.1; transform: scale(0.8); }
+      50% { opacity: 0.5; transform: scale(1); }
+    }
+
+    /* ========== BOTTOM STATUS BAR ========== */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 28px;
+      background: rgba(10,10,15,0.9);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      gap: 20px;
+      z-index: 996;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.warn { background: var(--neon-yellow); }
+    .status-dot.hot { background: var(--neon-pink); }
+
+    @media (max-width: 768px) {
+      .status-bar { display: none; }
+      .data-stream { display: none; }
+      .circuit-corner { display: none; }
+      .hex-grid { display: none; }
+    }
+
+    /* ========== CLASSIFIED SHOCK EFFECT ========== */
+    body.shock-shake {
+      animation: shockShake 1s linear;
+    }
+
+    @keyframes shockShake {
+      0%   { transform: translate(0, 0); }
+      5%   { transform: translate(-6px, 4px); }
+      10%  { transform: translate(6px, -4px); }
+      15%  { transform: translate(-7px, 3px); }
+      20%  { transform: translate(7px, -3px); }
+      25%  { transform: translate(-8px, 4px); }
+      30%  { transform: translate(8px, -4px); }
+      35%  { transform: translate(-7px, 3px); }
+      40%  { transform: translate(7px, -3px); }
+      45%  { transform: translate(-8px, 4px); }
+      50%  { transform: translate(8px, -4px); }
+      55%  { transform: translate(-7px, 3px); }
+      60%  { transform: translate(7px, -3px); }
+      65%  { transform: translate(-8px, 4px); }
+      70%  { transform: translate(8px, -4px); }
+      75%  { transform: translate(-7px, 3px); }
+      80%  { transform: translate(6px, -3px); }
+      85%  { transform: translate(-4px, 2px); }
+      90%  { transform: translate(3px, -2px); }
+      95%  { transform: translate(-2px, 1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .lightning-border {
+      position: fixed;
+      inset: 0;
+      z-index: 100002;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .lightning-border.active {
+      opacity: 1;
+      animation: borderGlow 2.5s linear forwards;
+    }
+
+    @keyframes borderGlow {
+      0%, 5% { opacity: 1; box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+      10% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.3); }
+      25% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
+      40% { box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 255, 0, 0.4); }
+      55% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 50px rgba(255, 255, 255, 0.4); }
+      70% { box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), 0 0 80px rgba(255, 255, 255, 0.5); }
+      83% { opacity: 1; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+      92% { opacity: 0.4; box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); }
+      100% { opacity: 0; box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+    }
+
+    .border-line {
+      position: absolute;
+      pointer-events: none;
+      background: linear-gradient(90deg, #ff0000, #00ff00, #000000, #ffffff, #00ff00, #ff0000);
+      background-size: 300% 100%;
+      animation: borderFlow 0.3s linear infinite, borderFlicker 0.18s linear infinite;
+    }
+
+    .border-line.top { top: 0; left: 0; width: 100%; height: 4px; }
+    .border-line.bottom { bottom: 0; left: 0; width: 100%; height: 4px; }
+    .border-line.left {
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(180deg, #ff0000, #00ff00, #000000, #ffffff, #00ff00, #ff0000);
+      background-size: 100% 300%;
+      animation: borderFlowV 0.3s linear infinite, borderFlicker 0.18s linear infinite;
+    }
+    .border-line.right {
+      top: 0; right: 0; width: 4px; height: 100%;
+      background: linear-gradient(180deg, #ff0000, #00ff00, #000000, #ffffff, #00ff00, #ff0000);
+      background-size: 100% 300%;
+      animation: borderFlowV 0.3s linear infinite, borderFlicker 0.18s linear infinite;
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    @keyframes borderFlowV {
+      0% { background-position: 50% 0%; }
+      100% { background-position: 50% 300%; }
+    }
+
+    @keyframes borderFlicker {
+      0%, 100% { opacity: 1; }
+      20% { opacity: 0.2; }
+      40% { opacity: 0.9; }
+      60% { opacity: 0.1; }
+      80% { opacity: 0.7; }
+    }
+
+    .classified-logo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      padding: 5vh 5vw;
+      z-index: 100003;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .classified-logo.show {
+      animation: logoBlurFlash 1s ease-out 0.15s forwards;
+    }
+
+    @keyframes logoBlurFlash {
+      0%   { opacity: 0; filter: blur(50px); }
+      20%  { opacity: 0.75; filter: blur(30px); }
+      50%  { opacity: 0.7; filter: blur(25px); }
+      80%  { opacity: 0.5; filter: blur(20px); }
+      100% { opacity: 0; filter: blur(12px); }
+    }
+
+    .secret-card,
+    .secret-overlay { cursor: pointer; }
   </style>
 </head>
 <body>
@@ -1183,6 +1872,256 @@
   <div class="particles" id="particles"></div>
   <div class="hex-pattern"></div>
   <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="linux-anim-overlay" id="linuxAnim">
+    <div class="boot-logo">CYBERHATC</div>
+    <div class="boot-text" id="bootText"></div>
+    <div class="boot-bar"></div>
+    <div class="boot-status" id="bootStatus">LOADING KERNEL...</div>
+  </div>
+  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
+
+  <!-- DATA STREAM LEFT -->
+  <div class="data-stream" id="dataStream"></div>
+
+  <!-- CIRCUIT CORNERS -->
+  <div class="circuit-corner top-left">
+    <svg viewBox="0 0 200 200">
+      <path class="circuit-line" d="M0,40 H60 L80,60 H120 L140,80 H180"/>
+      <path class="circuit-line" d="M0,80 H40 L60,100 H100 L120,120 H160"/>
+      <path class="circuit-line" d="M0,120 H30 L50,140 H90 L110,160 H140"/>
+      <path class="circuit-line" d="M40,0 V30 L60,50 V80 L80,100 V130"/>
+      <path class="circuit-line" d="M80,0 V20 L100,40 V70 L120,90 V120"/>
+      <circle class="circuit-node" cx="60" cy="40"/>
+      <circle class="circuit-node" cx="120" cy="80"/>
+      <circle class="circuit-node" cx="40" cy="80"/>
+      <circle class="circuit-node" cx="100" cy="120"/>
+      <circle class="circuit-node" cx="80" cy="100"/>
+    </svg>
+  </div>
+  <div class="circuit-corner bottom-right">
+    <svg viewBox="0 0 200 200">
+      <path class="circuit-line" d="M0,40 H60 L80,60 H120 L140,80 H180"/>
+      <path class="circuit-line" d="M0,80 H40 L60,100 H100 L120,120 H160"/>
+      <path class="circuit-line" d="M0,120 H30 L50,140 H90 L110,160 H140"/>
+      <path class="circuit-line" d="M40,0 V30 L60,50 V80 L80,100 V130"/>
+      <path class="circuit-line" d="M80,0 V20 L100,40 V70 L120,90 V120"/>
+      <circle class="circuit-node" cx="60" cy="40"/>
+      <circle class="circuit-node" cx="120" cy="80"/>
+      <circle class="circuit-node" cx="40" cy="80"/>
+      <circle class="circuit-node" cx="100" cy="120"/>
+      <circle class="circuit-node" cx="80" cy="100"/>
+    </svg>
+  </div>
+
+  <!-- HEX NODE GRID -->
+  <div class="hex-grid" id="hexGrid"></div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-item"><div class="status-dot"></div> SYS OK</div>
+    <div class="status-item"><div class="status-dot"></div> KERNEL 6.8.0</div>
+    <div class="status-item"><div class="status-dot warn"></div> CPU 47%</div>
+    <div class="status-item" id="statusTime">00:00:00</div>
+    <div class="status-item" style="margin-left:auto;">CYBERHATC v2.0 // <span style="color:var(--neon-green)">LINUX</span></div>
+  </div>
+
+  <!-- FIXED RIGHT-SIDE REALISTIC PROCESSOR CHIP -->
+  <div class="processor-chip-fixed" id="processorChip">
+    <svg viewBox="0 0 500 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="pCoreGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="1"/>
+          <stop offset="40%" stop-color="#00ff88" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="pOuterGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="ihsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2a2a2a"/>
+          <stop offset="30%" stop-color="#1a1a1a"/>
+          <stop offset="70%" stop-color="#222"/>
+          <stop offset="100%" stop-color="#181818"/>
+        </linearGradient>
+        <linearGradient id="dieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0a1a0f"/>
+          <stop offset="50%" stop-color="#0d2015"/>
+          <stop offset="100%" stop-color="#08150c"/>
+        </linearGradient>
+        <linearGradient id="pcbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0c1a10"/>
+          <stop offset="100%" stop-color="#081208"/>
+        </linearGradient>
+        <filter id="pGlow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="pGlowStrong">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="lightningGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#b347ff" stop-opacity="0.3"/>
+        </linearGradient>
+        <linearGradient id="lightningGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0.2"/>
+        </linearGradient>
+      </defs>
+
+      <circle cx="250" cy="400" r="220" fill="url(#pOuterGlow)"/>
+
+      <!-- ZIG-ZAG LIGHTNING TRACES -->
+      <path class="zig-trace" d="M250,290 L245,270 L235,260 L240,240 L230,225 L235,205 L225,190 L230,170 L220,150 L225,130 L215,110 L220,90 L210,70 L215,50 L205,30" fill="none" stroke="url(#lightningGrad1)" stroke-width="2" filter="url(#pGlow)" stroke-linecap="round"/>
+      <path class="zig-trace" d="M250,290 L255,270 L265,260 L260,240 L270,225 L265,205 L275,190 L270,170 L280,150 L275,130 L285,110 L280,90 L290,70 L285,50 L295,30" fill="none" stroke="url(#lightningGrad1)" stroke-width="2" filter="url(#pGlow)" stroke-linecap="round"/>
+      <path class="zig-trace" d="M250,510 L245,530 L235,540 L240,560 L230,575 L235,595 L225,610 L230,630 L220,650 L225,670 L215,690 L220,710 L210,730 L215,750 L205,770" fill="none" stroke="url(#lightningGrad1)" stroke-width="2" filter="url(#pGlow)" stroke-linecap="round"/>
+      <path class="zig-trace" d="M250,510 L255,530 L265,540 L260,560 L270,575 L265,595 L275,610 L270,630 L280,650 L275,670 L285,690 L280,710 L290,730 L285,750 L295,770" fill="none" stroke="url(#lightningGrad1)" stroke-width="2" filter="url(#pGlow)" stroke-linecap="round"/>
+      <path class="zig-trace" d="M190,400 L170,395 L160,400 L140,395 L130,400 L110,395 L100,400 L80,395 L70,400 L50,395 L40,400 L20,395" fill="none" stroke="url(#lightningGrad2)" stroke-width="2" filter="url(#pGlow)" stroke-linecap="round"/>
+      <path class="zig-trace" d="M310,400 L330,395 L340,400 L360,395 L370,400 L390,395 L400,400 L420,395 L430,400 L450,395 L460,400 L480,395" fill="none" stroke="url(#lightningGrad2)" stroke-width="2" filter="url(#pGlow)" stroke-linecap="round"/>
+      <path class="zig-trace" d="M210,310 L195,295 L185,300 L170,285 L160,290 L145,275 L135,280 L120,265 L110,270 L95,255" fill="none" stroke="#00ff88" stroke-width="1.2" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+      <path class="zig-trace" d="M290,310 L305,295 L315,300 L330,285 L340,290 L355,275 L365,280 L380,265 L390,270 L405,255" fill="none" stroke="#00e5ff" stroke-width="1.2" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+      <path class="zig-trace" d="M210,490 L195,505 L185,500 L170,515 L160,510 L145,525 L135,520 L120,535 L110,530 L95,545" fill="none" stroke="#00ff88" stroke-width="1.2" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+      <path class="zig-trace" d="M290,490 L305,505 L315,500 L330,515 L340,510 L355,525 L365,520 L380,535 L390,530 L405,545" fill="none" stroke="#00e5ff" stroke-width="1.2" filter="url(#pGlow)" stroke-linecap="round" opacity="0.5"/>
+      <path class="zig-trace" d="M225,340 L215,330 L210,335 L200,325 L190,330" fill="none" stroke="#b347ff" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.4"/>
+      <path class="zig-trace" d="M275,340 L285,330 L290,335 L300,325 L310,330" fill="none" stroke="#b347ff" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.4"/>
+      <path class="zig-trace" d="M225,460 L215,470 L210,465 L200,475 L190,470" fill="none" stroke="#ff006e" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.3"/>
+      <path class="zig-trace" d="M275,460 L285,470 L290,465 L300,475 L310,470" fill="none" stroke="#ff006e" stroke-width="0.8" filter="url(#pGlow)" stroke-linecap="round" opacity="0.3"/>
+
+      <!-- JUNCTION NODES -->
+      <circle class="chip-junction" cx="250" cy="290" r="4" fill="#00ff88" filter="url(#pGlowStrong)"/>
+      <circle class="chip-junction" cx="250" cy="510" r="4" fill="#00ff88" filter="url(#pGlowStrong)"/>
+      <circle class="chip-junction" cx="190" cy="400" r="3" fill="#00e5ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="310" cy="400" r="3" fill="#00e5ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="210" cy="310" r="2" fill="#b347ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="290" cy="310" r="2" fill="#b347ff" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="210" cy="490" r="2" fill="#ff006e" filter="url(#pGlow)"/>
+      <circle class="chip-junction" cx="290" cy="490" r="2" fill="#ff006e" filter="url(#pGlow)"/>
+
+      <!-- PCB BOARD -->
+      <rect x="160" y="280" width="180" height="240" rx="6" fill="url(#pcbGrad)" stroke="#1a3a2a" stroke-width="2"/>
+      <text x="175" y="295" font-family="JetBrains Mono, monospace" font-size="4" fill="#1a3a2a" opacity="0.6">CYBERHATC-REV2.0</text>
+      <text x="175" y="510" font-family="JetBrains Mono, monospace" font-size="3.5" fill="#1a3a2a" opacity="0.4">2026 DEVIL MIKE</text>
+
+      <!-- PCB copper traces -->
+      <g opacity="0.3" stroke="#1a3a2a" stroke-width="0.8">
+        <line x1="170" y1="310" x2="195" y2="310"/><line x1="170" y1="330" x2="195" y2="330"/>
+        <line x1="170" y1="350" x2="195" y2="350"/><line x1="170" y1="370" x2="195" y2="370"/>
+        <line x1="170" y1="390" x2="195" y2="390"/><line x1="170" y1="410" x2="195" y2="410"/>
+        <line x1="170" y1="430" x2="195" y2="430"/><line x1="170" y1="450" x2="195" y2="450"/>
+        <line x1="170" y1="470" x2="195" y2="470"/>
+        <line x1="305" y1="310" x2="330" y2="310"/><line x1="305" y1="330" x2="330" y2="330"/>
+        <line x1="305" y1="350" x2="330" y2="350"/><line x1="305" y1="370" x2="330" y2="370"/>
+        <line x1="305" y1="390" x2="330" y2="390"/><line x1="305" y1="410" x2="330" y2="410"/>
+        <line x1="305" y1="430" x2="330" y2="430"/><line x1="305" y1="450" x2="330" y2="450"/>
+        <line x1="305" y1="470" x2="330" y2="470"/>
+      </g>
+
+      <!-- IHS (HEAT SPREADER) -->
+      <rect x="185" y="305" width="130" height="190" rx="4" fill="url(#ihsGrad)" stroke="#333" stroke-width="1.5"/>
+      <rect x="186" y="306" width="128" height="2" rx="1" fill="#444" opacity="0.4"/>
+      <rect x="186" y="306" width="2" height="188" rx="1" fill="#444" opacity="0.3"/>
+      <rect x="313" y="306" width="2" height="188" rx="1" fill="#111" opacity="0.5"/>
+      <rect x="186" y="493" width="128" height="2" rx="1" fill="#111" opacity="0.5"/>
+      <rect x="200" y="320" width="100" height="160" rx="2" fill="none" stroke="#2a2a2a" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- CPU DIE -->
+      <rect x="210" y="340" width="80" height="120" rx="2" fill="url(#dieGrad)" stroke="#00ff88" stroke-width="0.8"/>
+      <rect class="chip-shimmer" x="210" y="340" width="80" height="120" rx="2" fill="url(#dieGrad)" opacity="0.05"/>
+
+      <!-- Die grid -->
+      <g opacity="0.15" stroke="#00ff88" stroke-width="0.3">
+        <line x1="220" y1="340" x2="220" y2="460"/><line x1="230" y1="340" x2="230" y2="460"/>
+        <line x1="240" y1="340" x2="240" y2="460"/><line x1="250" y1="340" x2="250" y2="460"/>
+        <line x1="260" y1="340" x2="260" y2="460"/><line x1="270" y1="340" x2="270" y2="460"/>
+        <line x1="280" y1="340" x2="280" y2="460"/>
+        <line x1="210" y1="350" x2="290" y2="350"/><line x1="210" y1="360" x2="290" y2="360"/>
+        <line x1="210" y1="370" x2="290" y2="370"/><line x1="210" y1="380" x2="290" y2="380"/>
+        <line x1="210" y1="390" x2="290" y2="390"/><line x1="210" y1="400" x2="290" y2="400"/>
+        <line x1="210" y1="410" x2="290" y2="410"/><line x1="210" y1="420" x2="290" y2="420"/>
+        <line x1="210" y1="430" x2="290" y2="430"/><line x1="210" y1="440" x2="290" y2="440"/>
+        <line x1="210" y1="450" x2="290" y2="450"/>
+      </g>
+
+      <!-- Die functional blocks -->
+      <rect x="215" y="345" width="30" height="25" rx="1" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.25"/>
+      <rect x="255" y="345" width="30" height="25" rx="1" fill="none" stroke="#00e5ff" stroke-width="0.4" opacity="0.25"/>
+      <rect x="215" y="375" width="30" height="25" rx="1" fill="none" stroke="#00e5ff" stroke-width="0.4" opacity="0.25"/>
+      <rect x="255" y="375" width="30" height="25" rx="1" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.25"/>
+      <rect x="215" y="405" width="30" height="25" rx="1" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.25"/>
+      <rect x="255" y="405" width="30" height="25" rx="1" fill="none" stroke="#00e5ff" stroke-width="0.4" opacity="0.25"/>
+      <rect x="215" y="435" width="70" height="20" rx="1" fill="none" stroke="#b347ff" stroke-width="0.4" opacity="0.2"/>
+
+      <!-- Core glow -->
+      <circle cx="250" cy="400" r="22" fill="url(#pCoreGlow)" class="chip-svg-core"/>
+      <text x="250" y="397" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="5.5" fill="#00ff88" opacity="0.9" font-weight="700">CYBERHATC</text>
+      <text x="250" y="406" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="4" fill="#00e5ff" opacity="0.7">DEVIL MIKE</text>
+
+      <!-- PGA PINS (gold) -->
+      <g fill="#c0a040" opacity="0.6">
+        <circle cx="205" cy="288" r="1.5"/><circle cx="215" cy="288" r="1.5"/><circle cx="225" cy="288" r="1.5"/>
+        <circle cx="235" cy="288" r="1.5"/><circle cx="245" cy="288" r="1.5"/><circle cx="255" cy="288" r="1.5"/>
+        <circle cx="265" cy="288" r="1.5"/><circle cx="275" cy="288" r="1.5"/><circle cx="285" cy="288" r="1.5"/>
+        <circle cx="295" cy="288" r="1.5"/><circle cx="305" cy="288" r="1.5"/>
+        <circle cx="205" cy="295" r="1.5"/><circle cx="215" cy="295" r="1.5"/><circle cx="225" cy="295" r="1.5"/>
+        <circle cx="235" cy="295" r="1.5"/><circle cx="245" cy="295" r="1.5"/><circle cx="255" cy="295" r="1.5"/>
+        <circle cx="265" cy="295" r="1.5"/><circle cx="275" cy="295" r="1.5"/><circle cx="285" cy="295" r="1.5"/>
+        <circle cx="295" cy="295" r="1.5"/><circle cx="305" cy="295" r="1.5"/>
+        <circle cx="205" cy="505" r="1.5"/><circle cx="215" cy="505" r="1.5"/><circle cx="225" cy="505" r="1.5"/>
+        <circle cx="235" cy="505" r="1.5"/><circle cx="245" cy="505" r="1.5"/><circle cx="255" cy="505" r="1.5"/>
+        <circle cx="265" cy="505" r="1.5"/><circle cx="275" cy="505" r="1.5"/><circle cx="285" cy="505" r="1.5"/>
+        <circle cx="295" cy="505" r="1.5"/><circle cx="305" cy="505" r="1.5"/>
+        <circle cx="205" cy="512" r="1.5"/><circle cx="215" cy="512" r="1.5"/><circle cx="225" cy="512" r="1.5"/>
+        <circle cx="235" cy="512" r="1.5"/><circle cx="245" cy="512" r="1.5"/><circle cx="255" cy="512" r="1.5"/>
+        <circle cx="265" cy="512" r="1.5"/><circle cx="275" cy="512" r="1.5"/><circle cx="285" cy="512" r="1.5"/>
+        <circle cx="295" cy="512" r="1.5"/><circle cx="305" cy="512" r="1.5"/>
+      </g>
+      <g fill="#c0a040" opacity="0.6">
+        <circle cx="168" cy="315" r="1.5"/><circle cx="168" cy="325" r="1.5"/><circle cx="168" cy="335" r="1.5"/>
+        <circle cx="168" cy="345" r="1.5"/><circle cx="168" cy="355" r="1.5"/><circle cx="168" cy="365" r="1.5"/>
+        <circle cx="168" cy="375" r="1.5"/><circle cx="168" cy="385" r="1.5"/><circle cx="168" cy="395" r="1.5"/>
+        <circle cx="168" cy="405" r="1.5"/><circle cx="168" cy="415" r="1.5"/><circle cx="168" cy="425" r="1.5"/>
+        <circle cx="168" cy="435" r="1.5"/><circle cx="168" cy="445" r="1.5"/><circle cx="168" cy="455" r="1.5"/>
+        <circle cx="168" cy="465" r="1.5"/><circle cx="168" cy="475" r="1.5"/><circle cx="168" cy="485" r="1.5"/>
+        <circle cx="332" cy="315" r="1.5"/><circle cx="332" cy="325" r="1.5"/><circle cx="332" cy="335" r="1.5"/>
+        <circle cx="332" cy="345" r="1.5"/><circle cx="332" cy="355" r="1.5"/><circle cx="332" cy="365" r="1.5"/>
+        <circle cx="332" cy="375" r="1.5"/><circle cx="332" cy="385" r="1.5"/><circle cx="332" cy="395" r="1.5"/>
+        <circle cx="332" cy="405" r="1.5"/><circle cx="332" cy="415" r="1.5"/><circle cx="332" cy="425" r="1.5"/>
+        <circle cx="332" cy="435" r="1.5"/><circle cx="332" cy="445" r="1.5"/><circle cx="332" cy="455" r="1.5"/>
+        <circle cx="332" cy="465" r="1.5"/><circle cx="332" cy="475" r="1.5"/><circle cx="332" cy="485" r="1.5"/>
+      </g>
+
+      <!-- SMD COMPONENTS -->
+      <g fill="#1a1a1a" stroke="#333" stroke-width="0.3">
+        <rect x="195" y="283" width="10" height="4" rx="1"/><rect x="215" y="283" width="6" height="4" rx="1"/>
+        <rect x="235" y="283" width="8" height="4" rx="1"/><rect x="255" y="283" width="6" height="4" rx="1"/>
+        <rect x="275" y="283" width="10" height="4" rx="1"/><rect x="295" y="283" width="8" height="4" rx="1"/>
+        <rect x="195" y="513" width="10" height="4" rx="1"/><rect x="215" y="513" width="6" height="4" rx="1"/>
+        <rect x="235" y="513" width="8" height="4" rx="1"/><rect x="255" y="513" width="6" height="4" rx="1"/>
+        <rect x="275" y="513" width="10" height="4" rx="1"/><rect x="295" y="513" width="8" height="4" rx="1"/>
+        <rect x="162" y="315" width="4" height="8" rx="1"/><rect x="162" y="340" width="4" height="6" rx="1"/>
+        <rect x="162" y="365" width="4" height="10" rx="1"/><rect x="162" y="395" width="4" height="6" rx="1"/>
+        <rect x="162" y="420" width="4" height="8" rx="1"/><rect x="162" y="450" width="4" height="6" rx="1"/>
+        <rect x="162" y="475" width="4" height="8" rx="1"/>
+        <rect x="334" y="315" width="4" height="8" rx="1"/><rect x="334" y="340" width="4" height="6" rx="1"/>
+        <rect x="334" y="365" width="4" height="10" rx="1"/><rect x="334" y="395" width="4" height="6" rx="1"/>
+        <rect x="334" y="420" width="4" height="8" rx="1"/><rect x="334" y="450" width="4" height="6" rx="1"/>
+        <rect x="334" y="475" width="4" height="8" rx="1"/>
+      </g>
+
+      <!-- MOUNTING HOLES -->
+      <circle cx="172" cy="290" r="5" fill="#0a0a0a" stroke="#333" stroke-width="0.5"/>
+      <circle cx="172" cy="290" r="2.5" fill="#1a1a1a"/>
+      <circle cx="328" cy="290" r="5" fill="#0a0a0a" stroke="#333" stroke-width="0.5"/>
+      <circle cx="328" cy="290" r="2.5" fill="#1a1a1a"/>
+      <circle cx="172" cy="510" r="5" fill="#0a0a0a" stroke="#333" stroke-width="0.5"/>
+      <circle cx="172" cy="510" r="2.5" fill="#1a1a1a"/>
+      <circle cx="328" cy="510" r="5" fill="#0a0a0a" stroke="#333" stroke-width="0.5"/>
+      <circle cx="328" cy="510" r="2.5" fill="#1a1a1a"/>
+    </svg>
+  </div>
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
@@ -1201,9 +2140,11 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-glitch-line">system.init --mode=hacker</div>
-    <h1 class="hero-name">
-      <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
-    </h1>
+    <div class="hero-name-row">
+      <h1 class="hero-name">
+        <span class="highlight glitch-text" data-text="Devil">Devil</span> Mike
+      </h1>
+    </div>
     <p class="hero-tagline">Full-Stack Dev // Mobile Architect // CyberNerd</p>
     <p class="hero-desc">
       Building cross-platform apps, 3D simulations, and algorithmic tools since age 14.
@@ -1231,22 +2172,32 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <span class="terminal-title">cyberhatc@devilmike:~</span>
+        <span class="terminal-title">cyberhatc@devilmike: ~/projects</span>
       </div>
       <div class="terminal-body" id="terminalBody">
-        <div class="terminal-output"><span class="green">DevilMike@CyberHATC</span>:<span class="cyan">~</span>$ neofetch</div>
+        <div class="terminal-output"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ neofetch</div>
+        <pre class="ascii-logo">
+█████ █████ █   █ █████ █      █   █ █████ █  █  █████
+█   █ █     █   █   █   █      ██ ██   █   █ █   █    
+█   █ █████ █   █   █   █      █ █ █   █   ██    █████
+█   █ █      █ █    █   █      █   █   █   █ █   █    
+█████ █████   █   █████ █████  █   █ █████ █  █  █████
+        </pre>
         <div class="terminal-output dim">
-  ╔══════════════════════════════════╗<br>
-  ║ &nbsp; <span class="green">CYBERHATC</span> v2.0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║<br>
-  ║ &nbsp; Dev: <span class="cyan">Devil Mike</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║<br>
-  ║ &nbsp; Stack: <span class="violet">Full-Stack | Mobile</span> &nbsp;║<br>
-  ║ &nbsp; OS: <span class="yellow">HackOS 5x Runner-Up</span> &nbsp;&nbsp;║<br>
-  ║ &nbsp; Uptime: Since age <span class="pink">14</span> &nbsp;&nbsp;&nbsp;&nbsp;║<br>
-  ╚══════════════════════════════════╝
+  <span class="cyan">cyberhatc@devilmike</span>
+  <span class="dim">---------------</span>
+  <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+  <span class="cyan">Host:</span> Devil Mike Workstation
+  <span class="cyan">Kernel:</span> 6.8.0-cyber
+  <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+  <span class="cyan">Shell:</span> /bin/zsh 5.9
+  <span class="cyan">WM:</span> i3-gaps
+  <span class="cyan">CPU:</span> DevilMike @ 5.1GHz
+  <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up
         </div>
         <div class="terminal-output dim">Type <span class="green">'help'</span> for available commands...</div>
         <div class="terminal-input-line" id="inputLine">
-          <span class="terminal-prompt">DevilMike@CyberHATC:~$</span>
+          <span class="terminal-prompt"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$</span>
           <input type="text" class="terminal-input" id="terminalInput" autofocus spellcheck="false" autocomplete="off">
         </div>
       </div>
@@ -1291,26 +2242,47 @@
             <span class="tech-tag">Blender</span>
             <span class="tech-tag">Unity</span>
             <span class="tech-tag">Git</span>
+            <span class="tech-tag">Linux</span>
           </div>
         </div>
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">14</div>
           <div class="stat-label">Started Coding (Age)</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F525;</div>
+            <div class="reveal-text">BORN TO CODE</div>
+            <div class="reveal-sub">First program: Hello World in C</div>
+          </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">5x</div>
           <div class="stat-label">Hackathon Runner-Up</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F3C6;</div>
+            <div class="reveal-text">NEAR MISSES</div>
+            <div class="reveal-sub">Each loss = 10x knowledge gain</div>
+          </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">9+</div>
           <div class="stat-label">Projects Shipped</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F680;</div>
+            <div class="reveal-text">DEPLOYED & LIVE</div>
+            <div class="reveal-sub">Zero abandoned repos</div>
+          </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-zone">
           <div class="stat-number">∞</div>
           <div class="stat-label">Curiosity Level</div>
+          <div class="reveal-content">
+            <div class="reveal-icon">&#x1F9E0;</div>
+            <div class="reveal-text">NEVER SATISFIED</div>
+            <div class="reveal-sub">Always one more feature away</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1327,7 +2299,7 @@
     <div class="projects-grid">
 
       <!-- 1 -->
-      <div class="project-card">
+      <a href="https://cyberhatc.github.io/maths-behind-gps-vtu-b/gps" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
         <div class="project-header">
           <span class="project-number">01</span>
           <span class="project-status">LIVE</span>
@@ -1344,7 +2316,7 @@
           <li>Real-time satellite geometry</li>
           <li>Visual proof of GPS math</li>
         </ul>
-      </div>
+      </a>
 
       <!-- 2 — SECRET -->
       <div class="project-card secret-card">
@@ -1371,7 +2343,7 @@
       </div>
 
       <!-- 3 -->
-      <div class="project-card">
+      <a href="https://kiranaos.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
         <div class="project-header">
           <span class="project-number">03</span>
           <span class="project-status">LIVE</span>
@@ -1382,13 +2354,14 @@
           <span class="project-tag">Flutter</span>
           <span class="project-tag">FastAPI</span>
           <span class="project-tag">Firestore</span>
+          <span class="project-tag">Linux</span>
         </div>
         <ul class="project-features">
           <li>Inventory management system</li>
           <li>Sales analytics dashboard</li>
           <li>Built for local Indian retail</li>
         </ul>
-      </div>
+      </a>
 
       <!-- 4 -->
       <div class="project-card">
@@ -1411,7 +2384,7 @@
       </div>
 
       <!-- 5 -->
-      <div class="project-card">
+      <a href="https://space.kiranaos.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
         <div class="project-header">
           <span class="project-number">05</span>
           <span class="project-status">LIVE</span>
@@ -1428,7 +2401,7 @@
           <li>Orbit prediction engine</li>
           <li>Telemetry data visualization</li>
         </ul>
-      </div>
+      </a>
 
       <!-- 6 -->
       <div class="project-card">
@@ -1475,7 +2448,7 @@
       </div>
 
       <!-- 8 -->
-      <div class="project-card">
+      <a href="https://mindfullheaven.xyz" target="_blank" class="project-card" style="text-decoration:none;color:inherit;">
         <div class="project-header">
           <span class="project-number">08</span>
           <span class="project-status">LIVE</span>
@@ -1486,13 +2459,14 @@
           <span class="project-tag">Flutter</span>
           <span class="project-tag">Hive</span>
           <span class="project-tag">GetX</span>
+          <span class="project-tag">Co-Founder</span>
         </div>
         <ul class="project-features">
           <li>Mood tracking & journaling</li>
           <li>Offline-first architecture</li>
           <li>GenZ-focused UX design</li>
         </ul>
-      </div>
+      </a>
 
       <!-- 9 — SECRET -->
       <div class="project-card secret-card">
@@ -1526,10 +2500,10 @@
   <!-- CONTACT -->
   <section class="fade-section" id="contact">
     <div class="section-label">// contact_me</div>
-    <div class="section-title">Hire Me</div>
+    <div class="section-title">Let's Talk</div>
     <div class="contact-grid">
       <div class="contact-text">
-        <h3>Let's Build Something Unhinged.</h3>
+        <h3>Got a Problem Worth Solving?</h3>
         <p>
           Whether you need a full-stack developer, a mobile architect, or someone who thinks in algorithms — I'm your guy. Let's turn wild ideas into deployed products.
         </p>
@@ -1667,7 +2641,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="cyan">Backend:</span>    FastAPI (Python), Firebase, Firestore
 <span class="cyan">Storage:</span>    Hive, GetX
 <span class="cyan">3D/Unity:</span>   Blender, Unity
-<span class="cyan">Tools:</span>      Git, VS Code, Figma`,
+<span class="cyan">OS/Tools:</span>   Linux, Git, VS Code, Figma`,
 
       projects: `<span class="green">// Featured Projects</span>
 <span class="cyan">01</span> How-Maths-Work-in-GPS     <span class="dim">— GPS math visualization</span>
@@ -1677,7 +2651,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="cyan">05</span> Satellite Tracking System  <span class="dim">— Orbit physics tracker</span>
 <span class="cyan">06</span> Personal Assistant AI      <span class="dim">— AI workflow bot</span>
 <span class="pink">07</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>
-<span class="cyan">08</span> StressFree App             <span class="dim">— GenZ mental health</span>
+<span class="cyan">08</span> StressFree App             <span class="dim">— GenZ mental health</span> <span class="green">(Co-Founder)</span>
 <span class="pink">09</span> <span class="dim">████████████████</span>         <span class="pink">— CLASSIFIED</span>`,
 
       contact: `<span class="green">// Reach Out</span>
@@ -1695,14 +2669,34 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="dim">Full-Stack Dev | Mobile Architect | CyberNerd</span>
 <span class="violet">Groups:</span> hackers, builders, dreamers`,
 
-      neofetch: `<span class="dim">
-╔══════════════════════════════════╗
-║  <span class="green">CYBERHATC</span> v2.0               ║
-║  Dev: <span class="cyan">Devil Mike</span>              ║
-║  Stack: <span class="violet">Full-Stack | Mobile</span>   ║
-║  OS: <span class="yellow">HackOS 5x Runner-Up</span>    ║
-║  Uptime: Since age <span class="pink">14</span>         ║
-╚══════════════════════════════════╝</span>`
+      neofetch: `<pre class="ascii-logo">
+█████ █████ █   █ █████ █      █   █ █████ █  █  █████
+█   █ █     █   █   █   █      ██ ██   █   █ █   █    
+█   █ █████ █   █   █   █      █ █ █   █   ██    █████
+█   █ █      █ █    █   █      █   █   █   █ █   █    
+█████ █████   █   █████ █████  █   █ █████ █  █  █████
+</pre><span class="dim">
+<span class="cyan">cyberhatc@devilmike</span>
+<span class="dim">---------------</span>
+<span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+<span class="cyan">Host:</span> Devil Mike Workstation
+<span class="cyan">Kernel:</span> 6.8.0-cyber
+<span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+<span class="cyan">Shell:</span> /bin/zsh 5.9
+<span class="cyan">CPU:</span> DevilMike @ 5.1GHz
+<span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>`,
+
+      htop: `<span class="dim">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+ Command</span>
+<span class="dim">    1</span> <span class="cyan">root</span>        20   0  168M  12M   8M  S  0.0  0.1   0:04 /sbin/init
+<span class="dim">  420</span> <span class="green">cyberhatc</span>   20   0  512M  48M  32M  S <span class="yellow">12.4</span>  3.2   1:23 flutter build
+<span class="dim"> 1337</span> <span class="green">cyberhatc</span>   20   0  256M 128M  64M  S <span class="pink">88.7</span> 18.6   5:42 fastapi server
+<span class="dim"> 2048</span> <span class="green">cyberhatc</span>   20   0  1.2G 256M 128M  S <span class="yellow">45.1</span>  9.8   3:11 blender render
+<span class="dim"> 4096</span> <span class="green">cyberhatc</span>   20   0  128M  64M  32M  S <span class="yellow">67.3</span> 12.4   2:55 firebase deploy
+<span class="dim"> 6666</span> <span class="green">cyberhatc</span>   20   0  512M 192M  96M  S <span class="yellow">33.9</span>  7.1   1:48 unity editor
+<span class="dim"> 8080</span> <span class="green">cyberhatc</span>   20   0  256M 128M  64M  S <span class="yellow">55.2</span> 11.3   2:33 dart compile`,
+
+      'uname -a': `<span class="cyan">HackOS</span> devilmike 6.8.0-cyber #1 SMP x86_64 GNU/Linux
+<span class="dim">CyberHATC kernel compiled with: --enable-hack-mode --disable-sleep</span>`,
     };
 
     terminalInput.addEventListener('keydown', (e) => {
@@ -1736,7 +2730,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       const inputLineEl = document.getElementById('inputLine');
       const output = document.createElement('div');
       output.className = 'terminal-output';
-      output.innerHTML = `<span class="green">DevilMike@CyberHATC</span>:<span class="cyan">~</span>$ ${escapeHtml(cmd)}`;
+      output.innerHTML = `<span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ ${escapeHtml(cmd)}`;
 
       if (cmd === 'clear') {
         terminalBody.innerHTML = '';
@@ -1774,7 +2768,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       line.className = 'terminal-input-line';
       line.id = 'inputLine';
       line.innerHTML = `
-        <span class="terminal-prompt">DevilMike@CyberHATC:~$</span>
+        <span class="terminal-prompt"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$</span>
         <input type="text" class="terminal-input" id="terminalInput" autofocus spellcheck="false" autocomplete="off">
       `;
       return line;
@@ -1912,6 +2906,277 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       link.addEventListener('mouseleave', () => {
         link.style.textShadow = 'none';
       });
+    });
+
+    /* ========== LINUX BOOT SCREEN ========== */
+    (function initBoot() {
+      const overlay = document.getElementById('linuxAnim');
+      const bootText = document.getElementById('bootText');
+      const bootStatus = document.getElementById('bootStatus');
+
+      const bootLines = [
+        { text: '<span class="dim">[    0.000000]</span> Linux version 6.8.0-cyber (gcc 13.2.0)', delay: 0 },
+        { text: '<span class="dim">[    0.004123]</span> Command line: BOOT_IMAGE=/vmlinuz', delay: 80 },
+        { text: '<span class="green">[    0.123456]</span> CYBERHATC BIOS v2.0 initializing...', delay: 160 },
+        { text: '<span class="cyan">[    0.341220]</span> CPU: DevilMike Engine @ 5.1GHz', delay: 240 },
+        { text: '<span class="yellow">[    0.512000]</span> Memory: <span class="green">5x hackathon</span> modules loaded', delay: 340 },
+        { text: '<span class="green">[    0.889102]</span> Mounting rootfs... <span class="green">OK</span>', delay: 440 },
+        { text: '<span class="cyan">[    1.103445]</span> Starting systemd... <span class="green">OK</span>', delay: 560 },
+        { text: '<span class="green">[    1.350012]</span> NetworkManager: <span class="green">connected</span>', delay: 680 },
+        { text: '<span class="violet">[    1.602334]</span> Loading CyberHATC modules... <span class="green">OK</span>', delay: 800 },
+        { text: '<span class="pink">[    1.900000]</span> <span class="green">cyberhatc@devilmike</span> login: ****', delay: 950 },
+        { text: '<span class="green">[    2.000000]</span> Welcome to <span class="cyan">HackOS 6.8.0-cyber</span>', delay: 1100 },
+        { text: '<span class="dim">               Last login: Sat Aug  1 12:00:00 2026</span>', delay: 1200 },
+      ];
+
+      const statuses = [
+        'LOADING KERNEL...',
+        'MOUNTING FILESYSTEM...',
+        'STARTING SERVICES...',
+        'CYBERHATC READY'
+      ];
+
+      let i = 0;
+      function showLine() {
+        if (i >= bootLines.length) {
+          bootStatus.textContent = statuses[3];
+          bootStatus.style.color = 'var(--neon-green)';
+          setTimeout(() => { overlay.classList.add('hidden'); }, 400);
+          return;
+        }
+        bootText.innerHTML += bootLines[i].text + '\n';
+        if (i < 4) bootStatus.textContent = statuses[0];
+        else if (i < 7) bootStatus.textContent = statuses[1];
+        else if (i < 10) bootStatus.textContent = statuses[2];
+        i++;
+        setTimeout(showLine, bootLines[i - 1].delay > 0 ? 100 : 80);
+      }
+
+      showLine();
+    })();
+
+    /* ========== CIRCUIT BOARD CANVAS ========== */
+    (function initCircuit() {
+      const canvas = document.getElementById('circuitCanvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, nodes = [], mouseX = -100, mouseY = -100;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        initNodes();
+      }
+
+      function initNodes() {
+        nodes = [];
+        const spacing = 80;
+        for (let x = 0; x < w; x += spacing) {
+          for (let y = 0; y < h; y += spacing) {
+            nodes.push({
+              x: x + (Math.random() - 0.5) * 20,
+              y: y + (Math.random() - 0.5) * 20,
+              vx: 0, vy: 0,
+              connections: []
+            });
+          }
+        }
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) nodes[i].connections.push(j);
+          }
+        }
+      }
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+          const dx = mouseX - n.x;
+          const dy = mouseY - n.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const influence = Math.max(0, 1 - dist / 250);
+
+          for (const j of n.connections) {
+            const m = nodes[j];
+            const mdx = mouseX - m.x;
+            const mdy = mouseY - m.y;
+            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            const minf = Math.max(0, 1 - mdist / 250);
+            const alpha = Math.max(influence, minf) * 0.4;
+            if (alpha > 0.02) {
+              ctx.beginPath();
+              ctx.moveTo(n.x, n.y);
+              ctx.lineTo(m.x, m.y);
+              ctx.strokeStyle = `rgba(0,255,136,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+
+          if (influence > 0.05) {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 2 + influence * 3, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0,255,136,${influence * 0.8})`;
+            ctx.fill();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+
+    /* ========== DATA STREAM LEFT EDGE ========== */
+    (function initDataStream() {
+      const container = document.getElementById('dataStream');
+      const chars = '01アイウエオカキクケコサシスセソ';
+      function spawn() {
+        const el = document.createElement('div');
+        el.className = 'data-stream-char';
+        el.textContent = chars[Math.floor(Math.random() * chars.length)];
+        el.style.left = (Math.random() * 20) + 'px';
+        el.style.animationDuration = (3 + Math.random() * 4) + 's';
+        el.style.animationDelay = '0s';
+        el.style.color = Math.random() > 0.7 ? 'var(--neon-cyan)' : 'var(--neon-green)';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 7000);
+      }
+      setInterval(spawn, 300);
+    })();
+
+    /* ========== HEX NODE GRID ========== */
+    (function initHexGrid() {
+      const grid = document.getElementById('hexGrid');
+      const cols = 10, rows = 8;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const node = document.createElement('div');
+          node.className = 'hex-node';
+          node.style.left = (c * 55 + (r % 2) * 28) + 'px';
+          node.style.top = (r * 48) + 'px';
+          node.style.animationDelay = (Math.random() * 4) + 's';
+          grid.appendChild(node);
+        }
+      }
+    })();
+
+    /* ========== STATUS BAR CLOCK ========== */
+    (function initStatusClock() {
+      const el = document.getElementById('statusTime');
+      function update() {
+        const now = new Date();
+        el.textContent = now.toTimeString().split(' ')[0];
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+
+    /* ========== NAV LINK REVEAL LABELS ========== */
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      const labels = { terminal: '>_', about: '{}', projects: '[]', contact: '<@>' };
+      const key = a.getAttribute('href').replace('#', '');
+      if (labels[key]) {
+        const span = document.createElement('span');
+        span.className = 'nav-reveal';
+        span.textContent = labels[key];
+        a.appendChild(span);
+      }
+    });
+
+    /* ========== HOVER REVEAL ON SECTION LABELS ========== */
+    document.querySelectorAll('.section-label').forEach(label => {
+      label.style.cursor = 'default';
+      const full = label.textContent;
+      const hidden = label.dataset.reveal;
+      if (hidden) {
+        label.addEventListener('mouseenter', () => {
+          label.textContent = hidden;
+          label.style.color = 'var(--neon-cyan)';
+        });
+        label.addEventListener('mouseleave', () => {
+          label.textContent = full;
+          label.style.color = '';
+        });
+      }
+    });
+
+    /* ========== CURSOR PROXIMITY GLOW ON CARDS ========== */
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0,255,136,0.06) 0%, var(--bg-card) 60%)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.background = 'var(--bg-card)';
+      });
+    });
+
+    /* ========== RANDOM GLITCH FLICKER ========== */
+    (function initGlitchFlicker() {
+      setInterval(() => {
+        if (Math.random() > 0.92) {
+          document.body.style.filter = 'hue-rotate(90deg) saturate(2)';
+          setTimeout(() => { document.body.style.filter = 'none'; }, 80);
+          setTimeout(() => {
+            document.body.style.filter = 'hue-rotate(-30deg) brightness(1.5)';
+            setTimeout(() => { document.body.style.filter = 'none'; }, 50);
+          }, 120);
+        }
+      }, 3000);
+    })();
+
+    /* ========== CLASSIFIED SHOCK EFFECT ========== */
+    const lightningBorder = document.createElement('div');
+    lightningBorder.className = 'lightning-border';
+    document.body.appendChild(lightningBorder);
+
+    ['top', 'right', 'bottom', 'left'].forEach(pos => {
+      const line = document.createElement('div');
+      line.className = 'border-line ' + pos;
+      lightningBorder.appendChild(line);
+    });
+
+    const classifiedLogo = document.createElement('img');
+    classifiedLogo.src = 'logodevilmike.jpeg';
+    classifiedLogo.alt = 'Devil Mike';
+    classifiedLogo.className = 'classified-logo';
+    document.body.appendChild(classifiedLogo);
+
+    let classifiedTimeout = null;
+
+    function triggerClassified() {
+      clearTimeout(classifiedTimeout);
+      document.body.classList.remove('shock-shake');
+      lightningBorder.classList.remove('active');
+      classifiedLogo.classList.remove('show');
+      void document.body.offsetWidth;
+      void lightningBorder.offsetWidth;
+
+      document.body.classList.add('shock-shake');
+      lightningBorder.classList.add('active');
+      classifiedLogo.classList.add('show');
+
+      classifiedTimeout = setTimeout(() => {
+        document.body.classList.remove('shock-shake');
+        lightningBorder.classList.remove('active');
+        classifiedLogo.classList.remove('show');
+      }, 3000);
+    }
+
+    document.querySelectorAll('.secret-card').forEach(card => {
+      card.addEventListener('click', triggerClassified);
     });
   </script>
 </body>
