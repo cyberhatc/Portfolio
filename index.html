@@ -456,6 +456,23 @@
       animation: scrollPulse 2s infinite;
     }
 
+    /* ========== RED FLOW LINE ========== */
+    .red-flow {
+      position: absolute;
+      right: 170px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #ff003c, transparent);
+      opacity: 0.6;
+      animation: redFlowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes redFlowPulse {
+      0%, 100% { opacity: 0.3; box-shadow: 0 0 5px #ff003c; }
+      50% { opacity: 0.8; box-shadow: 0 0 20px #ff003c, 0 0 40px #ff003c; }
+    }
+
     /* ========== TERMINAL ========== */
     .terminal-section { padding-bottom: 4rem; }
 
@@ -2169,6 +2186,8 @@
       SCROLL
       <div class="arrow"></div>
     </div>
+    <canvas id="matrixCanvas" style="position:absolute;right:0;top:0;width:350px;height:100%;pointer-events:none;"></canvas>
+    <div class="red-flow" id="redFlow"></div>
   </section>
 
   <div class="section-divider"></div>
@@ -3079,6 +3098,54 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       }
       update();
       setInterval(update, 1000);
+    })();
+
+    /* ========== MATRIX RAIN ON HERO RIGHT ========== */
+    (function initMatrixRain() {
+      const canvas = document.getElementById('matrixCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+      const fontSize = 14;
+      let columns, drops;
+
+      function resize() {
+        canvas.width = 350;
+        canvas.height = canvas.parentElement.offsetHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(1);
+      }
+
+      function draw() {
+        ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff88';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+
+          if (Math.random() > 0.98) {
+            ctx.fillStyle = '#ff003c';
+          } else {
+            ctx.fillStyle = 'rgba(0, 255, 136, ' + (Math.random() * 0.5 + 0.3) + ')';
+          }
+
+          ctx.fillText(text, x, y);
+
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      draw();
     })();
 
     /* ========== NAV LINK REVEAL LABELS ========== */
