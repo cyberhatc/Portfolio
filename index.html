@@ -776,9 +776,8 @@
     /* ========== CONTACT ========== */
     .contact-grid {
       display: grid;
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 1fr 1fr;
       gap: 4rem;
-      max-width: none;
     }
 
     .contact-text h3 {
@@ -2537,10 +2536,10 @@
   <div class="section-divider"></div>
 
   <!-- CONTACT -->
-  <section class="fade-section" id="contact" style="max-width:none;">
+  <section class="fade-section" id="contact">
     <div class="section-label">// contact_me</div>
     <div class="section-title">Let's Talk</div>
-    <div class="contact-grid" style="grid-template-columns:1fr 2fr;align-items:center;">
+    <div class="contact-grid">
       <div class="contact-text">
         <h3>Got a Problem Worth Solving?</h3>
         <p>
@@ -3106,7 +3105,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
       const canvas = document.getElementById('matrixCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+      const chars = 'devil_Mike ';
       const fontSize = 14;
       let columns, drops;
 
@@ -3194,15 +3193,11 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
     /* ========== RANDOM GLITCH FLICKER ========== */
     (function initGlitchFlicker() {
       setInterval(() => {
-        if (Math.random() > 0.92) {
-          document.body.style.filter = 'hue-rotate(90deg) saturate(2)';
-          setTimeout(() => { document.body.style.filter = 'none'; }, 80);
-          setTimeout(() => {
-            document.body.style.filter = 'hue-rotate(-30deg) brightness(1.5)';
-            setTimeout(() => { document.body.style.filter = 'none'; }, 50);
-          }, 120);
+        if (Math.random() > 0.97) {
+          document.querySelector('.hero-name').style.filter = 'hue-rotate(90deg)';
+          setTimeout(() => { document.querySelector('.hero-name').style.filter = 'none'; }, 100);
         }
-      }, 3000);
+      }, 4000);
     })();
 
     /* ========== CURSOR TORCH ========== */
