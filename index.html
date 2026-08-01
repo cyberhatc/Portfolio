@@ -453,7 +453,7 @@
       border: 1px solid #333;
       border-radius: 6px;
       overflow: hidden;
-      max-width: 750px;
+      max-width: 1050px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 1px rgba(0,255,136,0.3);
     }
 
@@ -484,11 +484,11 @@
     }
 
     .terminal-body {
-      padding: 1rem;
+      padding: 1.2rem;
       font-family: var(--font-mono);
-      font-size: 0.82rem;
-      min-height: 320px;
-      max-height: 420px;
+      font-size: 0.9rem;
+      min-height: 440px;
+      max-height: 640px;
       overflow-y: auto;
       background: #0c0c0c;
       color: #ccc;
@@ -529,6 +529,18 @@
       animation: blink 1s infinite;
       vertical-align: middle;
     }
+
+    .ascii-logo {
+      color: var(--neon-green);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.12;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 10px rgba(0,255,136,0.4);
+      user-select: none;
+    }
+
+    .ascii-logo .cyan { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,229,255,0.4); }
 
     /* ========== ABOUT ========== */
     .about-grid {
@@ -2135,17 +2147,24 @@
       </div>
       <div class="terminal-body" id="terminalBody">
         <div class="terminal-output"><span class="green">cyberhatc@devilmike</span>:<span class="cyan">~</span>$ neofetch</div>
+        <pre class="ascii-logo">
+█████ █████ █   █ █████ █      █   █ █████ █  █  █████
+█   █ █     █   █   █   █      ██ ██   █   █ █   █    
+█   █ █████ █   █   █   █      █ █ █   █   ██    █████
+█   █ █      █ █    █   █      █   █   █   █ █   █    
+█████ █████   █   █████ █████  █   █ █████ █  █  █████
+        </pre>
         <div class="terminal-output dim">
-  <span class="green">       _</span>               <span class="cyan">cyberhatc@devilmike</span>
-  <span class="green">      | |</span>              <span class="dim">---------------</span>
-  <span class="green">  ___ | |___</span>           <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
-  <span class="green"> / _ \\| / __|</span>          <span class="cyan">Host:</span> Devil Mike Workstation
-  <span class="green">|  __/| \\__ \\</span>          <span class="cyan">Kernel:</span> 6.8.0-cyber
-  <span class="green"> \\___||_|___/</span>          <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
-  <span class="dim">                       <span class="cyan">Shell:</span> /bin/zsh 5.9</span>
-  <span class="dim">                       <span class="cyan">WM:</span> i3-gaps</span>
-  <span class="dim">                       <span class="cyan">CPU:</span> DevilMike @ 5.1GHz</span>
-  <span class="dim">                       <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>
+  <span class="cyan">cyberhatc@devilmike</span>
+  <span class="dim">---------------</span>
+  <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+  <span class="cyan">Host:</span> Devil Mike Workstation
+  <span class="cyan">Kernel:</span> 6.8.0-cyber
+  <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+  <span class="cyan">Shell:</span> /bin/zsh 5.9
+  <span class="cyan">WM:</span> i3-gaps
+  <span class="cyan">CPU:</span> DevilMike @ 5.1GHz
+  <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up
         </div>
         <div class="terminal-output dim">Type <span class="green">'help'</span> for available commands...</div>
         <div class="terminal-input-line" id="inputLine">
@@ -2581,16 +2600,22 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
 <span class="dim">Full-Stack Dev | Mobile Architect | CyberNerd</span>
 <span class="violet">Groups:</span> hackers, builders, dreamers`,
 
-      neofetch: `<span class="dim">
-       _               <span class="cyan">cyberhatc@devilmike</span>
-      | |              <span class="dim">---------------</span>
-  ___ | |___           <span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
- / _ \\| / __|          <span class="cyan">Host:</span> Devil Mike Workstation
-|  __/| \\__ \\          <span class="cyan">Kernel:</span> 6.8.0-cyber
- \\___||_|___/          <span class="cyan">Uptime:</span> since age <span class="pink">14</span>
-                       <span class="cyan">Shell:</span> /bin/zsh 5.9
-                       <span class="cyan">CPU:</span> DevilMike @ 5.1GHz
-                       <span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>`,
+      neofetch: `<pre class="ascii-logo">
+█████ █████ █   █ █████ █      █   █ █████ █  █  █████
+█   █ █     █   █   █   █      ██ ██   █   █ █   █    
+█   █ █████ █   █   █   █      █ █ █   █   ██    █████
+█   █ █      █ █    █   █      █   █   █   █ █   █    
+█████ █████   █   █████ █████  █   █ █████ █  █  █████
+</pre><span class="dim">
+<span class="cyan">cyberhatc@devilmike</span>
+<span class="dim">---------------</span>
+<span class="cyan">OS:</span> HackOS 6.8.0-cyber x86_64
+<span class="cyan">Host:</span> Devil Mike Workstation
+<span class="cyan">Kernel:</span> 6.8.0-cyber
+<span class="cyan">Uptime:</span> since age <span class="pink">14</span>
+<span class="cyan">Shell:</span> /bin/zsh 5.9
+<span class="cyan">CPU:</span> DevilMike @ 5.1GHz
+<span class="cyan">Memory:</span> <span class="yellow">5x</span> hackathon runner-up</span>`,
 
       htop: `<span class="dim">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+ Command</span>
 <span class="dim">    1</span> <span class="cyan">root</span>        20   0  168M  12M   8M  S  0.0  0.1   0:04 /sbin/init
