@@ -293,9 +293,9 @@
     .zig-trace:nth-child(14) { animation-delay: 3.9s; }
 
     @keyframes zigDraw {
-      0% { stroke-dashoffset: 300; opacity: 0.05; }
-      50% { stroke-dashoffset: 0; opacity: 0.10; }
-      100% { stroke-dashoffset: -300; opacity: 0.05; }
+      0% { stroke-dashoffset: 300; opacity: 0.10; }
+      50% { stroke-dashoffset: 0; opacity: 0.30; }
+      100% { stroke-dashoffset: -300; opacity: 0.10; }
     }
 
     /* Lightning flash effect */
@@ -478,11 +478,11 @@
 
     .terminal-window {
       background: #0c0c0c;
-      border: 1px solid #333;
+      border: 1px solid #ffffff;
       border-radius: 6px;
       overflow: hidden;
       max-width: 1250px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 1px rgba(0,255,136,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.15);
     }
 
     .terminal-header {
@@ -1302,7 +1302,7 @@
       pointer-events: none;
       z-index: -1;
       animation: hexDrift 20s linear infinite;
-      opacity: 0.25;
+      opacity: 0.30;
     }
 
     @keyframes hexDrift {
@@ -1917,6 +1917,20 @@
     .site-glitch-active .contact-form,
     .site-glitch-active .nav-logo {
       animation: borderGlitch 0.5s ease-in-out;
+    }
+
+    .site-glitch-active .terminal-window {
+      animation: terminalBorderGlitch 0.5s ease-in-out;
+    }
+
+    @keyframes terminalBorderGlitch {
+      0%   { border-color: var(--neon-green); box-shadow: 0 0 8px rgba(0,255,136,0.3); }
+      15%  { border-color: #ff0000; box-shadow: 0 0 30px rgba(255,0,0,1), inset 0 0 30px rgba(255,0,0,0.15); }
+      30%  { border-color: #ff0000; box-shadow: 0 0 40px rgba(255,0,0,1), inset 0 0 40px rgba(255,0,0,0.2); }
+      50%  { border-color: #ff0000; box-shadow: 0 0 50px rgba(255,0,0,1), inset 0 0 50px rgba(255,0,0,0.25); }
+      70%  { border-color: #ff0000; box-shadow: 0 0 35px rgba(255,0,0,0.8), inset 0 0 30px rgba(255,0,0,0.15); }
+      85%  { border-color: #ff0000; box-shadow: 0 0 25px rgba(255,0,0,0.6); }
+      100% { border-color: var(--neon-green); box-shadow: 0 0 8px rgba(0,255,136,0.3); }
     }
 
     .site-glitch-active .ascii-logo {
@@ -3095,7 +3109,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
             const mdy = mouseY - m.y;
             const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
             const minf = Math.max(0, 1 - mdist / 250);
-            const alpha = Math.max(influence, minf) * 0.30;
+            const alpha = Math.max(influence, minf) * 0.50;
             if (alpha > 0.01) {
               ctx.beginPath();
               ctx.moveTo(n.x, n.y);
@@ -3109,7 +3123,7 @@ and algorithmic tools under the <span class="violet">CyberHATC</span> brand.`,
           if (influence > 0.02) {
             ctx.beginPath();
             ctx.arc(n.x, n.y, 2 + influence * 3, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0,255,136,${influence * 0.60})`;
+            ctx.fillStyle = `rgba(0,255,136,${influence * 1.0})`;
             ctx.fill();
           }
         }
