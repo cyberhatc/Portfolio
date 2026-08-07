@@ -36,7 +36,7 @@ info=(
 "${T}Shell${R}: /bin/zsh 5.9"
 "${T}WM${R}: i3-gaps"
 "${T}CPU${R}: devil_Mike @ 5.1GHz"
-"${T}Memory${R}: 5x hackathon runner-up"
+"${T}Memory${R}: 5x hackathon Contestant"
 )
 
 # Print header
